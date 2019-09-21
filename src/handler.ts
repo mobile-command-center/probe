@@ -1,25 +1,20 @@
-import { ApolloServer, gql } from 'apollo-server-lambda';
+import { ApolloServer } from 'apollo-server-lambda';
 import { Handler } from 'aws-lambda';
+import schema from './graphql/schema/schema';
 
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-};
+// 참조 프로젝트 
+// https://github.com/tomyitav/apollo-typed-lambda
+// 참조영상
+// https://www.youtube.com/watch?v=ZzHD04QTwI8&list=PL7jH19IHhOLOpU_yAYzCO4iQNvdou1AnK&index=4
 
 const playground = {
     endpoint: '/graphql'
 };
 
-const server = new ApolloServer({ typeDefs, resolvers, playground });
+const server = new ApolloServer({ 
+  schema,
+  playground 
+});
 
 export const graphqlHandler: Handler = server.createHandler({
     cors: {
