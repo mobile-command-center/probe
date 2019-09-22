@@ -13,11 +13,11 @@ provider:
   name: aws
   runtime: nodejs10.x
   stage: dev
-  region: ap-northeast-2
+  region: ap-northeast-2 # Lambda 및 dynamodb가 생성될 region
   environment: # 환경변수
     NODE_ENV: production
     STAGE: ${opt:stage, self:provider.stage}  
-  iamRoleStatements:
+  iamRoleStatements: # Lambda가 dynamodb에 접속할 수 있는 IAM Role 생성
     - Effect: Allow
       Action:
         - dynamodb:Query
