@@ -1,0 +1,11 @@
+graphqlHandler:
+    handler: src/handler.graphqlHandler
+    events:
+      - http:
+          method: post
+          path: graphql
+          cors: true
+      - http:
+          method: get
+          path: playground
+          cors: true

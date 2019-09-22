@@ -1,10 +1,6 @@
 service:
-  name: probe
-# app and org for use with dashboard.serverless.com
-#app: your-app-name
-#org: your-org-name
+  name: hello
 
-# Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
   - serverless-offline
@@ -13,8 +9,8 @@ provider:
   name: aws
   runtime: nodejs10.x
   stage: dev
-  region: ap-northeast-2 # Lambda 및 dynamodb가 생성될 region
-  environment: # 환경변수
+  region: ap-northeast-2
+  environment: # process.env에 추가될 환경 변수
     NODE_ENV: production
     STAGE: ${opt:stage, self:provider.stage}  
   iamRoleStatements: # Lambda가 dynamodb에 접속할 수 있는 IAM Role 생성
@@ -26,33 +22,21 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      # Restrict our IAM role permissions to
-      # the specific table for the stage
       Resource: 
-        - { "Fn::GetAtt": ["hello", "Arn"] }
+        - { "Fn::GetAtt": ["hello", "Arn"] } # hello는 테이블 리소스 이름
 
 custom:
-  # Our stage is based on what is passed in when running serverless
-  # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}  
   webpack: # serverless-webpack 관련 설정
     webpackConfig: 'webpack.config.js'
     includeModules: true # apollo-server-lambda와 같이 외부 모듈이 반드시 필요한 경우 설정
-    packager: 'npm' # yarn을 사용한다면 yarn으로 설정해주세요.
+    packager: 'npm' # yarn을 사용한다면 yarn으로 설정
 
 resources:
   # DynamoDB
   - ${file(resources/dynamodb-table.yml)}
 
 functions:
-  graphqlHandler:
-    handler: src/handler.graphqlHandler
-    events:
-      - http:
-          method: post
-          path: graphql
-          cors: true
-      - http:
-          method: get
-          path: playground
-          cors: true
+  # Lambda
+  - ${file(resources/lambda-handler.yml)}
+  
