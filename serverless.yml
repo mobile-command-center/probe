@@ -9,6 +9,12 @@ plugins:
   - serverless-webpack
   - serverless-offline
 
+custom:
+  webpack: # serverless-webpack 관련 설정
+    webpackConfig: 'webpack.config.js'
+    includeModules: true # apollo-server-lambda와 같이 외부 모듈이 반드시 필요한 경우 설정
+    packager: 'npm' # yarn을 사용한다면 yarn으로 설정해주세요.
+
 provider:
   name: aws
   runtime: nodejs10.x
