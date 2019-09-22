@@ -14,7 +14,7 @@ class HelloService {
         return this._instance;
     }
 
-    public async hello(): Promise<string> {  
+    public hello(): Promise<string> {  
         const payload = {
             TableName: 'hello',
             Item: {
