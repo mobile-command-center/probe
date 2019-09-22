@@ -12,11 +12,11 @@ plugins:
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: real
+  stage: dev
   region: ap-northeast-2
   environment: # 환경변수
     NODE_ENV: production
-    STAGE: ${opt.stage, self:provider.stage}
+    STAGE: ${opt:stage, self:provider.stage}  
   iamRoleStatements:
     - Effect: Allow
       Action:

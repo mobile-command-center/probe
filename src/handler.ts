@@ -8,7 +8,12 @@ import schema from './graphql/schema/schema';
 // https://www.youtube.com/watch?v=ZzHD04QTwI8&list=PL7jH19IHhOLOpU_yAYzCO4iQNvdou1AnK&index=4
 
 const playground = {
-    endpoint: '/playground'
+    endpoint: '/playground',
+    tabs: [
+        {
+            endpoint: `graphql`
+        }
+    ]
 };
 
 const server = new ApolloServer({ 
