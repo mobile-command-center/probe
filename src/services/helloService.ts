@@ -16,7 +16,7 @@ class HelloService {
 
     public hello(): Promise<string> {  
         const payload = {
-            TableName: 'hello',
+            TableName: `${process.env.STAGE}-hello`,
             Item: {
                 "id": uuid()
             }
