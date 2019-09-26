@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import { Handler } from 'aws-lambda';
-import schema from './graphql/schema/schema';
+import schema from './graphql/schema/Schema';
 
 // 참조 프로젝트 
 // https://github.com/tomyitav/apollo-typed-lambda
@@ -18,7 +18,7 @@ const playground = {
 
 const server = new ApolloServer({ 
   schema,
-  playground 
+  playground
 });
 
 export const graphqlHandler: Handler = server.createHandler({

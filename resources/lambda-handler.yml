@@ -3,9 +3,9 @@ graphqlHandler:
     events:
       - http:
           method: post
-          path: graphql
+          path: v1/graphql
           cors: true
       - http:
           method: get
-          path: playground
+          path: v1/playground
           cors: true
