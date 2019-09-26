@@ -30,14 +30,14 @@ class ConsultService {
         return this._instance;
     }
 
-    public read(first: number, after?: string): Promise<ConsultationConnection> {
-        if(!after) {
-            return this.readFromPagination(first);
+    public read(limit: number, constId?: string): Promise<ConsultationConnection> {
+        if(!constId) {
+            return this.readFromPagination(limit);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            Key: { 'CONST_ID': after }
+            Key: { 'CONST_ID': constId }
         }
 
         return new Promise((resolve, reject) => {
@@ -46,7 +46,7 @@ class ConsultService {
                     console.log(err, err.stack);
                     throw err;
                 } else {
-                    this.readFromPagination(first, data.Item as ConsultationInput)
+                    this.readFromPagination(limit, data.Item as Consultation)
                         .then((result: ConsultationConnection) => {
                             resolve(result);
                         });
@@ -55,7 +55,7 @@ class ConsultService {
         });
     }
 
-    private readFromPagination(limit: number, input?: ConsultationInput): Promise<ConsultationConnection>  {
+    private readFromPagination(limit: number, consultation?: Consultation): Promise<ConsultationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
             IndexName: 'SortDateGSI',
@@ -70,8 +70,8 @@ class ConsultService {
             Limit: limit
         }
 
-        if(input) {
-            params.ExclusiveStartKey =  { 'CONST_ID': input.CONST_ID, 'DATE': input.DATE, 'SORT': 0 };
+        if(consultation) {
+            params.ExclusiveStartKey =  { 'CONST_ID': consultation.CONST_ID, 'DATE': consultation.DATE, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {

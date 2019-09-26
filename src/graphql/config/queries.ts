@@ -1,6 +1,6 @@
 export const readQuery = 
 `query {
-    readConsultation(first:2, after: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016") {
+    readConsultation(limit:2, constId: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016") {
       edges {
         CONST_ID
       }
