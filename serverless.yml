@@ -1,5 +1,5 @@
 service:
-  name: hello
+  name: probe
 
 plugins:
   - serverless-webpack
@@ -11,7 +11,7 @@ provider:
   stage: dev
   region: ap-northeast-2
   environment: # process.env에 추가될 환경 변수
-    NODE_ENV: production
+    NODE_ENV: ${env:NODE_ENV, production}
     STAGE: ${opt:stage, self:provider.stage}  
   iamRoleStatements: # Lambda가 dynamodb에 접속할 수 있는 IAM Role 생성
     - Effect: Allow
@@ -23,7 +23,7 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: 
-        - { "Fn::GetAtt": ["hello", "Arn"] } # hello는 테이블 리소스 이름
+        - { "Fn::GetAtt": ["consultation", "Arn"] } # consultation는 테이블 리소스 이름
 
 custom:
   stage: ${opt:stage, self:provider.stage}  

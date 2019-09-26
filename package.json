@@ -5,10 +5,10 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "sls offline --stage dev",
-    "deploy:dev": "sls deploy --stage dev",
-    "deploy:stage": "sls deploy --stage stage",
-    "deploy:real": "sls deploy --stage real"
+    "start": "cross-env NODE_ENV=development sls offline --stage dev",
+    "deploy:dev": "cross-env NODE_ENV=development sls deploy --stage dev",
+    "deploy:stage": "cross-env NODE_ENV=development sls deploy --stage stage",
+    "deploy:real": "cross-env NODE_ENV=production sls deploy --stage real"
   },
   "dependencies": {
     "apollo-server": "^2.9.3",
@@ -25,6 +25,7 @@
     "@types/graphql": "^14.5.0",
     "@types/node": "^10.12.18",
     "@types/uuid": "^3.4.5",
+    "cross-env": "^6.0.0",
     "serverless": "^1.52.2",
     "serverless-offline": "^5.11.0",
     "serverless-webpack": "^5.2.0",
