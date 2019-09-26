@@ -1,5 +1,5 @@
 import { PlaygroundConfig } from "apollo-server-lambda";
-import { readQuery, insertQuery, updateQuery } from "./queries";
+import { readQuery, insertQuery, updateQuery, deleteQuery } from "./queries";
 
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
@@ -18,6 +18,11 @@ const playgroundConfig: PlaygroundConfig = {
             name: 'update',
             endpoint: `graphql`,
             query: updateQuery
+        },
+        {
+            name: 'delete',
+            endpoint: `graphql`,
+            query: deleteQuery
         }
     ]
 };

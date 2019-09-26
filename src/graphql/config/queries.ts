@@ -30,3 +30,12 @@ export const updateQuery =
       CONST_ID
     }
 }`;
+
+export const deleteQuery =
+`mutation {
+    deleteConsultation(input: {
+      CONST_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
+    }){
+      CONST_ID
+    }
+}`;
