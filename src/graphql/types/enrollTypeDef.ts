@@ -47,7 +47,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    readEnrollment(limit: Int!, constId: String): EnrollmentConnection!
+    readEnrollment(limit: Int!, elId: String): EnrollmentConnection!
   }
 
   type Mutation {
