@@ -36,6 +36,7 @@ resources:
   # DynamoDB
   - ${file(resources/dynamodb-table-consultation.yml)}
   - ${file(resources/dynamodb-table-enrollment.yml)}
+  - ${file(resources/dynamodb-table-payment.yml)}
 
 functions:
   # Lambda
