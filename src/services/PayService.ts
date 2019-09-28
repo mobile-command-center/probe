@@ -85,8 +85,8 @@ class PayService {
                     const result = {
                         edges: data.Items as PaymentDTO[],
                         pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.Items[data.Items.length-1].PYMT_ID,
-                            startCursor: data.Items[0].PYMT_ID,
+                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : null,
+                            startCursor: data.Items.length > 0 ? data.Items[0].PYMT_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
                             hasPreviousPage: false // @TODO 이부분도 작업이 필요함
                         },

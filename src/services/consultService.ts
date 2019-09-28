@@ -1,6 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
-import { ConsultationInput, ConsultationConnection} from '../interfaces/ConsultationInterface';
-import Consultation from '../model/Consultation';
+import ConsultationDTO from '../model/ConsultationDTO';
+import ConsultantationBuilder from '../model/ConsultationBuilder';
+import { ConsultationConnection, createConsultationInput, readConsultationInput, deleteConsultationInput, updateConsultationInput } from '../interfaces/ConsultationInterface';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -30,14 +31,14 @@ class ConsultService {
         return this._instance;
     }
 
-    public read(limit: number, constId?: string): Promise<ConsultationConnection> {
-        if(!constId) {
+    public read(limit: number, input?:readConsultationInput): Promise<ConsultationConnection> {
+        if(!input) {
             return this.readFromPagination(limit);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            Key: { 'CONST_ID': constId }
+            Key: { 'CONST_ID': input.CONST_ID }
         }
 
         return new Promise((resolve, reject) => {
@@ -46,7 +47,7 @@ class ConsultService {
                     console.log(err, err.stack);
                     throw err;
                 } else {
-                    this.readFromPagination(limit, data.Item as Consultation)
+                    this.readFromPagination(limit, data.Item as ConsultationDTO)
                         .then((result: ConsultationConnection) => {
                             resolve(result);
                         });
@@ -55,7 +56,7 @@ class ConsultService {
         });
     }
 
-    private readFromPagination(limit: number, consultation?: Consultation): Promise<ConsultationConnection>  {
+    private readFromPagination(limit: number, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
             IndexName: 'SortDateGSI',
@@ -70,9 +71,11 @@ class ConsultService {
             Limit: limit
         }
 
-        if(consultation) {
-            params.ExclusiveStartKey =  { 'CONST_ID': consultation.CONST_ID, 'DATE': consultation.DATE, 'SORT': 0 };
+        if(consultationDTO) {
+            params.ExclusiveStartKey =  { 'CONST_ID': consultationDTO.CONST_ID, 'DATE': consultationDTO.DATE, 'SORT': 0 };
         }
+
+        console.log(params);
 
         return new Promise((resolve, reject) => {
             docClient.query(params, (err, data: QueryOutput) => {
@@ -81,11 +84,12 @@ class ConsultService {
                     reject(err);
                     throw err;
                 } else {
+                    console.log(data);
                     const result = {
-                        edges: data.Items as Consultation[],
+                        edges: data.Items as ConsultationDTO[],
                         pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.Items[data.Items.length-1].CONST_ID,
-                            startCursor: data.Items[0].CONST_ID,
+                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : null,
+                            startCursor: data.Items.length > 0 ? data.Items[0].CONST_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
                             hasPreviousPage: false // @TODO 이부분도 작업이 필요함
                         },
@@ -98,20 +102,15 @@ class ConsultService {
         });
     }
 
-    public create(input: ConsultationInput): Promise<Consultation> {
-       const consultation = new Consultation(input);
+    public create(input: createConsultationInput): Promise<ConsultationDTO> {
+       const consultationDTO = new ConsultantationBuilder()
+        .setByCreateInput(input)
+        .build();
        
         const payload: PutItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
             Item: {
-                'CONST_ID': consultation.CONST_ID,
-                'DATE': consultation.DATE,
-                'WRTR_ID': consultation.WRTR_ID,
-                'WRTR_DATE': consultation.WRT_DATE,
-                'EE_ID': consultation.EE_ID,
-                'C_TEL': consultation.C_TEL,
-                'MEMO': consultation.MEMO,
-                'P_SUBSIDY_AMT': consultation.P_SUBSIDY_AMT,
+                ...consultationDTO.getItem(),
                 'SORT': 0,  //날짜 정렬을 위한 GSI용
             }
         }
@@ -123,64 +122,78 @@ class ConsultService {
                     reject(err);
                     throw err;
                 } else {
-                    console.log('success', consultation);
-                    resolve(consultation);
+                    resolve(consultationDTO);
                 }
             })
         });
     }
 
-    public update(input: ConsultationInput): Promise<Consultation> {
-        const consultation = new Consultation(input);
-       
-        const payload: UpdateItemInput = {
+    public update(input: updateConsultationInput): Promise<ConsultationDTO> {
+        const params: GetItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            Key: {
-              'CONST_ID' : consultation.CONST_ID
-            },
-            UpdateExpression: 'set MEMO = :t',
-            ExpressionAttributeValues: {
-              ':t' : input.MEMO,
-            }
+            Key: { 'CONST_ID': input.CONST_ID }
         }
 
         return new Promise((resolve, reject) => {
-            docClient.update(payload, (err, data: UpdateItemOutput) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
                 if (err) {
                     console.log(err, err.stack);
                     reject(err);
-                    throw err;
                 } else {
-                    console.log('success', consultation);
-                    resolve(consultation);
+                    const consultationDTO = new ConsultantationBuilder(data.Item as ConsultationDTO)
+                    .setByUpdateInput(input)
+                    .build();
+
+                    const payload: UpdateItemInput = {
+                        TableName: `${process.env.STAGE}-consultation`,
+                        Key: {
+                          'CONST_ID' : consultationDTO.CONST_ID
+                        },
+                        ExpressionAttributeNames: consultationDTO.getExpressionAttributeNames(),
+                        UpdateExpression: consultationDTO.getUpdateExpression(),
+                        ExpressionAttributeValues: consultationDTO.getExpressionAttributeValues()
+                    }
+    
+                    docClient.update(payload, (err, data: UpdateItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(consultationDTO);
+                        }
+                    });
                 }
-            })
+            });
         });
     }
 
-    public delete(input: ConsultationInput): Promise<Consultation> {
-        const consultation = new Consultation(input);
-       
-        const payload: DeleteItemInput = {
+    public delete(input: deleteConsultationInput): Promise<ConsultationDTO> {
+        const params: GetItemInput | DeleteItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            Key: {
-              'CONST_ID' : consultation.CONST_ID
-            },
+            Key: { 'CONST_ID': input.CONST_ID }
         }
 
         return new Promise((resolve, reject) => {
-            docClient.delete(payload, (err, data: DeleteItemOutput) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
                 if (err) {
                     console.log(err, err.stack);
                     reject(err);
-                    throw err;
                 } else {
-                    console.log('success', consultation);
-                    resolve(consultation);
-                }
-            })
-        });
+                    const consultationDTO = data.Item as ConsultationDTO;
 
+                    docClient.delete(params, (err, data: DeleteItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(consultationDTO);
+                        }
+                    })
+                }
+            });
+        });
     }
 }
 
