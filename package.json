@@ -8,7 +8,10 @@
     "start": "cross-env NODE_ENV=development sls offline --stage dev",
     "deploy:dev": "cross-env NODE_ENV=development sls deploy --stage dev",
     "deploy:stage": "cross-env NODE_ENV=development sls deploy --stage stage",
-    "deploy:real": "cross-env NODE_ENV=production sls deploy --stage real"
+    "deploy:real": "cross-env NODE_ENV=production sls deploy --stage real",
+    "remove:dev" : "sls remove --stage dev",
+    "remove:stage" : "sls remove --stage stage",
+    "remove:real" : "sls remove --stage real"
   },
   "dependencies": {
     "apollo-server": "^2.9.3",
