@@ -1,4 +1,4 @@
-import EnrollService from "../../services/enrollService"
+import EnrollService from "../../services/EnrollService"
 import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from "../../interfaces/EnrollmentInterface";
 import EnrollmentDTO from "../../model/EnrollmentDTO";
 

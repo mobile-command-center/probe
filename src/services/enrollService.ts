@@ -1,6 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
-import Enrollment from '../model/Enrollment';
-import { EnrollmentInput, EnrollmentConnection } from '../interfaces/EnrollmentInterface';
+import EnrollmentDTO from '../model/EnrollmentDTO';
+import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from '../interfaces/EnrollmentInterface';
+import EnrollmentBuilder from '../model/enrollmentBuilder';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -30,14 +31,14 @@ class EnrollService {
         return this._instance;
     }
 
-    public read(limit: number, elId?: string): Promise<EnrollmentConnection> {
-        if(!elId) {
+    public read(limit: number, input?:readEnrollmentInput): Promise<EnrollmentConnection> {
+        if(!input) {
             return this.readFromPagination(limit);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-enrollment`,
-            Key: { 'EL_ID': elId }
+            Key: { 'EL_ID': input.EL_ID }
         }
 
         return new Promise((resolve, reject) => {
@@ -46,7 +47,7 @@ class EnrollService {
                     console.log(err, err.stack);
                     throw err;
                 } else {
-                    this.readFromPagination(limit, data.Item as Enrollment)
+                    this.readFromPagination(limit, data.Item as EnrollmentDTO)
                         .then((result: EnrollmentConnection) => {
                             resolve(result);
                         });
@@ -55,7 +56,7 @@ class EnrollService {
         });
     }
 
-    private readFromPagination(limit: number, enrollment?: Enrollment): Promise<EnrollmentConnection>  {
+    private readFromPagination(limit: number, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-enrollment`,
             IndexName: 'SortDateGSI',
@@ -70,8 +71,8 @@ class EnrollService {
             Limit: limit
         }
 
-        if(enrollment) {
-            params.ExclusiveStartKey =  { 'EL_ID': enrollment.EL_ID, 'DATE': enrollment.DATE, 'SORT': 0 };
+        if(enrollmentDTO) {
+            params.ExclusiveStartKey =  { 'EL_ID': enrollmentDTO.EL_ID, 'DATE': enrollmentDTO.DATE, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {
@@ -82,12 +83,12 @@ class EnrollService {
                     throw err;
                 } else {
                     const result = {
-                        edges: data.Items as Enrollment[],
+                        edges: data.Items as EnrollmentDTO[],
                         pageInfo: {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.Items[data.Items.length-1].EL_ID,
                             startCursor: data.Items[0].EL_ID,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false
+                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
                         },
                         totalCount: data.Count
                     }
@@ -98,17 +99,15 @@ class EnrollService {
         });
     }
 
-    public create(input: EnrollmentInput): Promise<Enrollment> {
-       const enrollment = new Enrollment(input);
+    public create(input: createEnrollmentInput): Promise<EnrollmentDTO> {
+       const enrollmentDTO = new EnrollmentBuilder()
+        .setByCreateInput(input)
+        .build();
        
         const payload: PutItemInput = {
             TableName: `${process.env.STAGE}-enrollment`,
             Item: {
-                'CONST_ID': enrollment.CONST_ID,
-                'DATE': enrollment.DATE,
-                'WRTR_ID': enrollment.WRTR_ID,
-                'WRTR_DATE': enrollment.WRT_DATE,
-                'EE_ID': enrollment.EE_ID,
+                ...enrollmentDTO.getItem(),
                 'SORT': 0,  //날짜 정렬을 위한 GSI용
             }
         }
@@ -120,64 +119,78 @@ class EnrollService {
                     reject(err);
                     throw err;
                 } else {
-                    console.log('success', enrollment);
-                    resolve(enrollment);
+                    resolve(enrollmentDTO);
                 }
             })
         });
     }
 
-    public update(input: EnrollmentInput): Promise<Enrollment> {
-        const enrollment = new Enrollment(input);
-       
-        const payload: UpdateItemInput = {
+    public update(input: updateEnrollmentInput): Promise<EnrollmentDTO> {
+        const params: GetItemInput = {
             TableName: `${process.env.STAGE}-enrollment`,
-            Key: {
-              'EL_ID' : enrollment.EL_ID
-            },
-            UpdateExpression: 'set ST = :t',
-            ExpressionAttributeValues: {
-              ':t' : input.ST,
-            }
+            Key: { 'EL_ID': input.EL_ID }
         }
 
         return new Promise((resolve, reject) => {
-            docClient.update(payload, (err, data: UpdateItemOutput) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
                 if (err) {
                     console.log(err, err.stack);
                     reject(err);
-                    throw err;
                 } else {
-                    console.log('success', enrollment);
-                    resolve(enrollment);
+                    const enrollmentDTO = new EnrollmentBuilder(data.Item as EnrollmentDTO)
+                    .setByUpdateInput(input)
+                    .build();
+
+                    const payload: UpdateItemInput = {
+                        TableName: `${process.env.STAGE}-enrollment`,
+                        Key: {
+                          'EL_ID' : enrollmentDTO.EL_ID
+                        },
+                        ExpressionAttributeNames: enrollmentDTO.getExpressionAttributeNames(),
+                        UpdateExpression: enrollmentDTO.getUpdateExpression(),
+                        ExpressionAttributeValues: enrollmentDTO.getExpressionAttributeValues()
+                    }
+    
+                    docClient.update(payload, (err, data: UpdateItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(enrollmentDTO);
+                        }
+                    });
                 }
-            })
+            });
         });
     }
 
-    public delete(input: EnrollmentInput): Promise<Enrollment> {
-        const enrollment = new Enrollment(input);
-       
-        const payload: DeleteItemInput = {
-            TableName: `${process.env.STAGE}-consultation`,
-            Key: {
-              'EL_ID' : enrollment.EL_ID
-            },
+    public delete(input: deleteEnrollmentInput): Promise<EnrollmentDTO> {
+        const params: GetItemInput | DeleteItemInput = {
+            TableName: `${process.env.STAGE}-enrollment`,
+            Key: { 'EL_ID': input.EL_ID }
         }
 
         return new Promise((resolve, reject) => {
-            docClient.delete(payload, (err, data: DeleteItemOutput) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
                 if (err) {
                     console.log(err, err.stack);
                     reject(err);
-                    throw err;
                 } else {
-                    console.log('success', enrollment);
-                    resolve(enrollment);
-                }
-            })
-        });
+                    const enrollmentDTO = data.Item as EnrollmentDTO;
 
+                    docClient.delete(params, (err, data: DeleteItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(enrollmentDTO);
+                        }
+                    })
+                }
+            });
+        });
     }
 }
 
