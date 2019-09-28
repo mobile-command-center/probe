@@ -87,7 +87,7 @@ class ConsultService {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.Items[data.Items.length-1].CONST_ID,
                             startCursor: data.Items[0].CONST_ID,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false
+                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
                         },
                         totalCount: data.Count
                     }

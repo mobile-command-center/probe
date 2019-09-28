@@ -34,7 +34,8 @@ custom:
 
 resources:
   # DynamoDB
-  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/dynamodb-table-consultation.yml)}
+  - ${file(resources/dynamodb-table-enrollment.yml)}
 
 functions:
   # Lambda
