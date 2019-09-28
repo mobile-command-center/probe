@@ -18,11 +18,14 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
-  input EnrollmentInput {
+  input readEnrollmentInput {
     EL_ID: String!
+    DATE: String
+  }
+
+  input createEnrollmentInput {
     DATE: String!
     WRTR_ID: String!
-    WRT_DATE: String!
     CONST_ID: String
     EE_ID: String
     APL_ID: String
@@ -30,6 +33,23 @@ const typeDefs = gql`
     PROD: String
     ST: String!
     GIFT_AMT: Int
+  }
+
+  input updateEnrollmentInput {
+    EL_ID: String!
+    DATE: String
+    WRTR_ID: String
+    CONST_ID: String
+    EE_ID: String
+    APL_ID: String
+    CPAN: String
+    PROD: String
+    ST: String
+    GIFT_AMT: Int
+  }
+
+  input deleteEnrollmentInput {
+    EL_ID: String!
   }
 
   type Enrollment {
@@ -47,13 +67,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    readEnrollment(limit: Int!, elId: String): EnrollmentConnection!
+    readEnrollment(limit: Int!, input: readEnrollmentInput): EnrollmentConnection!
   }
 
   type Mutation {
-    createEnrollment(input: EnrollmentInput!): Enrollment!
-    updateEnrollment(input: EnrollmentInput!): Enrollment!
-    deleteEnrollment(input: EnrollmentInput!): Enrollment!
+    createEnrollment(input: createEnrollmentInput!): Enrollment!
+    updateEnrollment(input: updateEnrollmentInput!): Enrollment!
+    deleteEnrollment(input: deleteEnrollmentInput!): Enrollment!
   }
 `;
 

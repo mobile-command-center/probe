@@ -1,21 +1,21 @@
 import EnrollService from "../../services/enrollService"
-import { EnrollmentInput, EnrollmentConnection } from "../../interfaces/EnrollmentInterface";
-import Enrollment from "../../model/Enrollment";
+import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from "../../interfaces/EnrollmentInterface";
+import EnrollmentDTO from "../../model/EnrollmentDTO";
 
 const resolvers = {
     Query: {
-        readEnrollment: (_, {limit, elId}:{limit: number, elId?: string}): Promise<EnrollmentConnection> => {
-            return EnrollService.getInstance().read(limit, elId);
+        readEnrollment: (_, {limit, input}:{limit: number, input?: readEnrollmentInput}): Promise<EnrollmentConnection> => {
+            return EnrollService.getInstance().read(limit, input);
         }
     },
     Mutation: {
-        createEnrollment: (_, {input}:{input: EnrollmentInput}): Promise<Enrollment> => {
+        createEnrollment: (_, {input}:{input: createEnrollmentInput}): Promise<EnrollmentDTO> => {
             return EnrollService.getInstance().create(input);
         },
-        updateEnrollment: (_, {input}:{input: EnrollmentInput}): Promise<Enrollment> => {
+        updateEnrollment: (_, {input}:{input: updateEnrollmentInput}): Promise<EnrollmentDTO> => {
             return EnrollService.getInstance().update(input);
         },
-        deleteEnrollment: (_, {input}:{input: EnrollmentInput}): Promise<Enrollment> => {
+        deleteEnrollment: (_, {input}:{input: deleteEnrollmentInput}): Promise<EnrollmentDTO> => {
             return EnrollService.getInstance().delete(input);
         }
     }
