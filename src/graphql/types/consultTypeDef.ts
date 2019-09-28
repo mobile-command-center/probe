@@ -18,14 +18,32 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
-  input ConsultationInput {
-    CONST_ID: String
+  input readConsultationInput {
+    CONST_ID: String!
     DATE: String
+  }
+
+  input createConsultationInput {
+    DATE: String!
     WRTR_ID: String!
-    EE_ID: String!
+    EE_ID: String
     C_TELL: String
     MEMO: String
     P_SUBSIDY_AMT: String
+  }
+
+  input updateConsultationInput {
+    CONST_ID: String!
+    DATE: String
+    WRTR_ID: String
+    EE_ID: String
+    C_TELL: String
+    MEMO: String
+    P_SUBSIDY_AMT: String
+  }
+
+  input deleteConsultationInput {
+    CONST_ID: String!
   }
 
   type Consultation {
@@ -39,13 +57,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    readConsultation(limit: Int!, constId: String): ConsultationConnection!
+    readConsultation(limit: Int!, input: readConsultationInput): ConsultationConnection!
   }
 
   type Mutation {
-    createConsultation(input: ConsultationInput!): Consultation!
-    updateConsultation(input: ConsultationInput!): Consultation!
-    deleteConsultation(input: ConsultationInput!): Consultation!
+    createConsultation(input: createConsultationInput!): Consultation!
+    updateConsultation(input: updateConsultationInput!): Consultation!
+    deleteConsultation(input: deleteConsultationInput!): Consultation!
   }
 `;
 

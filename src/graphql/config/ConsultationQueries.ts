@@ -1,6 +1,8 @@
 export const readConsultationQuery = 
 `query {
-    readConsultation(limit:2, constId: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016") {
+    readConsultation(limit:2, input: {
+      CONST_ID: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016"
+    }) {
       edges {
         CONST_ID
       }
@@ -12,6 +14,7 @@ export const createConsultationQuery =
 `mutation {
     createConsultation(input: {
       WRTR_ID: "11231"
+      DATE: "2019-09-28T02:60:26.330Z"
       EE_ID: "2121312"
       C_TELL: "01093616635",
       MEMO: "메모니라",

@@ -85,8 +85,8 @@ class EnrollService {
                     const result = {
                         edges: data.Items as EnrollmentDTO[],
                         pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.Items[data.Items.length-1].EL_ID,
-                            startCursor: data.Items[0].EL_ID,
+                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : null,
+                            startCursor: data.Items.length > 0 ? data.Items[0].EL_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
                             hasPreviousPage: false // @TODO 이부분도 작업이 필요함
                         },
