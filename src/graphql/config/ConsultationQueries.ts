@@ -1,4 +1,4 @@
-export const readQuery = 
+export const readConsultationQuery = 
 `query {
     readConsultation(limit:2, constId: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016") {
       edges {
@@ -8,7 +8,7 @@ export const readQuery =
     }
 }`;
 
-export const insertQuery =
+export const createConsultationQuery =
 `mutation {
     createConsultation(input: {
       WRTR_ID: "11231"
@@ -21,7 +21,7 @@ export const insertQuery =
     }
 }`;
 
-export const updateQuery =
+export const updateConsultationQuery =
 `mutation {
     updateConsultation(input: {
       CONST_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
@@ -31,7 +31,7 @@ export const updateQuery =
     }
 }`;
 
-export const deleteQuery =
+export const deleteConsultationQuery =
 `mutation {
     deleteConsultation(input: {
       CONST_ID: "24778120-559c-4386-a023-8ac145c0c2bc"

@@ -1,28 +1,49 @@
 import { PlaygroundConfig } from "apollo-server-lambda";
-import { readQuery, insertQuery, updateQuery, deleteQuery } from "./queries";
+import { readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
+import { createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery } from './EnrollmentQueries';
 
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
     tabs: [
         {
-            name: 'read',
+            name: 'readConsultation',
             endpoint: `graphql`,
-            query: readQuery
+            query: readConsultationQuery
         },
         {
-            name: 'insert',
+            name: 'createConsultation',
             endpoint: `graphql`,
-            query: insertQuery
+            query: createConsultationQuery
         },
         {
-            name: 'update',
+            name: 'updateConsultation',
             endpoint: `graphql`,
-            query: updateQuery
+            query: updateConsultationQuery
         },
         {
-            name: 'delete',
+            name: 'deleteConsultation',
             endpoint: `graphql`,
-            query: deleteQuery
+            query: deleteConsultationQuery
+        },
+        {
+            name: 'readEnrollment',
+            endpoint: 'graphql',
+            query: readEnrollmentQuery
+        },
+        {
+            name: 'createEnrollment',
+            endpoint: 'graphql',
+            query: createEnrollmentQuery
+        },
+        {
+            name: 'updateEnrollment',
+            endpoint: 'graphql',
+            query: updateEnrollmentQuery
+        },
+        {
+            name: 'deleteEnrollment',
+            endpoint: 'graphql',
+            query: deleteEnrollmentQuery
         }
     ]
 };
