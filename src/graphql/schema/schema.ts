@@ -3,10 +3,10 @@ import {mergeTypes, mergeResolvers} from 'merge-graphql-schemas'
 import {GraphQLSchema} from 'graphql'
 
 import ConsultResolver from '../resolvers/ConsultResolver';
-import EnrollResolver from '../resolvers/enrollResolver';
+import EnrollResolver from '../resolvers/EnrollResolver';
 
 import ConsultTypeDef from '../types/ConsultTypeDef';
-import EnrollTypeDef from '../types/enrollTypeDef';
+import EnrollTypeDef from '../types/EnrollTypeDef';
 
 const allTypes = mergeTypes([ConsultTypeDef, EnrollTypeDef]);
 const allResolvers = mergeResolvers([ConsultResolver, EnrollResolver]);

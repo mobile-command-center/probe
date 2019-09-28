@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import { Handler } from 'aws-lambda';
-import schema from './graphql/schema/schema';
+import schema from './graphql/schema/Schema';
 import playground from './graphql/config/playgroundConfig';
 
 // 참조 프로젝트 
