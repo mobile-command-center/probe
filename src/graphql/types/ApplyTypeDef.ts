@@ -25,7 +25,7 @@ const typeDefs = gql`
 
   input createApplicationInput {
     DATE: String!
-    WRTR:ID: String!
+    WRTR_ID: String!
     UA: String
     FRM_DATA: String
   }
@@ -33,7 +33,7 @@ const typeDefs = gql`
   input updateApplicationInput {
     APL_ID: String!
     DATE: String
-    WRTR:ID: String
+    WRTR_ID: String
     UA: String
     FRM_DATA: String
   }
@@ -45,7 +45,7 @@ const typeDefs = gql`
   type Application {
     APL_ID: String
     DATE: String
-    WRTR:ID: String
+    WRTR_ID: String
     WRT_DATE: String
     UA: String
     FRM_DATA: String
