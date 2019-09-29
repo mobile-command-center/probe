@@ -1,0 +1,30 @@
+# 옵션값 설명
+# https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
+# PK, 관계
+# https://aws.amazon.com/ko/blogs/database/choosing-the-right-dynamodb-partition-key/
+Resources:
+  application: # 테이블 리소스
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.stage}-application
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: APL_ID
+          AttributeType: S
+        - AttributeName: DATE
+          AttributeType: S
+        - AttributeName: SORT
+          AttributeType: N
+      KeySchema:
+        - AttributeName: APL_ID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: SortDateGSI
+          KeySchema:
+            - AttributeName: SORT
+              KeyType: HASH
+            - AttributeName: DATE
+              KeyType: RANGE
+          Projection:
+              ProjectionType: ALL
+          
