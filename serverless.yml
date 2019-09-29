@@ -23,7 +23,14 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: 
-        - { "Fn::GetAtt": ["consultation", "Arn"] } # consultation는 테이블 리소스 이름
+        - !GetAtt consultation.Arn # consultation는 테이블 리소스 이름
+        - !Join [ '/',[!GetAtt consultation.Arn,index/*]]
+        - !GetAtt enrollment.Arn
+        - !Join [ '/',[!GetAtt enrollment.Arn,index/*]]
+        - !GetAtt payment.Arn
+        - !Join [ '/',[!GetAtt payment.Arn,index/*]]
+        - !GetAtt application.Arn
+        - !Join [ '/',[!GetAtt application.Arn,index/*]]
 
 custom:
   stage: ${opt:stage, self:provider.stage}  
