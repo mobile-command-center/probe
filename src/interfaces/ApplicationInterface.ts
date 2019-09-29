@@ -2,7 +2,7 @@ export interface ApplicationInterface {
     APL_ID: string;
     DATE: string;
     WRTR_ID: string;
-    WRT_DATE: string;s
+    WRT_DATE: string;
     UA: string;
     FRM_DATA: string;
 };
