@@ -2,6 +2,7 @@ import { PlaygroundConfig } from "apollo-server-lambda";
 import { readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
 import { createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery } from './EnrollmentQueries';
 import { createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery } from './PaymentQueries';
+import { createApplicationQuery, readApplicationQuery, updateApplicationQuery, deleteApplicationQuery} from './ApplicationQueries';
 
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
@@ -65,6 +66,26 @@ const playgroundConfig: PlaygroundConfig = {
             name: 'deletePayment',
             endpoint: 'graphql',
             query: deletePaymentQuery
+        },
+        {
+            name: 'readApplication',
+            endpoint: 'graphql',
+            query: readApplicationQuery
+        },
+        {
+            name: 'createApplication',
+            endpoint: 'graphql',
+            query: createApplicationQuery
+        },
+        {
+            name: 'updateApplication',
+            endpoint: 'graphql',
+            query: updateApplicationQuery
+        },
+        {
+            name: 'deleteApplication',
+            endpoint: 'graphql',
+            query: deleteApplicationQuery
         }
     ]
 };
