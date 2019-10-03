@@ -4,7 +4,7 @@ import ApplicationDTO from '../../model/ApplicationDTO';
 
 const resolvers = {
     Query: {
-        readConsultation: (_, {limit, input}:{limit: number, input?: readApplicationInput}): Promise<ApplicationConnection> => {
+        readApplication: (_, {limit, input}:{limit: number, input?: readApplicationInput}): Promise<ApplicationConnection> => {
             return ApplicationService.getInstance().read(limit, input);
         }
     },
