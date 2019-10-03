@@ -47,10 +47,24 @@ class EnrollService {
                     console.log(err, err.stack);
                     throw err;
                 } else {
-                    this.readFromPagination(limit, data.Item as EnrollmentDTO)
-                        .then((result: EnrollmentConnection) => {
-                            resolve(result);
-                        });
+                    if(data.Item) {
+                        this.readFromPagination(limit, data.Item as EnrollmentDTO)
+                            .then((result: EnrollmentConnection) => {
+                                resolve(result);
+                            });
+                    } else {
+                        const result = {
+                            edges: [],
+                            pageInfo: {
+                                endCursor: null,
+                                startCursor: null,
+                                hasNextPage: false,
+                                hasPreviousPage: false
+                            },
+                            totalCount: 0
+                        }
+                        resolve(result);
+                    }
                 }
             });
         });
