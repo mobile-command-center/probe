@@ -18,6 +18,10 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
+  input getConsultationInput {
+    CONST_ID: String!
+  }
+
   input readConsultationInput {
     CONST_ID: String!
     DATE: String
@@ -50,6 +54,7 @@ const typeDefs = gql`
     CONST_ID: String!
     DATE: String!
     WRTR_ID: String
+    WRT_DATE: String
     EE_ID: String
     C_TELL: String
     MEMO: String
@@ -57,6 +62,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    getConsultation(input: getConsultationInput!): Consultation!
     readConsultation(limit: Int!, input: readConsultationInput): ConsultationConnection!
   }
 

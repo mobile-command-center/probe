@@ -9,6 +9,10 @@ export interface ConsultationInterface {
     P_SUBSIDY_AMT: string;
 };
 
+export interface getConsultationInput {
+    CONST_ID: string;
+};
+
 export interface readConsultationInput {
     CONST_ID: string;
     DATE?: string;

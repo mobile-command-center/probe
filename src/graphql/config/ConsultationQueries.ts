@@ -1,3 +1,19 @@
+export const getConsultationQuery = 
+`query {
+    getConsultation(input: {
+      CONST_ID: "c70527b4-23db-49c8-9411-6bacf7264086"
+    }) {
+      CONST_ID
+      DATE
+      WRTR_ID
+      WRT_DATE
+      EE_ID
+      C_TELL
+      MEMO
+      P_SUBSIDY_AMT
+    }
+}`;
+
 export const readConsultationQuery = 
 `query {
     readConsultation(limit:2, input: {

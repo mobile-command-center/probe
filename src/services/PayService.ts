@@ -1,6 +1,6 @@
 import { DynamoDB } from 'aws-sdk';
 import PaymentDTO from '../model/PaymentDTO';
-import { PaymentConnection, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput } from '../interfaces/PaymentInterface';
+import { PaymentConnection, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput, getPaymentInput } from '../interfaces/PaymentInterface';
 import PaymentBuilder from '../model/PaymentBuilder';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
@@ -29,6 +29,25 @@ class PayService {
         }
 
         return this._instance;
+    }
+
+    public get(input: getPaymentInput): Promise<PaymentDTO> {
+        const params: GetItemInput = {
+            TableName: `${process.env.STAGE}-payment`,
+            Key: { 'PYMT_ID': input.PYMT_ID }
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                } else {
+                    console.log(data);
+                    resolve(data.Item as PaymentDTO);
+                }
+            });
+        });
     }
 
     public read(limit: number, input?:readPaymentInput): Promise<PaymentConnection> {

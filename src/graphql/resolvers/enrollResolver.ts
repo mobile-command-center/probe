@@ -1,9 +1,12 @@
 import EnrollService from "../../services/EnrollService"
-import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from "../../interfaces/EnrollmentInterface";
+import { EnrollmentConnection, getEnrollmentInput, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from "../../interfaces/EnrollmentInterface";
 import EnrollmentDTO from "../../model/EnrollmentDTO";
 
 const resolvers = {
     Query: {
+        getEnrollment: (_, {input}:{input: getEnrollmentInput}): Promise<EnrollmentDTO> => {
+            return EnrollService.getInstance().get(input);
+        },
         readEnrollment: (_, {limit, input}:{limit: number, input?: readEnrollmentInput}): Promise<EnrollmentConnection> => {
             return EnrollService.getInstance().read(limit, input);
         }

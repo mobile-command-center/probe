@@ -1,7 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
 import ApplicationDTO from '../model/ApplicationDTO';
 import ApplicationBuilder from '../model/ApplicationBuilder';
-import { ApplicationConnection, createApplicationInput, readApplicationInput, deleteApplicationInput, updateApplicationInput } from '../interfaces/ApplicationInterface';
+import { ApplicationConnection, getApplicationInput, createApplicationInput, readApplicationInput, deleteApplicationInput, updateApplicationInput } from '../interfaces/ApplicationInterface';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -30,6 +30,26 @@ class ApplicationService {
 
         return this._instance;
     }
+
+    public get(input: getApplicationInput): Promise<ApplicationDTO> {
+        const params: GetItemInput = {
+            TableName: `${process.env.STAGE}-application`,
+            Key: { 'APL_ID': input.APL_ID }
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                } else {
+                    console.log(data);
+                    resolve(data.Item as ApplicationDTO);
+                }
+            });
+        });
+    }
+
 
     public read(limit: number, input?:readApplicationInput): Promise<ApplicationConnection> {
         if(!input) {

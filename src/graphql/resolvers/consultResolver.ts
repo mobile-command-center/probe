@@ -1,9 +1,12 @@
 import ConsultService from "../../services/ConsultService"
-import { ConsultationConnection, createConsultationInput, updateConsultationInput, deleteConsultationInput, readConsultationInput} from '../../interfaces/ConsultationInterface'
+import { ConsultationConnection, getConsultationInput, createConsultationInput, updateConsultationInput, deleteConsultationInput, readConsultationInput} from '../../interfaces/ConsultationInterface'
 import ConsultationDTO from '../../model/ConsultationDTO';
 
 const resolvers = {
     Query: {
+        getConsultation: (_, {input}:{input: getConsultationInput}): Promise<ConsultationDTO> => {
+            return ConsultService.getInstance().get(input);
+        },
         readConsultation: (_, {limit, input}:{limit: number, input?: readConsultationInput}): Promise<ConsultationConnection> => {
             return ConsultService.getInstance().read(limit, input);
         }

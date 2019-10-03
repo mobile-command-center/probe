@@ -7,6 +7,10 @@ export interface ApplicationInterface {
     FRM_DATA: string;
 };
 
+export interface getApplicationInput {
+    APL_ID: string;
+};
+
 export interface readApplicationInput {
     APL_ID: string;
     DATE?: string;

@@ -12,6 +12,9 @@ export interface EnrollmentInterface {
     GIFT_AMT?: number;
 };
 
+export interface getEnrollmentInput {
+    EL_ID: string;
+}
 export interface readEnrollmentInput {
     EL_ID: string;
     DATE?: string;
@@ -28,7 +31,6 @@ export interface createEnrollmentInput {
     ST: ENROLL_STATE;
     GIFT_AMT?: number;
 };
-
 export interface updateEnrollmentInput {
     EL_ID: string;
     DATE?: string;

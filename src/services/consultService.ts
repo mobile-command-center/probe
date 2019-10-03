@@ -1,7 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
 import ConsultationDTO from '../model/ConsultationDTO';
 import ConsultantationBuilder from '../model/ConsultationBuilder';
-import { ConsultationConnection, createConsultationInput, readConsultationInput, deleteConsultationInput, updateConsultationInput } from '../interfaces/ConsultationInterface';
+import { ConsultationConnection, createConsultationInput, readConsultationInput, deleteConsultationInput, updateConsultationInput, getConsultationInput } from '../interfaces/ConsultationInterface';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -29,6 +29,25 @@ class ConsultService {
         }
 
         return this._instance;
+    }
+
+    public get(input: getConsultationInput): Promise<ConsultationDTO> {
+        const params: GetItemInput = {
+            TableName: `${process.env.STAGE}-consultation`,
+            Key: { 'CONST_ID': input.CONST_ID }
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                } else {
+                    console.log(data);
+                    resolve(data.Item as ConsultationDTO);
+                }
+            });
+        });
     }
 
     public read(limit: number, input?:readConsultationInput): Promise<ConsultationConnection> {

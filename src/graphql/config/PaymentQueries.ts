@@ -1,3 +1,21 @@
+export const getPaymentQuery = 
+`query {
+    getPayment(input: {
+      PYMT_ID: "eb0651f6-9bfa-4b53-ab26-262443793028"
+    }) {
+      PYMT_ID
+      DATE
+      EE_ID
+      PAY_TYPE
+      PAY_AMT
+      WRTR_ID
+      WRT_DATE
+      ST
+      CONST_ID
+      EL_ID
+    }
+}`;
+
 export const readPaymentQuery = 
 `query {
     readPayment(limit:2, input: {
@@ -19,6 +37,15 @@ export const createPaymentQuery =
     ST: "PAY_GIFT"
   }){
     PYMT_ID
+    DATE
+    EE_ID
+    PAY_TYPE
+    PAY_AMT
+    WRTR_ID
+    WRT_DATE
+    ST
+    CONST_ID
+    EL_ID
   }
 }`;
 

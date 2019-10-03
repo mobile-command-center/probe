@@ -18,6 +18,10 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
+  input getApplicationInput {
+    APL_ID: String!
+  }
+
   input readApplicationInput {
     APL_ID: String!
     DATE: String
@@ -52,6 +56,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    getApplication(input: getApplicationInput!): Application!
     readApplication(limit: Int!, input: readApplicationInput): ApplicationConnection!
   }
 
