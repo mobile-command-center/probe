@@ -38,7 +38,7 @@ export default class ConsultationBuilder {
         this._wrtrId = input.WRTR_ID;
         this._wrtDate = new Date().toISOString();
         this._eeId = input.EE_ID;
-        this._cTel = input.C_TELL;
+        this._cTel = input.C_TEL;
         this._memo = input.MEMO;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT;
 
