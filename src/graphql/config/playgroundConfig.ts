@@ -1,12 +1,17 @@
 import { PlaygroundConfig } from "apollo-server-lambda";
-import { readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
-import { createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery } from './EnrollmentQueries';
-import { createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery } from './PaymentQueries';
-import { createApplicationQuery, readApplicationQuery, updateApplicationQuery, deleteApplicationQuery} from './ApplicationQueries';
+import { getConsultationQuery, readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
+import { getEnrollmentQuery, createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery } from './EnrollmentQueries';
+import { getPaymentQuery, createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery } from './PaymentQueries';
+import { getApplicationQuery, createApplicationQuery, readApplicationQuery, updateApplicationQuery, deleteApplicationQuery} from './ApplicationQueries';
 
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
     tabs: [
+        {
+            name: 'getConsultation',
+            endpoint: `graphql`,
+            query: getConsultationQuery
+        },
         {
             name: 'readConsultation',
             endpoint: `graphql`,
@@ -26,6 +31,11 @@ const playgroundConfig: PlaygroundConfig = {
             name: 'deleteConsultation',
             endpoint: `graphql`,
             query: deleteConsultationQuery
+        },
+        {
+            name: 'getEnrollment',
+            endpoint: 'graphql',
+            query: getEnrollmentQuery
         },
         {
             name: 'readEnrollment',
@@ -48,6 +58,11 @@ const playgroundConfig: PlaygroundConfig = {
             query: deleteEnrollmentQuery
         },
         {
+            name: 'getPayment',
+            endpoint: 'graphql',
+            query: getPaymentQuery
+        },
+        {
             name: 'readPayment',
             endpoint: 'graphql',
             query: readPaymentQuery
@@ -66,6 +81,11 @@ const playgroundConfig: PlaygroundConfig = {
             name: 'deletePayment',
             endpoint: 'graphql',
             query: deletePaymentQuery
+        },
+        {
+            name: 'getApplication',
+            endpoint: 'graphql',
+            query: getApplicationQuery
         },
         {
             name: 'readApplication',

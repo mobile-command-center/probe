@@ -18,6 +18,10 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
+  input getEnrollmentInput {
+    EL_ID: String!
+  }
+
   input readEnrollmentInput {
     EL_ID: String!
     DATE: String
@@ -67,6 +71,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    getEnrollment(input: getEnrollmentInput!): Enrollment!
     readEnrollment(limit: Int!, input: readEnrollmentInput): EnrollmentConnection!
   }
 

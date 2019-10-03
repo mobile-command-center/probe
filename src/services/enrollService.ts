@@ -1,6 +1,6 @@
 import { DynamoDB } from 'aws-sdk';
 import EnrollmentDTO from '../model/EnrollmentDTO';
-import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from '../interfaces/EnrollmentInterface';
+import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, getEnrollmentInput } from '../interfaces/EnrollmentInterface';
 import EnrollmentBuilder from '../model/enrollmentBuilder';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
@@ -29,6 +29,25 @@ class EnrollService {
         }
 
         return this._instance;
+    }
+
+    public get(input: getEnrollmentInput): Promise<EnrollmentDTO> {
+        const params: GetItemInput = {
+            TableName: `${process.env.STAGE}-enrollment`,
+            Key: { 'EL_ID': input.EL_ID }
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.get(params, (err, data: GetItemOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                } else {
+                    console.log(data);
+                    resolve(data.Item as EnrollmentDTO);
+                }
+            });
+        });
     }
 
     public read(limit: number, input?:readEnrollmentInput): Promise<EnrollmentConnection> {

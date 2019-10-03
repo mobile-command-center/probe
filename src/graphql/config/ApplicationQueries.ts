@@ -1,3 +1,17 @@
+export const getApplicationQuery = 
+`query {
+    getApplication(input: {
+      APL_ID: "a4d781b2-cef0-48e0-9b7c-387eb8b3d16d"
+    }) {
+      APL_ID
+      DATE
+      WRTR_ID
+      WRT_DATE
+      UA
+      FRM_DATA
+    }
+}`;
+
 export const readApplicationQuery = 
 `query {
     readApplication(limit:2, input: {

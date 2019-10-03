@@ -1,9 +1,12 @@
 import ApplicationService from "../../services/ApplicationService";
-import { ApplicationConnection, createApplicationInput, updateApplicationInput, deleteApplicationInput, readApplicationInput} from '../../interfaces/ApplicationInterface';
+import { ApplicationConnection, getApplicationInput, createApplicationInput, updateApplicationInput, deleteApplicationInput, readApplicationInput} from '../../interfaces/ApplicationInterface';
 import ApplicationDTO from '../../model/ApplicationDTO';
 
 const resolvers = {
     Query: {
+        getApplication: (_, {input}:{input: getApplicationInput}): Promise<ApplicationDTO> => {
+            return ApplicationService.getInstance().get(input);
+        },
         readApplication: (_, {limit, input}:{limit: number, input?: readApplicationInput}): Promise<ApplicationConnection> => {
             return ApplicationService.getInstance().read(limit, input);
         }

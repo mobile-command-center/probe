@@ -18,8 +18,12 @@ const typeDefs = gql`
     totalCount: Int!
   }
 
+  input getPaymentInput {
+    PYMT_ID: String!
+  }
+
   input readPaymentInput {
-    EL_ID: String!
+    PYMT_ID: String!
     DATE: String
   }
 
@@ -65,6 +69,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    getPayment(input: getPaymentInput!): Payment!
     readPayment(limit: Int!, input: readPaymentInput): PaymentConnection!
   }
 

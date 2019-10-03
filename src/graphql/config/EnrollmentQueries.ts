@@ -1,3 +1,22 @@
+export const getEnrollmentQuery = 
+`query {
+    getEnrollment(input: {
+      EL_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+    }) {
+      EL_ID
+      DATE
+      WRTR_ID
+      WRT_DATE
+      CONST_ID
+      EE_ID
+      APL_ID
+      CPAN
+      PROD
+      ST
+      GIFT_AMT
+    }
+}`;
+
 export const readEnrollmentQuery = 
 `query {
     readEnrollment(limit:2, input: {

@@ -11,6 +11,10 @@ export interface PaymentInterface {
     EL_ID: string;
 };
 
+export interface getPaymentInput {
+    PYMT_ID: string;
+}
+
 export interface readPaymentInput {
     PYMT_ID: string;
     DATE?: string;
