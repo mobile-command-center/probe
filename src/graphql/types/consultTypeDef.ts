@@ -31,7 +31,7 @@ const typeDefs = gql`
     DATE: String!
     WRTR_ID: String!
     EE_ID: String
-    C_TELL: String
+    C_TEL: String
     MEMO: String
     P_SUBSIDY_AMT: String
   }
@@ -41,7 +41,7 @@ const typeDefs = gql`
     DATE: String
     WRTR_ID: String
     EE_ID: String
-    C_TELL: String
+    C_TEL: String
     MEMO: String
     P_SUBSIDY_AMT: String
   }
@@ -56,7 +56,7 @@ const typeDefs = gql`
     WRTR_ID: String
     WRT_DATE: String
     EE_ID: String
-    C_TELL: String
+    C_TEL: String
     MEMO: String
     P_SUBSIDY_AMT: String
   }

@@ -22,7 +22,7 @@ export interface createConsultationInput {
     DATE: string;
     WRTR_ID: string;
     EE_ID?: string;
-    C_TELL?: string;
+    C_TEL?: string;
     MEMO?: string;
     P_SUBSIDY_AMT?: string;
 };

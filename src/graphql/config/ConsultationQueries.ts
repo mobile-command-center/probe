@@ -8,7 +8,7 @@ export const getConsultationQuery =
       WRTR_ID
       WRT_DATE
       EE_ID
-      C_TELL
+      C_TEL
       MEMO
       P_SUBSIDY_AMT
     }
@@ -32,7 +32,7 @@ export const createConsultationQuery =
       WRTR_ID: "11231"
       DATE: "2019-09-28T02:60:26.330Z"
       EE_ID: "2121312"
-      C_TELL: "01093616635",
+      C_TEL: "01093616635",
       MEMO: "메모니라",
       P_SUBSIDY_AMT: "70000"
     }){
