@@ -23,8 +23,10 @@ const typeDefs = gql`
   }
 
   input readApplicationInput {
-    APL_ID: String!
-    DATE: String
+    first: Int
+    last: Int
+    after: String
+    before: String
   }
 
   input createApplicationInput {
@@ -57,7 +59,7 @@ const typeDefs = gql`
 
   type Query {
     getApplication(input: getApplicationInput!): Application!
-    readApplication(first: Int!, input: readApplicationInput): ApplicationConnection!
+    readApplication(input: readApplicationInput!): ApplicationConnection!
   }
 
   type Mutation {

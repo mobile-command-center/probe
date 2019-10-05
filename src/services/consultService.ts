@@ -50,14 +50,14 @@ class ConsultService {
         });
     }
 
-    public read(first: number, input?:readConsultationInput): Promise<ConsultationConnection> {
-        if(!input) {
-            return this.readFromPagination(first);
+    public read(input: readConsultationInput): Promise<ConsultationConnection> {
+        if(!input.before && !input.after) {
+            return this.readFromPagination(input, null);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            Key: { 'CONST_ID': input.CONST_ID }
+            Key: { 'CONST_ID': input.after || input.before }
         }
 
         return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ class ConsultService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(first, data.Item as ConsultationDTO)
+                        this.readFromPagination(input, data.Item as ConsultationDTO)
                             .then((result: ConsultationConnection) => {
                                 resolve(result);
                             });
@@ -89,11 +89,11 @@ class ConsultService {
         });
     }
 
-    private readFromPagination(first: number, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
+    private readFromPagination(input: readConsultationInput, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: true,
+            ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -101,14 +101,12 @@ class ConsultService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: first
+            Limit: input.first || input.last
         }
 
         if(consultationDTO) {
             params.ExclusiveStartKey =  { 'CONST_ID': consultationDTO.CONST_ID, 'DATE': consultationDTO.DATE, 'SORT': 0 };
         }
-
-        console.log(params);
 
         return new Promise((resolve, reject) => {
             docClient.query(params, (err, data: QueryOutput) => {
@@ -118,18 +116,33 @@ class ConsultService {
                     throw err;
                 } else {
                     console.log(data);
-                    const result = {
-                        edges: data.Items as ConsultationDTO[],
-                        pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : null,
-                            startCursor: consultationDTO ? consultationDTO.CONST_ID : null,
-                            hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: !!consultationDTO // @TODO 이부분도 작업이 필요함
-                        },
-                        totalCount: data.Count
+                    if(input.first) {
+                        const result = {
+                            edges: data.Items as ConsultationDTO[],
+                            pageInfo: {
+                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
+                                startCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
+                                hasNextPage: (data.ScannedCount === input.first),
+                                hasPreviousPage: !!consultationDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
                     }
-    
-                    resolve(result);
+
+                    if(input.last) {
+                        const result = {
+                            edges: data.Items.reverse() as ConsultationDTO[],
+                            pageInfo: {
+                                endCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
+                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
+                                hasNextPage: (data.ScannedCount === input.last),
+                                hasPreviousPage: !!consultationDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
+                    }
                 }
             });
         });

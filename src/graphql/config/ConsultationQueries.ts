@@ -16,11 +16,18 @@ export const getConsultationQuery =
 
 export const readConsultationQuery = 
 `query {
-    readConsultation(limit:2, input: {
-      CONST_ID: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016"
+    readConsultation(input: {
+      first: 10
     }) {
       edges {
-        CONST_ID
+        APL_ID
+        DATE
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
       }
       totalCount
     }

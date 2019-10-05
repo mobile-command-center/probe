@@ -7,8 +7,8 @@ const resolvers = {
         getApplication: (_, {input}:{input: getApplicationInput}): Promise<ApplicationDTO> => {
             return ApplicationService.getInstance().get(input);
         },
-        readApplication: (_, {first, input}:{first: number, input?: readApplicationInput}): Promise<ApplicationConnection> => {
-            return ApplicationService.getInstance().read(first, input);
+        readApplication: (_, {input}:{input: readApplicationInput}): Promise<ApplicationConnection> => {
+            return ApplicationService.getInstance().read(input);
         }
     },
     Mutation: {

@@ -51,14 +51,14 @@ class ApplicationService {
     }
 
 
-    public read(first: number, input?:readApplicationInput): Promise<ApplicationConnection> {
-        if(!input) {
-            return this.readFromPagination(first);
+    public read(input: readApplicationInput): Promise<ApplicationConnection> {
+        if(!input.before && !input.after) {
+            return this.readFromPagination(input, null);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-application`,
-            Key: { 'APL_ID': input.APL_ID }
+            Key: { 'APL_ID': input.after || input.before }
         }
 
         return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ class ApplicationService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(first, data.Item as ApplicationDTO)
+                        this.readFromPagination(input, data.Item as ApplicationDTO)
                             .then((result: ApplicationConnection) => {
                                 resolve(result);
                             });
@@ -90,11 +90,11 @@ class ApplicationService {
         });
     }
 
-    private readFromPagination(first: number, applicationDTO?: ApplicationDTO): Promise<ApplicationConnection>  {
+    private readFromPagination(input: readApplicationInput, applicationDTO?: ApplicationDTO): Promise<ApplicationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-application`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: true,
+            ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -102,14 +102,12 @@ class ApplicationService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: first
+            Limit: input.first || input.last
         }
 
         if(applicationDTO) {
             params.ExclusiveStartKey =  { 'APL_ID': applicationDTO.APL_ID, 'DATE': applicationDTO.DATE, 'SORT': 0 };
         }
-
-        console.log(params);
 
         return new Promise((resolve, reject) => {
             docClient.query(params, (err, data: QueryOutput) => {
@@ -119,18 +117,34 @@ class ApplicationService {
                     throw err;
                 } else {
                     console.log(data);
-                    const result = {
-                        edges: data.Items as ApplicationDTO[],
-                        pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : null,
-                            startCursor: applicationDTO ? applicationDTO.APL_ID : null,
-                            hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: !!applicationDTO
-                        },
-                        totalCount: data.Count
+
+                    if(input.first) {
+                        const result = {
+                            edges: data.Items as ApplicationDTO[],
+                            pageInfo: {
+                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
+                                startCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
+                                hasNextPage: (data.ScannedCount === input.first),
+                                hasPreviousPage: !!applicationDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
                     }
-    
-                    resolve(result);
+
+                    if(input.last) {
+                        const result = {
+                            edges: data.Items.reverse() as ApplicationDTO[],
+                            pageInfo: {
+                                endCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
+                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
+                                hasNextPage: (data.ScannedCount === input.last),
+                                hasPreviousPage: !!applicationDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
+                    }
                 }
             });
         });

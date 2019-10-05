@@ -50,14 +50,14 @@ class PayService {
         });
     }
 
-    public read(first: number, input?:readPaymentInput): Promise<PaymentConnection> {
-        if(!input) {
-            return this.readFromPagination(first);
+    public read(input: readPaymentInput): Promise<PaymentConnection> {
+        if(!input.before && !input.after) {
+            return this.readFromPagination(input, null);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-payment`,
-            Key: { 'PYMT_ID': input.PYMT_ID }
+            Key: { 'PYMT_ID': input.after || input.before }
         }
 
         return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ class PayService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(first, data.Item as PaymentDTO)
+                        this.readFromPagination(input, data.Item as PaymentDTO)
                             .then((result: PaymentConnection) => {
                                 resolve(result);
                             });
@@ -89,11 +89,11 @@ class PayService {
         });
     }
 
-    private readFromPagination(first: number, paymentDTO?: PaymentDTO): Promise<PaymentConnection>  {
+    private readFromPagination(input: readPaymentInput, paymentDTO?: PaymentDTO): Promise<PaymentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-payment`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: true,
+            ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -101,7 +101,7 @@ class PayService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: first
+            Limit: input.first || input.last
         }
 
         if(paymentDTO) {
@@ -115,18 +115,33 @@ class PayService {
                     reject(err);
                     throw err;
                 } else {
-                    const result = {
-                        edges: data.Items as PaymentDTO[],
-                        pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : null,
-                            startCursor: paymentDTO ? paymentDTO.PYMT_ID : null,
-                            hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: !!paymentDTO
-                        },
-                        totalCount: data.Count
+                    if(input.first) {
+                        const result = {
+                            edges: data.Items as PaymentDTO[],
+                            pageInfo: {
+                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].PYMT_ID : null,
+                                startCursor: data.ScannedCount ? data.Items[0].PYMT_ID : null,
+                                hasNextPage: (data.ScannedCount === input.first),
+                                hasPreviousPage: !!paymentDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
                     }
-    
-                    resolve(result);
+
+                    if(input.last) {
+                        const result = {
+                            edges: data.Items.reverse() as PaymentDTO[],
+                            pageInfo: {
+                                endCursor: data.ScannedCount ? data.Items[0].PYMT_ID : null,
+                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].PYMT_ID : null,
+                                hasNextPage: (data.ScannedCount === input.last),
+                                hasPreviousPage: !!paymentDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
+                    }
                 }
             });
         });

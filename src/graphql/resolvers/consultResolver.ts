@@ -7,8 +7,8 @@ const resolvers = {
         getConsultation: (_, {input}:{input: getConsultationInput}): Promise<ConsultationDTO> => {
             return ConsultService.getInstance().get(input);
         },
-        readConsultation: (_, {first, input}:{first: number, input?: readConsultationInput}): Promise<ConsultationConnection> => {
-            return ConsultService.getInstance().read(first, input);
+        readConsultation: (_, {input}:{input: readConsultationInput}): Promise<ConsultationConnection> => {
+            return ConsultService.getInstance().read(input);
         }
     },
     Mutation: {

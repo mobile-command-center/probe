@@ -14,8 +14,10 @@ export interface getConsultationInput {
 };
 
 export interface readConsultationInput {
-    CONST_ID: string;
-    DATE?: string;
+    first: number;
+    last: number;
+    after: string;
+    before: string;
 };
 
 export interface createConsultationInput {

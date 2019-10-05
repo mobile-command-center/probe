@@ -16,8 +16,10 @@ export interface getEnrollmentInput {
     EL_ID: string;
 }
 export interface readEnrollmentInput {
-    EL_ID: string;
-    DATE?: string;
+    first: number;
+    last: number;
+    after: string;
+    before: string;
 }
 
 export interface createEnrollmentInput {

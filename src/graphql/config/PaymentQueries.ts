@@ -18,11 +18,18 @@ export const getPaymentQuery =
 
 export const readPaymentQuery = 
 `query {
-    readPayment(limit:2, input: {
-      PYMT_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+    readPayment(input: {
+      first: 10
     }) {
       edges {
-        PYMT_ID
+        APL_ID
+        DATE
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
       }
       totalCount
     }

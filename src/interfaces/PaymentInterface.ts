@@ -16,8 +16,10 @@ export interface getPaymentInput {
 }
 
 export interface readPaymentInput {
-    PYMT_ID: string;
-    DATE?: string;
+    first: number;
+    last: number;
+    after: string;
+    before: string;
 }
 
 export interface createPaymentInput {
