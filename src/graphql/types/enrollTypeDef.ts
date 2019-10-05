@@ -23,8 +23,10 @@ const typeDefs = gql`
   }
 
   input readEnrollmentInput {
-    EL_ID: String!
-    DATE: String
+    first: Int
+    last: Int
+    after: String
+    before: String
   }
 
   input createEnrollmentInput {
@@ -72,7 +74,7 @@ const typeDefs = gql`
 
   type Query {
     getEnrollment(input: getEnrollmentInput!): Enrollment!
-    readEnrollment(limit: Int!, input: readEnrollmentInput): EnrollmentConnection!
+    readEnrollment(input: readEnrollmentInput!): EnrollmentConnection!
   }
 
   type Mutation {

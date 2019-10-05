@@ -7,8 +7,8 @@ const resolvers = {
         getEnrollment: (_, {input}:{input: getEnrollmentInput}): Promise<EnrollmentDTO> => {
             return EnrollService.getInstance().get(input);
         },
-        readEnrollment: (_, {limit, input}:{limit: number, input?: readEnrollmentInput}): Promise<EnrollmentConnection> => {
-            return EnrollService.getInstance().read(limit, input);
+        readEnrollment: (_, {input}:{input: readEnrollmentInput}): Promise<EnrollmentConnection> => {
+            return EnrollService.getInstance().read(input);
         }
     },
     Mutation: {

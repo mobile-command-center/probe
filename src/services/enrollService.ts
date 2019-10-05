@@ -50,14 +50,14 @@ class EnrollService {
         });
     }
 
-    public read(limit: number, input?:readEnrollmentInput): Promise<EnrollmentConnection> {
-        if(!input) {
-            return this.readFromPagination(limit);
+    public read(input: readEnrollmentInput): Promise<EnrollmentConnection> {
+        if(!input.before && !input.after) {
+            return this.readFromPagination(input, null);
         }
 
         const params: GetItemInput = {
             TableName: `${process.env.STAGE}-enrollment`,
-            Key: { 'EL_ID': input.EL_ID }
+            Key: { 'EL_ID': input.after || input.before }
         }
 
         return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ class EnrollService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(limit, data.Item as EnrollmentDTO)
+                        this.readFromPagination(input, data.Item as EnrollmentDTO)
                             .then((result: EnrollmentConnection) => {
                                 resolve(result);
                             });
@@ -89,11 +89,11 @@ class EnrollService {
         });
     }
 
-    private readFromPagination(limit: number, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
+    private readFromPagination(input: readEnrollmentInput, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-enrollment`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: true,
+            ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -101,7 +101,7 @@ class EnrollService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: limit
+            Limit: input.first || input.last
         }
 
         if(enrollmentDTO) {
@@ -115,18 +115,33 @@ class EnrollService {
                     reject(err);
                     throw err;
                 } else {
-                    const result = {
-                        edges: data.Items as EnrollmentDTO[],
-                        pageInfo: {
-                            endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : null,
-                            startCursor: enrollmentDTO ? enrollmentDTO.EL_ID : null,
-                            hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: !!enrollmentDTO
-                        },
-                        totalCount: data.Count
+                    if(input.first) {
+                        const result = {
+                            edges: data.Items as EnrollmentDTO[],
+                            pageInfo: {
+                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
+                                startCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
+                                hasNextPage: (data.ScannedCount === input.first),
+                                hasPreviousPage: !!enrollmentDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
                     }
-    
-                    resolve(result);
+
+                    if(input.last) {
+                        const result = {
+                            edges: data.Items.reverse() as EnrollmentDTO[],
+                            pageInfo: {
+                                endCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
+                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
+                                hasNextPage: (data.ScannedCount === input.last),
+                                hasPreviousPage: !!enrollmentDTO
+                            },
+                            totalCount: data.ScannedCount
+                        };
+                        return resolve(result);
+                    }
                 }
             });
         });

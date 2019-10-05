@@ -14,15 +14,21 @@ export const getApplicationQuery =
 
 export const readApplicationQuery = 
 `query {
-    readApplication(limit:2, input: {
-      APL_ID: "b2c5a46f-73fd-434d-8a08-a47f1b8a3016"
-    }) {
-      edges {
-        APL_ID
-        FRM_DATA
-      }
-      totalCount
+  readApplication(input: {
+    first: 10
+  }) {
+    edges {
+      APL_ID
+      DATE
     }
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
 }`;
 
 export const createApplicationQuery =

@@ -23,8 +23,10 @@ const typeDefs = gql`
   }
 
   input readConsultationInput {
-    CONST_ID: String!
-    DATE: String
+    first: Int
+    last: Int
+    after: String
+    before: String
   }
 
   input createConsultationInput {
@@ -63,7 +65,7 @@ const typeDefs = gql`
 
   type Query {
     getConsultation(input: getConsultationInput!): Consultation!
-    readConsultation(limit: Int!, input: readConsultationInput): ConsultationConnection!
+    readConsultation(input: readConsultationInput!): ConsultationConnection!
   }
 
   type Mutation {

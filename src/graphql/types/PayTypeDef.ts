@@ -23,8 +23,10 @@ const typeDefs = gql`
   }
 
   input readPaymentInput {
-    PYMT_ID: String!
-    DATE: String
+    first: Int
+    last: Int
+    after: String
+    before: String
   }
 
   input createPaymentInput {
@@ -70,7 +72,7 @@ const typeDefs = gql`
 
   type Query {
     getPayment(input: getPaymentInput!): Payment!
-    readPayment(limit: Int!, input: readPaymentInput): PaymentConnection!
+    readPayment(input: readPaymentInput!): PaymentConnection!
   }
 
   type Mutation {

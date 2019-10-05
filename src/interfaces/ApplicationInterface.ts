@@ -12,8 +12,10 @@ export interface getApplicationInput {
 };
 
 export interface readApplicationInput {
-    APL_ID: string;
-    DATE?: string;
+    first: number;
+    last: number;
+    after: string;
+    before: string;
 };
 
 export interface createApplicationInput {

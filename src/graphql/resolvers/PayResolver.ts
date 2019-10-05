@@ -7,8 +7,8 @@ const resolvers = {
         getPayment: (_, {input}:{input: getPaymentInput}): Promise<PaymentDTO> => {
             return PayService.getInstance().get(input);
         },
-        readPayment: (_, {limit, input}:{limit: number, input?: readPaymentInput}): Promise<PaymentConnection> => {
-            return PayService.getInstance().read(limit, input);
+        readPayment: (_, {input}:{input: readPaymentInput}): Promise<PaymentConnection> => {
+            return PayService.getInstance().read(input);
         }
     },
     Mutation: {
