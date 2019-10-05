@@ -50,9 +50,9 @@ class ConsultService {
         });
     }
 
-    public read(limit: number, input?:readConsultationInput): Promise<ConsultationConnection> {
+    public read(first: number, input?:readConsultationInput): Promise<ConsultationConnection> {
         if(!input) {
-            return this.readFromPagination(limit);
+            return this.readFromPagination(first);
         }
 
         const params: GetItemInput = {
@@ -67,7 +67,7 @@ class ConsultService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(limit, data.Item as ConsultationDTO)
+                        this.readFromPagination(first, data.Item as ConsultationDTO)
                             .then((result: ConsultationConnection) => {
                                 resolve(result);
                             });
@@ -89,7 +89,7 @@ class ConsultService {
         });
     }
 
-    private readFromPagination(limit: number, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
+    private readFromPagination(first: number, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
             IndexName: 'SortDateGSI',
@@ -101,7 +101,7 @@ class ConsultService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: limit
+            Limit: first
         }
 
         if(consultationDTO) {

@@ -50,9 +50,9 @@ class EnrollService {
         });
     }
 
-    public read(limit: number, input?:readEnrollmentInput): Promise<EnrollmentConnection> {
+    public read(first: number, input?:readEnrollmentInput): Promise<EnrollmentConnection> {
         if(!input) {
-            return this.readFromPagination(limit);
+            return this.readFromPagination(first);
         }
 
         const params: GetItemInput = {
@@ -67,7 +67,7 @@ class EnrollService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(limit, data.Item as EnrollmentDTO)
+                        this.readFromPagination(first, data.Item as EnrollmentDTO)
                             .then((result: EnrollmentConnection) => {
                                 resolve(result);
                             });
@@ -89,7 +89,7 @@ class EnrollService {
         });
     }
 
-    private readFromPagination(limit: number, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
+    private readFromPagination(first: number, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-enrollment`,
             IndexName: 'SortDateGSI',
@@ -101,7 +101,7 @@ class EnrollService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: limit
+            Limit: first
         }
 
         if(enrollmentDTO) {

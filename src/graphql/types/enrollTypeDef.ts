@@ -72,7 +72,7 @@ const typeDefs = gql`
 
   type Query {
     getEnrollment(input: getEnrollmentInput!): Enrollment!
-    readEnrollment(limit: Int!, input: readEnrollmentInput): EnrollmentConnection!
+    readEnrollment(first: Int!, input: readEnrollmentInput): EnrollmentConnection!
   }
 
   type Mutation {

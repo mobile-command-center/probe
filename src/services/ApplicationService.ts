@@ -51,9 +51,9 @@ class ApplicationService {
     }
 
 
-    public read(limit: number, input?:readApplicationInput): Promise<ApplicationConnection> {
+    public read(first: number, input?:readApplicationInput): Promise<ApplicationConnection> {
         if(!input) {
-            return this.readFromPagination(limit);
+            return this.readFromPagination(first);
         }
 
         const params: GetItemInput = {
@@ -68,7 +68,7 @@ class ApplicationService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(limit, data.Item as ApplicationDTO)
+                        this.readFromPagination(first, data.Item as ApplicationDTO)
                             .then((result: ApplicationConnection) => {
                                 resolve(result);
                             });
@@ -90,7 +90,7 @@ class ApplicationService {
         });
     }
 
-    private readFromPagination(limit: number, applicationDTO?: ApplicationDTO): Promise<ApplicationConnection>  {
+    private readFromPagination(first: number, applicationDTO?: ApplicationDTO): Promise<ApplicationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-application`,
             IndexName: 'SortDateGSI',
@@ -102,7 +102,7 @@ class ApplicationService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: limit
+            Limit: first
         }
 
         if(applicationDTO) {

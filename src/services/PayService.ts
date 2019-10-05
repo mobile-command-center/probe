@@ -50,9 +50,9 @@ class PayService {
         });
     }
 
-    public read(limit: number, input?:readPaymentInput): Promise<PaymentConnection> {
+    public read(first: number, input?:readPaymentInput): Promise<PaymentConnection> {
         if(!input) {
-            return this.readFromPagination(limit);
+            return this.readFromPagination(first);
         }
 
         const params: GetItemInput = {
@@ -67,7 +67,7 @@ class PayService {
                     throw err;
                 } else {
                     if(data.Item) {
-                        this.readFromPagination(limit, data.Item as PaymentDTO)
+                        this.readFromPagination(first, data.Item as PaymentDTO)
                             .then((result: PaymentConnection) => {
                                 resolve(result);
                             });
@@ -89,7 +89,7 @@ class PayService {
         });
     }
 
-    private readFromPagination(limit: number, paymentDTO?: PaymentDTO): Promise<PaymentConnection>  {
+    private readFromPagination(first: number, paymentDTO?: PaymentDTO): Promise<PaymentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-payment`,
             IndexName: 'SortDateGSI',
@@ -101,7 +101,7 @@ class PayService {
             ExpressionAttributeValues: {
                 ":sort": 0,
             },
-            Limit: limit
+            Limit: first
         }
 
         if(paymentDTO) {

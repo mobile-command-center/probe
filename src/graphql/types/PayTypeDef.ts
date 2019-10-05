@@ -70,7 +70,7 @@ const typeDefs = gql`
 
   type Query {
     getPayment(input: getPaymentInput!): Payment!
-    readPayment(limit: Int!, input: readPaymentInput): PaymentConnection!
+    readPayment(first: Int!, input: readPaymentInput): PaymentConnection!
   }
 
   type Mutation {

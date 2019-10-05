@@ -57,7 +57,7 @@ const typeDefs = gql`
 
   type Query {
     getApplication(input: getApplicationInput!): Application!
-    readApplication(limit: Int!, input: readApplicationInput): ApplicationConnection!
+    readApplication(first: Int!, input: readApplicationInput): ApplicationConnection!
   }
 
   type Mutation {

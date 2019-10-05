@@ -63,7 +63,7 @@ const typeDefs = gql`
 
   type Query {
     getConsultation(input: getConsultationInput!): Consultation!
-    readConsultation(limit: Int!, input: readConsultationInput): ConsultationConnection!
+    readConsultation(first: Int!, input: readConsultationInput): ConsultationConnection!
   }
 
   type Mutation {
