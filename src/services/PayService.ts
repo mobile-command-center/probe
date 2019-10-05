@@ -93,7 +93,7 @@ class PayService {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-payment`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: false,
+            ScanIndexForward: true,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -119,9 +119,9 @@ class PayService {
                         edges: data.Items as PaymentDTO[],
                         pageInfo: {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : null,
-                            startCursor: data.Items.length > 0 ? data.Items[0].PYMT_ID : null,
+                            startCursor: paymentDTO ? paymentDTO.PYMT_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
+                            hasPreviousPage: !!paymentDTO
                         },
                         totalCount: data.Count
                     }

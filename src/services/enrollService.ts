@@ -93,7 +93,7 @@ class EnrollService {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-enrollment`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: false,
+            ScanIndexForward: true,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -119,9 +119,9 @@ class EnrollService {
                         edges: data.Items as EnrollmentDTO[],
                         pageInfo: {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : null,
-                            startCursor: data.Items.length > 0 ? data.Items[0].EL_ID : null,
+                            startCursor: enrollmentDTO ? enrollmentDTO.EL_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
+                            hasPreviousPage: !!enrollmentDTO
                         },
                         totalCount: data.Count
                     }
