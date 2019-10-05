@@ -93,7 +93,7 @@ class ConsultService {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: false,
+            ScanIndexForward: true,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -122,9 +122,9 @@ class ConsultService {
                         edges: data.Items as ConsultationDTO[],
                         pageInfo: {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : null,
-                            startCursor: data.Items.length > 0 ? data.Items[0].CONST_ID : null,
+                            startCursor: consultationDTO ? consultationDTO.CONST_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
+                            hasPreviousPage: !!consultationDTO // @TODO 이부분도 작업이 필요함
                         },
                         totalCount: data.Count
                     }

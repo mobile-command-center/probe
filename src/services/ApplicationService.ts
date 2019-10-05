@@ -94,7 +94,7 @@ class ApplicationService {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-application`,
             IndexName: 'SortDateGSI',
-            ScanIndexForward: false,
+            ScanIndexForward: true,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
                 '#sort': 'SORT',
@@ -123,9 +123,9 @@ class ApplicationService {
                         edges: data.Items as ApplicationDTO[],
                         pageInfo: {
                             endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : null,
-                            startCursor: data.Items.length > 0 ? data.Items[0].APL_ID : null,
+                            startCursor: applicationDTO ? applicationDTO.APL_ID : null,
                             hasNextPage: !!data.LastEvaluatedKey,
-                            hasPreviousPage: false // @TODO 이부분도 작업이 필요함
+                            hasPreviousPage: !!applicationDTO
                         },
                         totalCount: data.Count
                     }
