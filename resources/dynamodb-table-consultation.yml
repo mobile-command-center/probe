@@ -10,21 +10,18 @@ Resources:
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: CONST_ID
-          AttributeType: S
-        - AttributeName: DATE
-          AttributeType: S
+          AttributeType: N
         - AttributeName: SORT
           AttributeType: N
       KeySchema:
         - AttributeName: CONST_ID
           KeyType: HASH
       GlobalSecondaryIndexes:
-        - IndexName: SortDateGSI
+        - IndexName: SortIDGSI
           KeySchema:
             - AttributeName: SORT
               KeyType: HASH
-            - AttributeName: DATE
+            - AttributeName: CONST_ID
               KeyType: RANGE
           Projection:
-              ProjectionType: ALL
-          
+              ProjectionType: ALL          

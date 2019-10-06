@@ -3,7 +3,7 @@ import ApplicationBuilder from './ApplicationBuilder';
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 export default class ApplicationDTO implements ApplicationInterface {
-    public APL_ID: string;
+    public APL_ID: number;
     public DATE: string;
     public WRTR_ID: string;
     public WRT_DATE: string;

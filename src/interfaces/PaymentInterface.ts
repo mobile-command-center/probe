@@ -1,5 +1,5 @@
 export interface PaymentInterface {
-    PYMT_ID: string;
+    PYMT_ID: number;
     DATE: string;
     EE_ID: string;
     PAY_TYPE: string;
@@ -12,14 +12,14 @@ export interface PaymentInterface {
 };
 
 export interface getPaymentInput {
-    PYMT_ID: string;
+    PYMT_ID: number;
 }
 
 export interface readPaymentInput {
     first: number;
     last: number;
-    after: string;
-    before: string;
+    after: number;
+    before: number;
 }
 
 export interface createPaymentInput {
@@ -34,7 +34,7 @@ export interface createPaymentInput {
 };
 
 export interface updatePaymentInput {
-    PYMT_ID: string;
+    PYMT_ID: number;
     DATE?: string;
     EE_ID?: string;
     PAY_TYPE?: string;
@@ -46,7 +46,7 @@ export interface updatePaymentInput {
 }
 
 export interface deletePaymentInput {
-    PYMT_ID: string;
+    PYMT_ID: number;
 }
 
 export interface PaymentConnection {
@@ -56,8 +56,8 @@ export interface PaymentConnection {
 }
 
 export interface PageInfo {
-    endCursor?: string;
-    startCursor?: string;
+    endCursor?: number;
+    startCursor?: number;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
 }

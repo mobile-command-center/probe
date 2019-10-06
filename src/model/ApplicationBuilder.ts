@@ -1,12 +1,12 @@
-import { v4 as uuid} from 'uuid';
 import ApplicationDTO from './ApplicationDTO';
 import { createApplicationInput, updateApplicationInput } from '../interfaces/ApplicationInterface';
 
 type TypedString = string | undefined;
+type TypedNumber = number | undefined;
 
 export default class ApplicationBuilder {
     
-    private _aplId: TypedString;
+    private _aplId: TypedNumber;
     private _date: TypedString;
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
@@ -29,7 +29,7 @@ export default class ApplicationBuilder {
     }
 
     public setByCreateInput(input: createApplicationInput) {
-        this._aplId = uuid();
+        this._aplId = this._aplId || 1;
         this._date = input.DATE;
         this._wrtrId = input.WRTR_ID;
         this._wrtDate = new Date().toISOString();
@@ -50,7 +50,13 @@ export default class ApplicationBuilder {
         return this;
     }
 
-    public get APL_ID(): TypedString {
+    public setAPL_ID(aplId: number) {
+        this._aplId = aplId;
+
+        return this;
+    }
+
+    public get APL_ID(): TypedNumber {
         return this._aplId;
     }
 

@@ -1,12 +1,12 @@
-import { v4 as uuid} from 'uuid';
 import ConsultationDTO from './ConsultationDTO';
 import { createConsultationInput, updateConsultationInput } from '../interfaces/ConsultationInterface';
 
 type TypedString = string | undefined;
+type TypedNumber = number | undefined;
 
 export default class ConsultationBuilder {
     
-    private _constId: TypedString;
+    private _constId: TypedNumber;
     private _date: TypedString;
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
@@ -33,7 +33,7 @@ export default class ConsultationBuilder {
     }
 
     public setByCreateInput(input: createConsultationInput) {
-        this._constId = uuid();
+        this._constId = this._constId || 1;
         this._date = input.DATE;
         this._wrtrId = input.WRTR_ID;
         this._wrtDate = new Date().toISOString();
@@ -50,7 +50,6 @@ export default class ConsultationBuilder {
         this._date = input.DATE || this._date; 
         this._wrtrId = input.WRTR_ID || this._wrtrId;
         this._wrtDate = new Date().toISOString();
-        this._constId = input.CONST_ID || this._constId;
         this._eeId = input.EE_ID || this._eeId;
         this._cTel = input.C_TEL || this._cTel;
         this._memo = input.MEMO || this._memo;
@@ -59,7 +58,13 @@ export default class ConsultationBuilder {
         return this;
     }
 
-    public get CONST_ID(): TypedString {
+    public setCONST_ID(constId: number)  {
+        this._constId = constId;
+
+        return this;
+    }
+
+    public get CONST_ID(): TypedNumber {
         return this._constId;
     }
 

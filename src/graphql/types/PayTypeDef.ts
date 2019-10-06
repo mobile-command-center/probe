@@ -19,14 +19,14 @@ const typeDefs = gql`
   }
 
   input getPaymentInput {
-    PYMT_ID: String!
+    PYMT_ID: Int!
   }
 
   input readPaymentInput {
     first: Int
     last: Int
-    after: String
-    before: String
+    after: Int
+    before: Int
   }
 
   input createPaymentInput {
@@ -41,7 +41,7 @@ const typeDefs = gql`
   }
 
   input updatePaymentInput {
-    PYMT_ID: String!
+    PYMT_ID: Int!
     DATE: String
     EE_ID: String
     PAY_TYPE: String
@@ -54,11 +54,11 @@ const typeDefs = gql`
   }
 
   input deletePaymentInput {
-    PYMT_ID: String!
+    PYMT_ID: Int!
   }
 
   type Payment {
-    PYMT_ID: String!
+    PYMT_ID: Int!
     DATE: String
     EE_ID: String
     PAY_TYPE: String

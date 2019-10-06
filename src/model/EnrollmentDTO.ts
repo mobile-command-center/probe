@@ -3,7 +3,7 @@ import EnrollmentBuilder from './enrollmentBuilder';
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 export default class EnrollmentDTO implements EnrollmentInterface {
-    public EL_ID: string;
+    public EL_ID: number;
     public DATE: string;
     public WRTR_ID: string;
     public WRT_DATE: string;

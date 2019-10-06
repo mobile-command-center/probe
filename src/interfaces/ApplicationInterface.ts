@@ -1,5 +1,5 @@
 export interface ApplicationInterface {
-    APL_ID: string;
+    APL_ID: number;
     DATE: string;
     WRTR_ID: string;
     WRT_DATE: string;
@@ -8,14 +8,14 @@ export interface ApplicationInterface {
 };
 
 export interface getApplicationInput {
-    APL_ID: string;
+    APL_ID: number;
 };
 
 export interface readApplicationInput {
     first: number;
     last: number;
-    after: string;
-    before: string;
+    after: number;
+    before: number;
 };
 
 export interface createApplicationInput {
@@ -26,7 +26,7 @@ export interface createApplicationInput {
 };
 
 export interface updateApplicationInput {
-    APL_ID: string;
+    APL_ID: number;
     DATE?: string;
     WRTR_ID?: string;
     WRT_DATE?: string;s
@@ -35,7 +35,7 @@ export interface updateApplicationInput {
 }
 
 export interface deleteApplicationInput {
-    APL_ID: string;
+    APL_ID: number;
 }
 
 export interface ApplicationConnection {
@@ -45,8 +45,8 @@ export interface ApplicationConnection {
 }
 
 export interface PageInfo {
-    endCursor?: String;
-    startCursor?: String;
+    endCursor?: number;
+    startCursor?: number;
     hasNextPage: Boolean;
     hasPreviousPage: Boolean;
 }

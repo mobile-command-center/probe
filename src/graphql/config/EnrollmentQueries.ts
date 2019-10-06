@@ -1,7 +1,7 @@
 export const getEnrollmentQuery = 
 `query {
     getEnrollment(input: {
-      EL_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+      EL_ID: 1
     }) {
       EL_ID
       DATE
@@ -51,7 +51,7 @@ export const createEnrollmentQuery =
 export const updateEnrollmentQuery =
 `mutation {
     updateEnrollment(input: {
-      EL_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+      EL_ID: 1
       ST: "COMMAND"
     }){
       EL_ID
@@ -62,7 +62,7 @@ export const updateEnrollmentQuery =
 export const deleteEnrollmentQuery =
 `mutation {
     deleteEnrollment(input: {
-      EL_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+      EL_ID: 1
     }){
       EL_ID
       ST

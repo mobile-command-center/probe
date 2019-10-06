@@ -1,4 +1,3 @@
-import { v4 as uuid} from 'uuid';
 import EnrollmentDTO from './EnrollmentDTO';
 import { createEnrollmentInput, ENROLL_STATE, updateEnrollmentInput } from '../interfaces/EnrollmentInterface';
 
@@ -6,7 +5,7 @@ type TypedString = string | undefined;
 type TypedNumber = number | undefined;
 
 export default class EnrollmentBuilder {
-    private _elId: TypedString;
+    private _elId: TypedNumber;
     private _date: TypedString;
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
@@ -39,7 +38,7 @@ export default class EnrollmentBuilder {
     }
 
     public setByCreateInput(input: createEnrollmentInput) {
-        this._elId = uuid();
+        this._elId = this._elId || 1;
         this._date = input.DATE;
         this._wrtrId = input.WRTR_ID;
         this._wrtDate = new Date().toISOString();
@@ -70,7 +69,13 @@ export default class EnrollmentBuilder {
         return this;
     }
 
-    public get EL_ID(): TypedString {
+    public setEL_ID(elid: number) {
+        this._elId = elid;
+
+        return this;
+    }
+
+    public get EL_ID(): TypedNumber {
         return this._elId;
     }
 
@@ -113,31 +118,4 @@ export default class EnrollmentBuilder {
     public get GIFT_AMT(): TypedNumber {
         return this._giftAmt;
     }
-    
-
-    // public makeElid(): EnrollmentBuilder {
-    //     this._elId = uuid();
-    //     return this;
-    // }
-    
-    // public setElId(elid: string): EnrollmentBuilder {
-    //     this._elId = elid;
-    //     return this;
-    // }
-
-    // public setDate(date: string): EnrollmentBuilder {
-    //     this._date = date;
-    //     return this;
-    // }
-
-    // public setWrtrId(wrtrId: string): EnrollmentBuilder {
-    //     this._wrtrId = wrtrId;
-    //     return this;
-    // }
-
-    // public setWrtDate(wrtDate: string): EnrollmentBuilder {
-    //     this._wrtDate = wrtDate;
-    //     return this;
-    // }
-
 }

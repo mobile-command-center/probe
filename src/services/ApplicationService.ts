@@ -93,7 +93,7 @@ class ApplicationService {
     private readFromPagination(input: readApplicationInput, applicationDTO?: ApplicationDTO): Promise<ApplicationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-application`,
-            IndexName: 'SortDateGSI',
+            IndexName: 'SortIDGSI',
             ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
@@ -106,7 +106,7 @@ class ApplicationService {
         }
 
         if(applicationDTO) {
-            params.ExclusiveStartKey =  { 'APL_ID': applicationDTO.APL_ID, 'DATE': applicationDTO.DATE, 'SORT': 0 };
+            params.ExclusiveStartKey =  { 'APL_ID': applicationDTO.APL_ID, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {
@@ -134,7 +134,7 @@ class ApplicationService {
 
                     if(input.last) {
                         const result = {
-                            edges: data.Items.reverse() as ApplicationDTO[],
+                            edges: data.Items as ApplicationDTO[],
                             pageInfo: {
                                 endCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
                                 startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
@@ -151,27 +151,33 @@ class ApplicationService {
     }
 
     public create(input: createApplicationInput): Promise<ApplicationDTO> {
-       const applicationDTO = new ApplicationBuilder()
-        .setByCreateInput(input)
-        .build();
-       
-        const payload: PutItemInput = {
-            TableName: `${process.env.STAGE}-application`,
-            Item: {
-                ...applicationDTO.getItem(),
-                'SORT': 0,  //날짜 정렬을 위한 GSI용
-            }
-        }
-
         return new Promise((resolve, reject) => {
-            docClient.put(payload, (err, data: PutItemOutput) => {
-                if (err) {
-                    console.log(err, err.stack);
-                    reject(err);
-                    throw err;
-                } else {
-                    resolve(applicationDTO);
+            this.read({ last: 1 } as readApplicationInput)
+            .then(({pageInfo: {endCursor}}) => {
+                const applicationDTO = new ApplicationBuilder()
+                    .setAPL_ID(endCursor++)
+                    .setByCreateInput(input)
+                    .build();
+               
+                console.log(applicationDTO.getItem());
+
+                const payload: PutItemInput = {
+                    TableName: `${process.env.STAGE}-application`,
+                    Item: {
+                        ...applicationDTO.getItem(),
+                        'SORT': 0,  //날짜 정렬을 위한 GSI용
+                    }
                 }
+    
+                docClient.put(payload, (err, data: PutItemOutput) => {
+                    if (err) {
+                        console.log(err, err.stack);
+                        reject(err);
+                        throw err;
+                    } else {
+                        resolve(applicationDTO);
+                    }
+                })
             })
         });
     }

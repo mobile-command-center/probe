@@ -10,20 +10,18 @@ Resources:
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: APL_ID
-          AttributeType: S
-        - AttributeName: DATE
-          AttributeType: S
+          AttributeType: N
         - AttributeName: SORT
           AttributeType: N
       KeySchema:
         - AttributeName: APL_ID
           KeyType: HASH
       GlobalSecondaryIndexes:
-        - IndexName: SortDateGSI
+        - IndexName: SortIDGSI
           KeySchema:
             - AttributeName: SORT
               KeyType: HASH
-            - AttributeName: DATE
+            - AttributeName: APL_ID
               KeyType: RANGE
           Projection:
               ProjectionType: ALL

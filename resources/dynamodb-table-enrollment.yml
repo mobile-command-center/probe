@@ -10,21 +10,19 @@ Resources:
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: EL_ID
-          AttributeType: S
-        - AttributeName: DATE
-          AttributeType: S
+          AttributeType: N
         - AttributeName: SORT
           AttributeType: N
       KeySchema:
         - AttributeName: EL_ID
           KeyType: HASH
       GlobalSecondaryIndexes:
-        - IndexName: SortDateGSI
+        - IndexName: SortIDGSI
           KeySchema:
             - AttributeName: SORT
               KeyType: HASH
-            - AttributeName: DATE
+            - AttributeName: EL_ID
               KeyType: RANGE
           Projection:
-              ProjectionType: ALL
-          
+              ProjectionType: ALL    
+              

@@ -1,5 +1,5 @@
 export interface ConsultationInterface {
-    CONST_ID: string;
+    CONST_ID: number;
     DATE: string;
     WRTR_ID: string;
     WRT_DATE: string;
@@ -10,14 +10,14 @@ export interface ConsultationInterface {
 };
 
 export interface getConsultationInput {
-    CONST_ID: string;
+    CONST_ID: number;
 };
 
 export interface readConsultationInput {
     first: number;
     last: number;
-    after: string;
-    before: string;
+    after: number;
+    before: number;
 };
 
 export interface createConsultationInput {
@@ -30,7 +30,7 @@ export interface createConsultationInput {
 };
 
 export interface updateConsultationInput {
-    CONST_ID: string;
+    CONST_ID: number;
     DATE?: string;
     WRTR_ID?: string;
     WRT_DATE?: string;
@@ -41,7 +41,7 @@ export interface updateConsultationInput {
 }
 
 export interface deleteConsultationInput {
-    CONST_ID: string;
+    CONST_ID: number;
 }
 
 export interface ConsultationConnection {
@@ -51,8 +51,8 @@ export interface ConsultationConnection {
 }
 
 export interface PageInfo {
-    endCursor?: String;
-    startCursor?: String;
+    endCursor?: number;
+    startCursor?: number;
     hasNextPage: Boolean;
     hasPreviousPage: Boolean;
 }
