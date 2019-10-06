@@ -3,7 +3,7 @@ import PaymentBuilder from './paymentBuilder';
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 export default class PaymentDTO implements PaymentInterface {
-    public PYMT_ID: string;
+    public PYMT_ID: number;
     public DATE: string;
     public EE_ID: string;
     public PAY_TYPE: string; // @TODO enum으로 뺴야 하지 않을까?

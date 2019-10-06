@@ -3,7 +3,7 @@ import ConsultationBuilder from './ConsultationBuilder';
 import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 
 export default class ConsultationDTO implements ConsultationInterface {
-    public CONST_ID: string;
+    public CONST_ID: number;
     public DATE: string;
     public WRTR_ID: string;
     public WRT_DATE: string;

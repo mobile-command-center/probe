@@ -1,7 +1,7 @@
 export const getConsultationQuery = 
 `query {
     getConsultation(input: {
-      CONST_ID: "c70527b4-23db-49c8-9411-6bacf7264086"
+      CONST_ID: 1
     }) {
       CONST_ID
       DATE
@@ -20,7 +20,7 @@ export const readConsultationQuery =
       first: 10
     }) {
       edges {
-        APL_ID
+        CONST_ID
         DATE
       }
       pageInfo {
@@ -50,7 +50,7 @@ export const createConsultationQuery =
 export const updateConsultationQuery =
 `mutation {
     updateConsultation(input: {
-      CONST_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
+      CONST_ID: 1
       MEMO: "메모니라 업데이트 한다",
     }){
       CONST_ID
@@ -60,7 +60,7 @@ export const updateConsultationQuery =
 export const deleteConsultationQuery =
 `mutation {
     deleteConsultation(input: {
-      CONST_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
+      CONST_ID: 1
     }){
       CONST_ID
     }

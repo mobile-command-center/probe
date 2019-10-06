@@ -1,5 +1,5 @@
 export interface EnrollmentInterface {
-    EL_ID: string;
+    EL_ID: number;
     DATE: string;
     WRTR_ID: string;
     WRT_DATE: string;
@@ -13,13 +13,13 @@ export interface EnrollmentInterface {
 };
 
 export interface getEnrollmentInput {
-    EL_ID: string;
+    EL_ID: number;
 }
 export interface readEnrollmentInput {
     first: number;
     last: number;
-    after: string;
-    before: string;
+    after: number;
+    before: number;
 }
 
 export interface createEnrollmentInput {
@@ -34,7 +34,7 @@ export interface createEnrollmentInput {
     GIFT_AMT?: number;
 };
 export interface updateEnrollmentInput {
-    EL_ID: string;
+    EL_ID: number;
     DATE?: string;
     WRTR_ID?: string;
     WRT_DATE?: string; // @TODO WRT_DATE는 update시에 주입 받으면 안되는것 아닌가?
@@ -48,7 +48,7 @@ export interface updateEnrollmentInput {
 }
 
 export interface deleteEnrollmentInput {
-    EL_ID: string;
+    EL_ID: number;
 }
 
 export interface EnrollmentConnection {
@@ -58,8 +58,8 @@ export interface EnrollmentConnection {
 }
 
 export interface PageInfo {
-    endCursor?: String;
-    startCursor?: String;
+    endCursor?: number;
+    startCursor?: number;
     hasNextPage: Boolean;
     hasPreviousPage: Boolean;
 }

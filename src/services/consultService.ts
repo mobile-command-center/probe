@@ -92,7 +92,7 @@ class ConsultService {
     private readFromPagination(input: readConsultationInput, consultationDTO?: ConsultationDTO): Promise<ConsultationConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-consultation`,
-            IndexName: 'SortDateGSI',
+            IndexName: 'SortIDGSI',
             ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
@@ -105,7 +105,7 @@ class ConsultService {
         }
 
         if(consultationDTO) {
-            params.ExclusiveStartKey =  { 'CONST_ID': consultationDTO.CONST_ID, 'DATE': consultationDTO.DATE, 'SORT': 0 };
+            params.ExclusiveStartKey =  { 'CONST_ID': consultationDTO.CONST_ID, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {
@@ -115,8 +115,23 @@ class ConsultService {
                     reject(err);
                     throw err;
                 } else {
-                    console.log(data);
+                    if(data.ScannedCount < 1) {
+                        const result = {
+                            edges: [],
+                            pageInfo: {
+                                endCursor: null,
+                                startCursor: null,
+                                hasNextPage: false,
+                                hasPreviousPage: false
+                            },
+                            totalCount: 0
+                        }
+                        resolve(result);
+                        return;
+                    }
+
                     if(input.first) {
+                        console.log(data.Items);
                         const result = {
                             edges: data.Items as ConsultationDTO[],
                             pageInfo: {
@@ -132,7 +147,7 @@ class ConsultService {
 
                     if(input.last) {
                         const result = {
-                            edges: data.Items.reverse() as ConsultationDTO[],
+                            edges: data.Items as ConsultationDTO[],
                             pageInfo: {
                                 endCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
                                 startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
@@ -149,29 +164,36 @@ class ConsultService {
     }
 
     public create(input: createConsultationInput): Promise<ConsultationDTO> {
-       const consultationDTO = new ConsultantationBuilder()
-        .setByCreateInput(input)
-        .build();
-       
-        const payload: PutItemInput = {
-            TableName: `${process.env.STAGE}-consultation`,
-            Item: {
-                ...consultationDTO.getItem(),
-                'SORT': 0,  //날짜 정렬을 위한 GSI용
-            }
-        }
-
         return new Promise((resolve, reject) => {
-            docClient.put(payload, (err, data: PutItemOutput) => {
-                if (err) {
-                    console.log(err, err.stack);
-                    reject(err);
-                    throw err;
-                } else {
-                    resolve(consultationDTO);
-                }
-            })
-        });
+            this.read({ last: 1 } as readConsultationInput)
+                .then(({pageInfo: {endCursor}}) => {
+                    const consultationDTO = new ConsultantationBuilder()
+                        .setCONST_ID(++endCursor)
+                        .setByCreateInput(input)
+                        .build();
+
+                    const payload: PutItemInput = {
+                        TableName: `${process.env.STAGE}-consultation`,
+                        Item: {
+                            ...consultationDTO.getItem(),
+                            'SORT': 0,  //날짜 정렬을 위한 GSI용
+                        }
+                    };
+
+                    console.log(consultationDTO.getItem());
+
+                    docClient.put(payload, (err, data: PutItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(consultationDTO);
+                        }
+                    })
+
+                }); 
+            });
     }
 
     public update(input: updateConsultationInput): Promise<ConsultationDTO> {

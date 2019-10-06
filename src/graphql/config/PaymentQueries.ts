@@ -1,7 +1,7 @@
 export const getPaymentQuery = 
 `query {
     getPayment(input: {
-      PYMT_ID: "eb0651f6-9bfa-4b53-ab26-262443793028"
+      PYMT_ID: 1
     }) {
       PYMT_ID
       DATE
@@ -59,7 +59,7 @@ export const createPaymentQuery =
 export const updatePaymentQuery =
 `mutation {
     updatePayment(input: {
-      PYMT_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+      PYMT_ID: 1
       ST: "MOBILE_EXCHANGE"
     }){
       PYMT_ID
@@ -70,7 +70,7 @@ export const updatePaymentQuery =
 export const deletePaymentQuery =
 `mutation {
     deletePayment(input: {
-      PYMT_ID: "80a74970-6e7d-434d-90e0-e14d893a7c1f"
+      PYMT_ID: 1
     }){
       PYMT_ID
       ST

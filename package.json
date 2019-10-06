@@ -9,9 +9,9 @@
     "deploy:dev": "cross-env NODE_ENV=development sls deploy --stage dev",
     "deploy:stage": "cross-env NODE_ENV=development sls deploy --stage stage",
     "deploy:real": "cross-env NODE_ENV=production sls deploy --stage real",
-    "remove:dev" : "sls remove --stage dev",
-    "remove:stage" : "sls remove --stage stage",
-    "remove:real" : "sls remove --stage real"
+    "remove:dev": "sls remove --stage dev",
+    "remove:stage": "sls remove --stage stage",
+    "remove:real": "sls remove --stage real"
   },
   "dependencies": {
     "apollo-server": "^2.9.3",
@@ -19,15 +19,13 @@
     "aws-sdk": "^2.533.0",
     "graphql": "^14.5.6",
     "merge-graphql-schemas": "^1.7.0",
-    "source-map-support": "^0.5.10",
-    "uuid": "^3.3.3"
+    "source-map-support": "^0.5.10"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
     "@types/aws-sdk": "^2.7.0",
     "@types/graphql": "^14.5.0",
     "@types/node": "^10.12.18",
-    "@types/uuid": "^3.4.5",
     "cross-env": "^6.0.0",
     "serverless": "^1.52.2",
     "serverless-offline": "^5.11.0",

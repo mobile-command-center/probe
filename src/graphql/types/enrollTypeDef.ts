@@ -19,14 +19,14 @@ const typeDefs = gql`
   }
 
   input getEnrollmentInput {
-    EL_ID: String!
+    EL_ID: Int!
   }
 
   input readEnrollmentInput {
     first: Int
     last: Int
-    after: String
-    before: String
+    after: Int
+    before: Int
   }
 
   input createEnrollmentInput {
@@ -42,7 +42,7 @@ const typeDefs = gql`
   }
 
   input updateEnrollmentInput {
-    EL_ID: String!
+    EL_ID: Int!
     DATE: String
     WRTR_ID: String
     CONST_ID: String
@@ -55,11 +55,11 @@ const typeDefs = gql`
   }
 
   input deleteEnrollmentInput {
-    EL_ID: String!
+    EL_ID: Int!
   }
 
   type Enrollment {
-    EL_ID: String!
+    EL_ID: Int!
     DATE: String!
     WRTR_ID: String!
     WRT_DATE: String!

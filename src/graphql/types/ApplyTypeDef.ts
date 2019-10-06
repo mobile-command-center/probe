@@ -19,14 +19,14 @@ const typeDefs = gql`
   }
 
   input getApplicationInput {
-    APL_ID: String!
+    APL_ID: Int!
   }
 
   input readApplicationInput {
     first: Int
     last: Int
-    after: String
-    before: String
+    after: Int
+    before: Int
   }
 
   input createApplicationInput {
@@ -37,7 +37,7 @@ const typeDefs = gql`
   }
 
   input updateApplicationInput {
-    APL_ID: String!
+    APL_ID: Int!
     DATE: String
     WRTR_ID: String
     UA: String
@@ -49,7 +49,7 @@ const typeDefs = gql`
   }
 
   type Application {
-    APL_ID: String
+    APL_ID: Int
     DATE: String
     WRTR_ID: String
     WRT_DATE: String

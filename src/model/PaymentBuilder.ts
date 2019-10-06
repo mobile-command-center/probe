@@ -1,4 +1,3 @@
-import { v4 as uuid} from 'uuid';
 import PaymentDTO from './PaymentDTO';
 import { createPaymentInput, PAY_STATE, updatePaymentInput } from '../interfaces/PaymentInterface';
 
@@ -6,7 +5,7 @@ type TypedString = string | undefined;
 type TypedNumber = number | undefined;
 
 export default class PaymentBuilder {
-    private _pymtId: TypedString;
+    private _pymtId: TypedNumber;
     private _date: TypedString;
     private _eeId: TypedString;
     private _payType: TypedString;
@@ -37,7 +36,7 @@ export default class PaymentBuilder {
     }
 
     public setByCreateInput(input: createPaymentInput) {
-        this._pymtId = uuid();
+        this._pymtId = this._pymtId || 1;
         this._date = input.DATE;
         this._eeId = input.EE_ID;
         this._payType = input.PAY_TYPE;
@@ -52,7 +51,7 @@ export default class PaymentBuilder {
     }
 
     public setByUpdateInput(input: updatePaymentInput) {
-        this._pymtId = input.EL_ID || this._pymtId;
+        this._pymtId = input.PYMT_ID || this._pymtId;
         this._date = input.DATE || this._date; 
         this._eeId = input.EE_ID || this._eeId;
         this._payType = input.PAY_TYPE || this._payType;
@@ -66,7 +65,13 @@ export default class PaymentBuilder {
         return this;
     }
 
-    public get PYMT_ID(): TypedString {
+    public setPYMT_ID(pymtId: number) {
+        this._pymtId = pymtId;
+
+        return this;
+    }
+
+    public get PYMT_ID(): TypedNumber {
         return this._pymtId;
     }
 

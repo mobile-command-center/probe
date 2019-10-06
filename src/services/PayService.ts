@@ -92,7 +92,7 @@ class PayService {
     private readFromPagination(input: readPaymentInput, paymentDTO?: PaymentDTO): Promise<PaymentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-payment`,
-            IndexName: 'SortDateGSI',
+            IndexName: 'SortIDGSI',
             ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
@@ -105,7 +105,7 @@ class PayService {
         }
 
         if(paymentDTO) {
-            params.ExclusiveStartKey =  { 'PYMT_ID': paymentDTO.PYMT_ID, 'DATE': paymentDTO.DATE, 'SORT': 0 };
+            params.ExclusiveStartKey =  { 'PYMT_ID': paymentDTO.PYMT_ID, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {
@@ -131,7 +131,7 @@ class PayService {
 
                     if(input.last) {
                         const result = {
-                            edges: data.Items.reverse() as PaymentDTO[],
+                            edges: data.Items as PaymentDTO[],
                             pageInfo: {
                                 endCursor: data.ScannedCount ? data.Items[0].PYMT_ID : null,
                                 startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].PYMT_ID : null,
@@ -148,28 +148,32 @@ class PayService {
     }
 
     public create(input: createPaymentInput): Promise<PaymentDTO> {
-       const paymentDTO = new PaymentBuilder()
-        .setByCreateInput(input)
-        .build();
-       
-        const payload: PutItemInput = {
-            TableName: `${process.env.STAGE}-payment`,
-            Item: {
-                ...paymentDTO.getItem(),
-                'SORT': 0,  //날짜 정렬을 위한 GSI용
-            }
-        }
-
         return new Promise((resolve, reject) => {
-            docClient.put(payload, (err, data: PutItemOutput) => {
-                if (err) {
-                    console.log(err, err.stack);
-                    reject(err);
-                    throw err;
-                } else {
-                    resolve(paymentDTO);
-                }
-            })
+            this.read({ last: 1 } as readPaymentInput)
+                .then(({pageInfo: {endCursor}}) => {
+                    const paymentDTO = new PaymentBuilder()
+                        .setPYMT_ID(endCursor++)
+                        .setByCreateInput(input)
+                        .build();
+                    
+                     const payload: PutItemInput = {
+                         TableName: `${process.env.STAGE}-payment`,
+                         Item: {
+                             ...paymentDTO.getItem(),
+                             'SORT': 0,  //날짜 정렬을 위한 GSI용
+                         }
+                     }
+        
+                    docClient.put(payload, (err, data: PutItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(paymentDTO);
+                        }
+                    });
+                });
         });
     }
 

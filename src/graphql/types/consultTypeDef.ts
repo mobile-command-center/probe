@@ -19,14 +19,14 @@ const typeDefs = gql`
   }
 
   input getConsultationInput {
-    CONST_ID: String!
+    CONST_ID: Int!
   }
 
   input readConsultationInput {
     first: Int
     last: Int
-    after: String
-    before: String
+    after: Int
+    before: Int
   }
 
   input createConsultationInput {
@@ -39,7 +39,7 @@ const typeDefs = gql`
   }
 
   input updateConsultationInput {
-    CONST_ID: String!
+    CONST_ID: Int!
     DATE: String
     WRTR_ID: String
     EE_ID: String
@@ -49,11 +49,11 @@ const typeDefs = gql`
   }
 
   input deleteConsultationInput {
-    CONST_ID: String!
+    CONST_ID: Int!
   }
 
   type Consultation {
-    CONST_ID: String!
+    CONST_ID: Int!
     DATE: String!
     WRTR_ID: String
     WRT_DATE: String

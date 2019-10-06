@@ -92,7 +92,7 @@ class EnrollService {
     private readFromPagination(input: readEnrollmentInput, enrollmentDTO?: EnrollmentDTO): Promise<EnrollmentConnection>  {
         const params: QueryInput = {
             TableName: `${process.env.STAGE}-enrollment`,
-            IndexName: 'SortDateGSI',
+            IndexName: 'SortIDGSI',
             ScanIndexForward: !!input.first || !input.last,
             KeyConditionExpression: '#sort = :sort',
             ExpressionAttributeNames: {
@@ -105,7 +105,7 @@ class EnrollService {
         }
 
         if(enrollmentDTO) {
-            params.ExclusiveStartKey =  { 'EL_ID': enrollmentDTO.EL_ID, 'DATE': enrollmentDTO.DATE, 'SORT': 0 };
+            params.ExclusiveStartKey =  { 'EL_ID': enrollmentDTO.EL_ID, 'SORT': 0 };
         }
 
         return new Promise((resolve, reject) => {
@@ -131,7 +131,7 @@ class EnrollService {
 
                     if(input.last) {
                         const result = {
-                            edges: data.Items.reverse() as EnrollmentDTO[],
+                            edges: data.Items as EnrollmentDTO[],
                             pageInfo: {
                                 endCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
                                 startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
@@ -148,28 +148,32 @@ class EnrollService {
     }
 
     public create(input: createEnrollmentInput): Promise<EnrollmentDTO> {
-       const enrollmentDTO = new EnrollmentBuilder()
-        .setByCreateInput(input)
-        .build();
-       
-        const payload: PutItemInput = {
-            TableName: `${process.env.STAGE}-enrollment`,
-            Item: {
-                ...enrollmentDTO.getItem(),
-                'SORT': 0,  //날짜 정렬을 위한 GSI용
-            }
-        }
-
         return new Promise((resolve, reject) => {
-            docClient.put(payload, (err, data: PutItemOutput) => {
-                if (err) {
-                    console.log(err, err.stack);
-                    reject(err);
-                    throw err;
-                } else {
-                    resolve(enrollmentDTO);
-                }
-            })
+            this.read({ last: 1 } as readEnrollmentInput)
+                .then(({pageInfo: {endCursor}}) => {
+                    const enrollmentDTO = new EnrollmentBuilder()
+                        .setEL_ID(endCursor++)
+                        .setByCreateInput(input)
+                        .build();
+                   
+                    const payload: PutItemInput = {
+                        TableName: `${process.env.STAGE}-enrollment`,
+                        Item: {
+                            ...enrollmentDTO.getItem(),
+                            'SORT': 0,  //날짜 정렬을 위한 GSI용
+                        }
+                    }
+        
+                    docClient.put(payload, (err, data: PutItemOutput) => {
+                        if (err) {
+                            console.log(err, err.stack);
+                            reject(err);
+                            throw err;
+                        } else {
+                            resolve(enrollmentDTO);
+                        }
+                    });
+                });
         });
     }
 

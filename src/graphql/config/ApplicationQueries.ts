@@ -1,7 +1,7 @@
 export const getApplicationQuery = 
 `query {
     getApplication(input: {
-      APL_ID: "a4d781b2-cef0-48e0-9b7c-387eb8b3d16d"
+      APL_ID: 1
     }) {
       APL_ID
       DATE
@@ -45,7 +45,7 @@ export const createApplicationQuery =
 export const updateApplicationQuery =
 `mutation {
     updateApplication(input: {
-      APL_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
+      APL_ID: 1
       FRM_DATA: "{업데이트 된 내용이다}",
     }){
       APL_ID
@@ -56,7 +56,7 @@ export const updateApplicationQuery =
 export const deleteApplicationQuery =
 `mutation {
     deleteApplication(input: {
-      APL_ID: "24778120-559c-4386-a023-8ac145c0c2bc"
+      APL_ID: 1
     }){
       APL_ID
       FRM_DATA
