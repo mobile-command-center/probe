@@ -1,3 +1,5 @@
+import { SearchInput, ReadInput, DynamoDBFilter } from "./CommonInterface";
+
 export interface ConsultationInterface {
     CONST_ID: number;
     DATE: string;
@@ -13,12 +15,11 @@ export interface getConsultationInput {
     CONST_ID: number;
 };
 
-export interface readConsultationInput {
-    first: number;
-    last: number;
-    after: number;
-    before: number;
-};
+export interface readConsultationInput extends ReadInput {};
+
+export interface searchConsultationInput extends SearchInput {
+    filter: searchConsultationInputFilter;
+}
 
 export interface createConsultationInput {
     DATE: string;
@@ -42,6 +43,16 @@ export interface updateConsultationInput {
 
 export interface deleteConsultationInput {
     CONST_ID: number;
+}
+export interface searchConsultationInputFilter {
+    CONST_ID?: DynamoDBFilter;
+    DATE?: DynamoDBFilter;
+    WRTR_ID?: DynamoDBFilter;
+    WRT_DATE?: DynamoDBFilter;
+    EE_ID?: DynamoDBFilter;
+    C_TEL?: DynamoDBFilter;
+    MEMO?: DynamoDBFilter;
+    P_SUBSIDY_AMT?: DynamoDBFilter;
 }
 
 export interface ConsultationConnection {

@@ -1,5 +1,5 @@
 import ConsultService from "../../services/ConsultService"
-import { ConsultationConnection, getConsultationInput, createConsultationInput, updateConsultationInput, deleteConsultationInput, readConsultationInput} from '../../interfaces/ConsultationInterface'
+import { ConsultationConnection, getConsultationInput, createConsultationInput, updateConsultationInput, deleteConsultationInput, readConsultationInput, searchConsultationInput} from '../../interfaces/ConsultationInterface'
 import ConsultationDTO from '../../model/ConsultationDTO';
 
 const resolvers = {
@@ -9,6 +9,9 @@ const resolvers = {
         },
         readConsultation: (_, {input}:{input: readConsultationInput}): Promise<ConsultationConnection> => {
             return ConsultService.getInstance().read(input);
+        },
+        searchConsultation: (_, {input}: {input: searchConsultationInput}): Promise<ConsultationConnection> => {
+            return ConsultService.getInstance().search(input);
         }
     },
     Mutation: {

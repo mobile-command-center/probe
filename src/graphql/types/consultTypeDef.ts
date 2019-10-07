@@ -27,6 +27,14 @@ const typeDefs = gql`
     before: Int
   }
 
+  input searchConsultationInput {
+    first: Int
+    last: Int
+    after: Int
+    before: Int
+    filter: searchConsultationInputFilter!
+  }
+
   input createConsultationInput {
     DATE: String!
     WRTR_ID: String!
@@ -50,6 +58,30 @@ const typeDefs = gql`
     CONST_ID: Int!
   }
 
+  input searchConsultationInputFilter {
+    CONST_ID: ConsultationFilter
+    DATE: ConsultationFilter
+    WRTR_ID: ConsultationFilter
+    WRT_DATE: ConsultationFilter
+    EE_ID: ConsultationFilter
+    C_TEL: ConsultationFilter
+    MEMO: ConsultationFilter
+    P_SUBSIDY_AMT : ConsultationFilter
+  }
+
+  input ConsultationFilter {
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+    beginsWith: String
+  }
+
   type Consultation {
     CONST_ID: Int!
     DATE: String!
@@ -64,6 +96,7 @@ const typeDefs = gql`
   type Query {
     getConsultation(input: getConsultationInput!): Consultation!
     readConsultation(input: readConsultationInput!): ConsultationConnection!
+    searchConsultation(input: searchConsultationInput): ConsultationConnection!
   }
 
   type Mutation {

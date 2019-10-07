@@ -1,7 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import ConsultationDTO from '../model/ConsultationDTO';
 import ConsultantationBuilder from '../model/ConsultationBuilder';
-import { ConsultationConnection, createConsultationInput, readConsultationInput, deleteConsultationInput, updateConsultationInput, getConsultationInput } from '../interfaces/ConsultationInterface';
+import { ConsultationConnection, createConsultationInput, readConsultationInput, searchConsultationInput, deleteConsultationInput, updateConsultationInput, getConsultationInput } from '../interfaces/ConsultationInterface';
+import InputUtils from '../utils/InputUtils';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -133,6 +134,50 @@ class ConsultService {
                             startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
                         },
                         totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
+                }
+            });
+        });
+    }
+
+    public search(input: searchConsultationInput): Promise<ConsultationConnection> {
+        const params: QueryInput = {
+            TableName: `${process.env.STAGE}-consultation`,
+            IndexName: 'SortIDGSI',
+            KeyConditionExpression: '#sort = :sort',
+            ExpressionAttributeNames: {
+                '#sort': 'SORT',
+                ...InputUtils.getExpressionAttributeNames<searchConsultationInput>(input)
+            },
+            ExpressionAttributeValues: {
+                ":sort": 0,
+                ...InputUtils.getExpressionAttributeValues<searchConsultationInput>(input)
+            },
+            FilterExpression: InputUtils.getFilterExpression<searchConsultationInput>(input),
+            Limit: input.first || input.last,
+        }
+
+        if(input.after || input.before) {
+            params.ExclusiveStartKey =  {'CONST_ID': input.after || input.before, 'SORT': 0 };
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.query(params, (err, data: QueryOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                    throw err;
+                } else {
+                    console.log(data);
+
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as ConsultationDTO[],
+                        pageInfo: {
+                            endCursor: data.Count ? input.first ? data.Items[0].CONST_ID : data.Items[data.Count - 1].CONST_ID : null,
+                            startCursor: data.Count ? input.first ? data.Items[data.Count - 1].CONST_ID : data.Items[0].CONST_ID : null,
+                        },
+                        totalCount: data.Count
                     };
                     return resolve(result);
                 }
