@@ -1,5 +1,5 @@
 import ApplicationService from "../../services/ApplicationService";
-import { ApplicationConnection, getApplicationInput, createApplicationInput, updateApplicationInput, deleteApplicationInput, readApplicationInput} from '../../interfaces/ApplicationInterface';
+import { ApplicationConnection, getApplicationInput, createApplicationInput, updateApplicationInput, deleteApplicationInput, readApplicationInput, searchApplicationInput} from '../../interfaces/ApplicationInterface';
 import ApplicationDTO from '../../model/ApplicationDTO';
 
 const resolvers = {
@@ -9,6 +9,9 @@ const resolvers = {
         },
         readApplication: (_, {input}:{input: readApplicationInput}): Promise<ApplicationConnection> => {
             return ApplicationService.getInstance().read(input);
+        },
+        searchApplication: (_, {input}: {input: searchApplicationInput}): Promise<ApplicationConnection> => {
+            return ApplicationService.getInstance().search(input);
         }
     },
     Mutation: {

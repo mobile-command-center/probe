@@ -45,7 +45,6 @@ export interface deleteConsultationInput {
     CONST_ID: number;
 }
 export interface searchConsultationInputFilter {
-    CONST_ID?: DynamoDBFilter;
     DATE?: DynamoDBFilter;
     WRTR_ID?: DynamoDBFilter;
     WRT_DATE?: DynamoDBFilter;

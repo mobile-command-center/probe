@@ -145,7 +145,7 @@ class PayService {
             this.read({ last: 1 } as readPaymentInput)
                 .then(({pageInfo: {endCursor}}) => {
                     const paymentDTO = new PaymentBuilder()
-                        .setPYMT_ID(endCursor++)
+                        .setPYMT_ID(++endCursor)
                         .setByCreateInput(input)
                         .build();
                     

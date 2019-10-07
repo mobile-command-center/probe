@@ -145,7 +145,7 @@ class EnrollService {
             this.read({ last: 1 } as readEnrollmentInput)
                 .then(({pageInfo: {endCursor}}) => {
                     const enrollmentDTO = new EnrollmentBuilder()
-                        .setEL_ID(endCursor++)
+                        .setEL_ID(++endCursor)
                         .setByCreateInput(input)
                         .build();
                    

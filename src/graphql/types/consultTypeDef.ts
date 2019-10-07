@@ -79,7 +79,6 @@ const typeDefs = gql`
     contains: String
     notContains: String
     between: [String]
-    beginsWith: String
   }
 
   type Consultation {

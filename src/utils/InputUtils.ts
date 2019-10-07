@@ -1,23 +1,9 @@
-import { searchConsultationInput } from "../interfaces/ConsultationInterface";
 import { ExpressionAttributeNameMap } from "aws-sdk/clients/dynamodb";
 import CastingUtils from "./CastingUtils";
 import { SearchInput } from "../interfaces/CommonInterface";
 
 class InputUtils {
     public static getFilterExpression<T extends SearchInput>(input: T) {
-        // export interface ConsultationFilter {
-        //     ne: String
-        //     eq: String
-        //     le: String
-        //     lt: String
-        //     ge: String
-        //     gt: String
-        //     contains: String
-        //     notContains: String
-        //     between: [String]
-        //     beginsWith: String
-        // }
-
         return Object.entries(input.filter)
         .map(([key, filters]) => {
             return Object.entries(filters)

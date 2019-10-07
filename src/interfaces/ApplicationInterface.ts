@@ -1,3 +1,5 @@
+import { ReadInput, SearchInput, DynamoDBFilter } from "./CommonInterface";
+
 export interface ApplicationInterface {
     APL_ID: number;
     DATE: string;
@@ -11,12 +13,11 @@ export interface getApplicationInput {
     APL_ID: number;
 };
 
-export interface readApplicationInput {
-    first: number;
-    last: number;
-    after: number;
-    before: number;
-};
+export interface readApplicationInput extends ReadInput {};
+
+export interface searchApplicationInput extends SearchInput {
+    filter: searchApplicationInputFilter;
+}
 
 export interface createApplicationInput {
     DATE: string;
@@ -36,6 +37,15 @@ export interface updateApplicationInput {
 
 export interface deleteApplicationInput {
     APL_ID: number;
+}
+
+export interface searchApplicationInputFilter {
+    APL_ID?: DynamoDBFilter;
+    DATE?: DynamoDBFilter;
+    WRTR_ID?: DynamoDBFilter;
+    WRT_DATE?: DynamoDBFilter;
+    UA?: DynamoDBFilter;
+    FRM_DATA?: DynamoDBFilter;
 }
 
 export interface ApplicationConnection {

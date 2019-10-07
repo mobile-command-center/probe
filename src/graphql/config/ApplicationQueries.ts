@@ -29,6 +29,29 @@ export const readApplicationQuery =
   }
 }`;
 
+export const searchApplicationQuery = 
+`query {
+    searchApplication(input: {
+      first: 10
+      filter: {
+        WRTR_ID: {
+          contains: "USER"
+        }
+      }
+    }) {
+      edges {
+        APL_ID
+        DATE
+        WRTR_ID
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+      totalCount
+    }
+}`;
+
 export const createApplicationQuery =
 `mutation {
     createApplication(input: {

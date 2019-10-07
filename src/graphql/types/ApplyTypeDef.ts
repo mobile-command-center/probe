@@ -27,6 +27,14 @@ const typeDefs = gql`
     before: Int
   }
 
+  input searchApplicationInput {
+    first: Int
+    last: Int
+    after: Int
+    before: Int
+    filter: searchApplicationInputFilter!
+  }
+
   input createApplicationInput {
     DATE: String!
     WRTR_ID: String!
@@ -46,6 +54,29 @@ const typeDefs = gql`
     APL_ID: String!
   }
 
+  input searchApplicationInputFilter {
+    CONST_ID: ApplicationFilter
+    DATE: ApplicationFilter
+    WRTR_ID: ApplicationFilter
+    WRT_DATE: ApplicationFilter
+    EE_ID: ApplicationFilter
+    C_TEL: ApplicationFilter
+    MEMO: ApplicationFilter
+    P_SUBSIDY_AMT : ApplicationFilter
+  }
+
+  input ApplicationFilter {
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+  }
+
   type Application {
     APL_ID: Int
     DATE: String
@@ -58,6 +89,7 @@ const typeDefs = gql`
   type Query {
     getApplication(input: getApplicationInput!): Application!
     readApplication(input: readApplicationInput!): ApplicationConnection!
+    searchApplication(input: searchApplicationInput!): ApplicationConnection!
   }
 
   type Mutation {

@@ -37,8 +37,8 @@ export const searchConsultationQuery =
     searchConsultation(input: {
       first: 10
       filter: {
-        CONST_ID: {
-          eq: 1
+        MEMO: {
+          contains: "메모"
         }
       }
     }) {

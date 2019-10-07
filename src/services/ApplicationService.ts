@@ -1,7 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import ApplicationDTO from '../model/ApplicationDTO';
 import ApplicationBuilder from '../model/ApplicationBuilder';
-import { ApplicationConnection, getApplicationInput, createApplicationInput, readApplicationInput, deleteApplicationInput, updateApplicationInput } from '../interfaces/ApplicationInterface';
+import { ApplicationConnection, getApplicationInput, createApplicationInput, readApplicationInput, deleteApplicationInput, updateApplicationInput, searchApplicationInput } from '../interfaces/ApplicationInterface';
+import InputUtils from '../utils/InputUtils';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -144,12 +145,57 @@ class ApplicationService {
         });
     }
 
+
+    public search(input: searchApplicationInput): Promise<ApplicationConnection> {
+        const params: QueryInput = {
+            TableName: `${process.env.STAGE}-application`,
+            IndexName: 'SortIDGSI',
+            KeyConditionExpression: '#sort = :sort',
+            ExpressionAttributeNames: {
+                '#sort': 'SORT',
+                ...InputUtils.getExpressionAttributeNames<searchApplicationInput>(input)
+            },
+            ExpressionAttributeValues: {
+                ":sort": 0,
+                ...InputUtils.getExpressionAttributeValues<searchApplicationInput>(input)
+            },
+            FilterExpression: InputUtils.getFilterExpression<searchApplicationInput>(input),
+            Limit: input.first || input.last,
+        }
+
+        if(input.after || input.before) {
+            params.ExclusiveStartKey =  {'APL_ID': input.after || input.before, 'SORT': 0 };
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.query(params, (err, data: QueryOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                    throw err;
+                } else {
+                    console.log(data);
+
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as ApplicationDTO[],
+                        pageInfo: {
+                            endCursor: data.Count ? input.first ? data.Items[0].APL_ID : data.Items[data.Count - 1].APL_ID : null,
+                            startCursor: data.Count ? input.first ? data.Items[data.Count - 1].APL_ID : data.Items[0].APL_ID : null,
+                        },
+                        totalCount: data.Count
+                    };
+                    return resolve(result);
+                }
+            });
+        });
+    }
+
     public create(input: createApplicationInput): Promise<ApplicationDTO> {
         return new Promise((resolve, reject) => {
             this.read({ last: 1 } as readApplicationInput)
             .then(({pageInfo: {endCursor}}) => {
                 const applicationDTO = new ApplicationBuilder()
-                    .setAPL_ID(endCursor++)
+                    .setAPL_ID(++endCursor)
                     .setByCreateInput(input)
                     .build();
                
