@@ -1,4 +1,4 @@
-import { SearchInput, ReadInput, DynamoDBFilter } from "./CommonInterface";
+import { SearchInput, ReadInput, DynamoDBStringFilter } from "./CommonInterface";
 
 export interface ConsultationInterface {
     CONST_ID: number;
@@ -45,13 +45,13 @@ export interface deleteConsultationInput {
     CONST_ID: number;
 }
 export interface searchConsultationInputFilter {
-    DATE?: DynamoDBFilter;
-    WRTR_ID?: DynamoDBFilter;
-    WRT_DATE?: DynamoDBFilter;
-    EE_ID?: DynamoDBFilter;
-    C_TEL?: DynamoDBFilter;
-    MEMO?: DynamoDBFilter;
-    P_SUBSIDY_AMT?: DynamoDBFilter;
+    DATE?: DynamoDBStringFilter;
+    WRTR_ID?: DynamoDBStringFilter;
+    WRT_DATE?: DynamoDBStringFilter;
+    EE_ID?: DynamoDBStringFilter;
+    C_TEL?: DynamoDBStringFilter;
+    MEMO?: DynamoDBStringFilter;
+    P_SUBSIDY_AMT?: DynamoDBStringFilter;
 }
 
 export interface ConsultationConnection {

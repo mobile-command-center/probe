@@ -1,4 +1,4 @@
-import { ReadInput, SearchInput, DynamoDBFilter } from "./CommonInterface";
+import { ReadInput, SearchInput, DynamoDBStringFilter } from "./CommonInterface";
 
 export interface ApplicationInterface {
     APL_ID: number;
@@ -40,12 +40,12 @@ export interface deleteApplicationInput {
 }
 
 export interface searchApplicationInputFilter {
-    APL_ID?: DynamoDBFilter;
-    DATE?: DynamoDBFilter;
-    WRTR_ID?: DynamoDBFilter;
-    WRT_DATE?: DynamoDBFilter;
-    UA?: DynamoDBFilter;
-    FRM_DATA?: DynamoDBFilter;
+    APL_ID?: DynamoDBStringFilter;
+    DATE?: DynamoDBStringFilter;
+    WRTR_ID?: DynamoDBStringFilter;
+    WRT_DATE?: DynamoDBStringFilter;
+    UA?: DynamoDBStringFilter;
+    FRM_DATA?: DynamoDBStringFilter;
 }
 
 export interface ApplicationConnection {

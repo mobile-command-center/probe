@@ -1,4 +1,4 @@
-import { DynamoDBFilter, ReadInput, SearchInput } from "./CommonInterface";
+import { DynamoDBStringFilter, ReadInput, SearchInput } from "./CommonInterface";
 
 export interface EnrollmentInterface {
     EL_ID: number;
@@ -53,16 +53,16 @@ export interface deleteEnrollmentInput {
 }
 
 export interface searchEnrollmentInputFilter {
-    DATE?: DynamoDBFilter;
-    WRTR_ID?: DynamoDBFilter;
-    WRT_DATE?: DynamoDBFilter; 
-    CONST_ID?: DynamoDBFilter;
-    EE_ID?: DynamoDBFilter;
-    APL_ID?: DynamoDBFilter;
-    CPAN?: DynamoDBFilter;
-    PROD?: DynamoDBFilter;
-    ST?: DynamoDBFilter;
-    GIFT_AMT?: DynamoDBFilter;
+    DATE?: DynamoDBStringFilter;
+    WRTR_ID?: DynamoDBStringFilter;
+    WRT_DATE?: DynamoDBStringFilter; 
+    CONST_ID?: DynamoDBStringFilter;
+    EE_ID?: DynamoDBStringFilter;
+    APL_ID?: DynamoDBStringFilter;
+    CPAN?: DynamoDBStringFilter;
+    PROD?: DynamoDBStringFilter;
+    ST?: DynamoDBStringFilter;
+    GIFT_AMT?: DynamoDBStringFilter;
 }
 
 export interface EnrollmentConnection {

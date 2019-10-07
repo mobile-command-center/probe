@@ -9,7 +9,7 @@ export interface SearchInput extends ReadInput {
     filter: unknown;
 }
 
-export interface DynamoDBFilter {
+export interface DynamoDBStringFilter {
     ne: String
     eq: String
     le: String
