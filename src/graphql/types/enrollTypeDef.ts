@@ -65,19 +65,19 @@ const typeDefs = gql`
   }
 
   input searchEnrollmentInputFilter {
-    DATE: EnrollmentFilter
-    WRTR_ID: EnrollmentFilter
-    WRT_DATE: EnrollmentFilter
-    CONST_ID: EnrollmentFilter
-    EE_ID: EnrollmentFilter
-    APL_ID: EnrollmentFilter
-    CPAN: EnrollmentFilter
-    PROD: EnrollmentFilter
-    ST: EnrollmentFilter
-    GIFT_AMT: EnrollmentFilter
+    DATE: EnrollmentStringFilter
+    WRTR_ID: EnrollmentStringFilter
+    WRT_DATE: EnrollmentStringFilter
+    CONST_ID: EnrollmentStringFilter
+    EE_ID: EnrollmentStringFilter
+    APL_ID: EnrollmentStringFilter
+    CPAN: EnrollmentStringFilter
+    PROD: EnrollmentStringFilter
+    ST: EnrollmentStringFilter
+    GIFT_AMT: EnrollmentNumberFilter
   }
 
-  input EnrollmentFilter {
+  input EnrollmentStringFilter {
     ne: String
     eq: String
     le: String
@@ -87,6 +87,18 @@ const typeDefs = gql`
     contains: String
     notContains: String
     between: [String]
+  }
+
+  input EnrollmentNumberFilter {
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    contains: Int
+    notContains: Int
+    between: [Int]
   }
 
   type Enrollment {

@@ -1,5 +1,4 @@
 import { ExpressionAttributeNameMap } from "aws-sdk/clients/dynamodb";
-import CastingUtils from "./CastingUtils";
 import { SearchInput } from "../interfaces/CommonInterface";
 
 class InputUtils {
@@ -48,10 +47,10 @@ class InputUtils {
     public static getExpressionAttributeValues<T extends SearchInput>(input: T): object {
         return Object.entries(input.filter)
         .reduce((result, [key, filters]) => {
-            result[`:${key}`] = Object.entries(filters).reduce((result2, [filterKey, filterValue] : [string, string]) => {
+            result[`:${key}`] = Object.entries(filters).reduce((result2, [filterKey, filterValue] : [string, unknown]) => {
                 return [
                     ...result2,
-                    CastingUtils.checkStringNumber(filterValue) ? parseInt(filterValue, 10) : filterValue
+                    filterValue
                 ];
             }, [])[0];
 

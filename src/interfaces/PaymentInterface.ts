@@ -1,4 +1,4 @@
-import { DynamoDBStringFilter, ReadInput, SearchInput } from "./CommonInterface";
+import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } from "./CommonInterface";
 
 export interface PaymentInterface {
     PYMT_ID: number;
@@ -54,7 +54,7 @@ export interface searchPaymentInputFilter {
     DATE?: DynamoDBStringFilter;
     EE_ID?: DynamoDBStringFilter;
     PAY_TYPE?: DynamoDBStringFilter;
-    PAY_AMT?: DynamoDBStringFilter;
+    PAY_AMT?: DynamoDBNumberFilter;
     WRTR_ID?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
     CONST_ID?: DynamoDBStringFilter;

@@ -21,3 +21,16 @@ export interface DynamoDBStringFilter {
     between: [String]
     beginsWith: String
 }
+
+export interface DynamoDBNumberFilter {
+    ne: number
+    eq: number
+    le: number
+    lt: number
+    ge: number
+    gt: number
+    contains: number
+    notContains: number
+    between: [number]
+    beginsWith: number
+}

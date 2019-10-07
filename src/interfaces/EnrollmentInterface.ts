@@ -1,4 +1,4 @@
-import { DynamoDBStringFilter, ReadInput, SearchInput } from "./CommonInterface";
+import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } from "./CommonInterface";
 
 export interface EnrollmentInterface {
     EL_ID: number;
@@ -62,7 +62,7 @@ export interface searchEnrollmentInputFilter {
     CPAN?: DynamoDBStringFilter;
     PROD?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
-    GIFT_AMT?: DynamoDBStringFilter;
+    GIFT_AMT?: DynamoDBNumberFilter;
 }
 
 export interface EnrollmentConnection {

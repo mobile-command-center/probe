@@ -30,7 +30,7 @@ export interface updateApplicationInput {
     APL_ID: number;
     DATE?: string;
     WRTR_ID?: string;
-    WRT_DATE?: string;s
+    WRT_DATE?: string;
     UA?: string;
     FRM_DATA?: string;
 }
@@ -40,7 +40,6 @@ export interface deleteApplicationInput {
 }
 
 export interface searchApplicationInputFilter {
-    APL_ID?: DynamoDBStringFilter;
     DATE?: DynamoDBStringFilter;
     WRTR_ID?: DynamoDBStringFilter;
     WRT_DATE?: DynamoDBStringFilter;

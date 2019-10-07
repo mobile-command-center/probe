@@ -67,7 +67,7 @@ const typeDefs = gql`
     DATE: PaymentStringFilter
     EE_ID: PaymentStringFilter
     PAY_TYPE: PaymentStringFilter
-    PAY_AMT: PaymentStringFilter
+    PAY_AMT: PaymentNumberFilter
     WRTR_ID: PaymentStringFilter
     WRT_DATE: PaymentStringFilter
     ST: PaymentStringFilter
@@ -85,6 +85,18 @@ const typeDefs = gql`
     contains: String
     notContains: String
     between: [String]
+  }
+
+  input PaymentNumberFilter {
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    contains: Int
+    notContains: Int
+    between: [Int]
   }
 
   type Payment {
