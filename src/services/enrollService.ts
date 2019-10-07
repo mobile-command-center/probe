@@ -1,7 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import EnrollmentDTO from '../model/EnrollmentDTO';
-import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, getEnrollmentInput } from '../interfaces/EnrollmentInterface';
+import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, getEnrollmentInput, searchEnrollmentInput } from '../interfaces/EnrollmentInterface';
 import EnrollmentBuilder from '../model/enrollmentBuilder';
+import InputUtils from '../utils/InputUtils';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -133,6 +134,49 @@ class EnrollService {
                             startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
                         },
                         totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
+                }
+            });
+        });
+    }
+    public search(input: searchEnrollmentInput): Promise<EnrollmentConnection> {
+        const params: QueryInput = {
+            TableName: `${process.env.STAGE}-enrollment`,
+            IndexName: 'SortIDGSI',
+            KeyConditionExpression: '#sort = :sort',
+            ExpressionAttributeNames: {
+                '#sort': 'SORT',
+                ...InputUtils.getExpressionAttributeNames<searchEnrollmentInput>(input)
+            },
+            ExpressionAttributeValues: {
+                ":sort": 0,
+                ...InputUtils.getExpressionAttributeValues<searchEnrollmentInput>(input)
+            },
+            FilterExpression: InputUtils.getFilterExpression<searchEnrollmentInput>(input),
+            Limit: input.first || input.last,
+        }
+
+        if(input.after || input.before) {
+            params.ExclusiveStartKey =  {'EL_ID': input.after || input.before, 'SORT': 0 };
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.query(params, (err, data: QueryOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                    throw err;
+                } else {
+                    console.log(data);
+
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as EnrollmentDTO[],
+                        pageInfo: {
+                            endCursor: data.Count ? input.first ? data.Items[0].EL_ID : data.Items[data.Count - 1].EL_ID : null,
+                            startCursor: data.Count ? input.first ? data.Items[data.Count - 1].EL_ID : data.Items[0].EL_ID : null,
+                        },
+                        totalCount: data.Count
                     };
                     return resolve(result);
                 }

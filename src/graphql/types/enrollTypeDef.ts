@@ -27,6 +27,14 @@ const typeDefs = gql`
     before: Int
   }
 
+  input searchEnrollmentInput {
+    first: Int
+    last: Int
+    after: Int
+    before: Int
+    filter: searchEnrollmentInputFilter!
+  }
+
   input createEnrollmentInput {
     DATE: String!
     WRTR_ID: String!
@@ -56,6 +64,31 @@ const typeDefs = gql`
     EL_ID: Int!
   }
 
+  input searchEnrollmentInputFilter {
+    DATE: EnrollmentFilter
+    WRTR_ID: EnrollmentFilter
+    WRT_DATE: EnrollmentFilter
+    CONST_ID: EnrollmentFilter
+    EE_ID: EnrollmentFilter
+    APL_ID: EnrollmentFilter
+    CPAN: EnrollmentFilter
+    PROD: EnrollmentFilter
+    ST: EnrollmentFilter
+    GIFT_AMT: EnrollmentFilter
+  }
+
+  input EnrollmentFilter {
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+  }
+
   type Enrollment {
     EL_ID: Int!
     DATE: String!
@@ -73,6 +106,7 @@ const typeDefs = gql`
   type Query {
     getEnrollment(input: getEnrollmentInput!): Enrollment!
     readEnrollment(input: readEnrollmentInput!): EnrollmentConnection!
+    searchEnrollment(input: searchEnrollmentInput!): EnrollmentConnection!
   }
 
   type Mutation {
