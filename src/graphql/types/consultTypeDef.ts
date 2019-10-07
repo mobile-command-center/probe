@@ -59,7 +59,6 @@ const typeDefs = gql`
   }
 
   input searchConsultationInputFilter {
-    CONST_ID: ConsultationFilter
     DATE: ConsultationFilter
     WRTR_ID: ConsultationFilter
     WRT_DATE: ConsultationFilter
