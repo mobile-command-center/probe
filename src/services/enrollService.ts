@@ -117,7 +117,7 @@ class EnrollService {
                 } else {
                     if(input.first) {
                         const result = {
-                            edges: data.Items as EnrollmentDTO[],
+                            edges: data.Items.reverse() as EnrollmentDTO[],
                             pageInfo: {
                                 endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
                                 startCursor: data.ScannedCount ? data.Items[0].EL_ID : null,

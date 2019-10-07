@@ -120,7 +120,7 @@ class ApplicationService {
 
                     if(input.first) {
                         const result = {
-                            edges: data.Items as ApplicationDTO[],
+                            edges: data.Items.reverse() as ApplicationDTO[],
                             pageInfo: {
                                 endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
                                 startCursor: data.ScannedCount ? data.Items[0].APL_ID : null,

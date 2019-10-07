@@ -117,7 +117,7 @@ class PayService {
                 } else {
                     if(input.first) {
                         const result = {
-                            edges: data.Items as PaymentDTO[],
+                            edges: data.Items.reverse() as PaymentDTO[],
                             pageInfo: {
                                 endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].PYMT_ID : null,
                                 startCursor: data.ScannedCount ? data.Items[0].PYMT_ID : null,
