@@ -1,4 +1,4 @@
-import { PaymentConnection, getPaymentInput, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput } from "../../interfaces/PaymentInterface";
+import { PaymentConnection, getPaymentInput, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput, searchPaymentInput } from "../../interfaces/PaymentInterface";
 import PaymentDTO from "../../model/PaymentDTO";
 import PayService from "../../services/PayService";
 
@@ -9,6 +9,9 @@ const resolvers = {
         },
         readPayment: (_, {input}:{input: readPaymentInput}): Promise<PaymentConnection> => {
             return PayService.getInstance().read(input);
+        },
+        searchPayment: (_, {input}: {input: searchPaymentInput}): Promise<PaymentConnection> => {
+            return PayService.getInstance().search(input);
         }
     },
     Mutation: {

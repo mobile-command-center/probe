@@ -1,3 +1,5 @@
+import { DynamoDBFilter, ReadInput, SearchInput } from "./CommonInterface";
+
 export interface PaymentInterface {
     PYMT_ID: number;
     DATE: string;
@@ -15,11 +17,10 @@ export interface getPaymentInput {
     PYMT_ID: number;
 }
 
-export interface readPaymentInput {
-    first: number;
-    last: number;
-    after: number;
-    before: number;
+export interface readPaymentInput extends ReadInput {};
+
+export interface searchPaymentInput extends SearchInput {
+    filter: searchPaymentInputFilter;
 }
 
 export interface createPaymentInput {
@@ -47,6 +48,17 @@ export interface updatePaymentInput {
 
 export interface deletePaymentInput {
     PYMT_ID: number;
+}
+
+export interface searchPaymentInputFilter {
+    DATE?: DynamoDBFilter;
+    EE_ID?: DynamoDBFilter;
+    PAY_TYPE?: DynamoDBFilter;
+    PAY_AMT?: DynamoDBFilter;
+    WRTR_ID?: DynamoDBFilter;
+    ST?: DynamoDBFilter;
+    CONST_ID?: DynamoDBFilter;
+    EL_ID?: DynamoDBFilter;
 }
 
 export interface PaymentConnection {

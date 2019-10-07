@@ -1,7 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import PaymentDTO from '../model/PaymentDTO';
-import { PaymentConnection, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput, getPaymentInput } from '../interfaces/PaymentInterface';
+import { PaymentConnection, createPaymentInput, readPaymentInput, updatePaymentInput, deletePaymentInput, getPaymentInput, searchPaymentInput } from '../interfaces/PaymentInterface';
 import PaymentBuilder from '../model/PaymentBuilder';
+import InputUtils from '../utils/InputUtils';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -133,6 +134,50 @@ class PayService {
                             startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.PYMT_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].PYMT_ID : null,
                         },
                         totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
+                }
+            });
+        });
+    }
+
+    public search(input: searchPaymentInput): Promise<PaymentConnection> {
+        const params: QueryInput = {
+            TableName: `${process.env.STAGE}-payment`,
+            IndexName: 'SortIDGSI',
+            KeyConditionExpression: '#sort = :sort',
+            ExpressionAttributeNames: {
+                '#sort': 'SORT',
+                ...InputUtils.getExpressionAttributeNames<searchPaymentInput>(input)
+            },
+            ExpressionAttributeValues: {
+                ":sort": 0,
+                ...InputUtils.getExpressionAttributeValues<searchPaymentInput>(input)
+            },
+            FilterExpression: InputUtils.getFilterExpression<searchPaymentInput>(input),
+            Limit: input.first || input.last,
+        }
+
+        if(input.after || input.before) {
+            params.ExclusiveStartKey =  {'EL_ID': input.after || input.before, 'SORT': 0 };
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.query(params, (err, data: QueryOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                    throw err;
+                } else {
+                    console.log(data);
+
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as PaymentDTO[],
+                        pageInfo: {
+                            endCursor: data.Count ? input.first ? data.Items[0].EL_ID : data.Items[data.Count - 1].EL_ID : null,
+                            startCursor: data.Count ? input.first ? data.Items[data.Count - 1].EL_ID : data.Items[0].EL_ID : null,
+                        },
+                        totalCount: data.Count
                     };
                     return resolve(result);
                 }
