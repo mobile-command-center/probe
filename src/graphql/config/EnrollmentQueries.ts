@@ -29,8 +29,6 @@ export const readEnrollmentQuery =
       pageInfo {
         startCursor
         endCursor
-        hasNextPage
-        hasPreviousPage
       }
       totalCount
     }

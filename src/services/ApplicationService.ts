@@ -78,8 +78,6 @@ class ApplicationService {
                             pageInfo: {
                                 endCursor: null,
                                 startCursor: null,
-                                hasNextPage: false,
-                                hasPreviousPage: false
                             },
                             totalCount: 0
                         }
@@ -118,33 +116,29 @@ class ApplicationService {
                 } else {
                     console.log(data);
 
-                    if(input.first) {
+                    if(data.ScannedCount < 1) {
                         const result = {
-                            edges: data.Items.reverse() as ApplicationDTO[],
+                            edges: [],
                             pageInfo: {
-                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
-                                startCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
-                                hasNextPage: (data.ScannedCount === input.first),
-                                hasPreviousPage: !!applicationDTO
+                                endCursor: null,
+                                startCursor: null,
+                                hasNextPage: false,
                             },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
+                            totalCount: 0
+                        }
+                        resolve(result);
+                        return;
                     }
 
-                    if(input.last) {
-                        const result = {
-                            edges: data.Items as ApplicationDTO[],
-                            pageInfo: {
-                                endCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
-                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
-                                hasNextPage: (data.ScannedCount === input.last),
-                                hasPreviousPage: !!applicationDTO
-                            },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
-                    }
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as ApplicationDTO[],
+                        pageInfo: {
+                            endCursor: data.ScannedCount ? data.Items[0].APL_ID : null,
+                            startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.APL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].APL_ID : null,
+                        },
+                        totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
                 }
             });
         });

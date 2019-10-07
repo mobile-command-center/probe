@@ -53,6 +53,4 @@ export interface ConsultationConnection {
 export interface PageInfo {
     endCursor?: number;
     startCursor?: number;
-    hasNextPage: Boolean;
-    hasPreviousPage: Boolean;
 }

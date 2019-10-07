@@ -28,8 +28,6 @@ export const readPaymentQuery =
       pageInfo {
         startCursor
         endCursor
-        hasNextPage
-        hasPreviousPage
       }
       totalCount
     }

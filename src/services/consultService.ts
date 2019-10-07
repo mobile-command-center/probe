@@ -77,8 +77,6 @@ class ConsultService {
                             pageInfo: {
                                 endCursor: null,
                                 startCursor: null,
-                                hasNextPage: false,
-                                hasPreviousPage: false
                             },
                             totalCount: 0
                         }
@@ -121,8 +119,6 @@ class ConsultService {
                             pageInfo: {
                                 endCursor: null,
                                 startCursor: null,
-                                hasNextPage: false,
-                                hasPreviousPage: false
                             },
                             totalCount: 0
                         }
@@ -130,34 +126,15 @@ class ConsultService {
                         return;
                     }
 
-                    if(input.first) {
-                        console.log(data.Items);
-                        const result = {
-                            edges: data.Items.reverse() as ConsultationDTO[],
-                            pageInfo: {
-                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
-                                startCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
-                                hasNextPage: (data.ScannedCount === input.first),
-                                hasPreviousPage: !!consultationDTO
-                            },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
-                    }
-
-                    if(input.last) {
-                        const result = {
-                            edges: data.Items as ConsultationDTO[],
-                            pageInfo: {
-                                endCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
-                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
-                                hasNextPage: (data.ScannedCount === input.last),
-                                hasPreviousPage: !!consultationDTO
-                            },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
-                    }
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as ConsultationDTO[],
+                        pageInfo: {
+                            endCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
+                            startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
+                        },
+                        totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
                 }
             });
         });

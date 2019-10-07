@@ -8,8 +8,6 @@ const typeDefs = gql`
   type PageInfo {
     endCursor: String
     startCursor: String
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
   }
 
   type EnrollmentConnection {

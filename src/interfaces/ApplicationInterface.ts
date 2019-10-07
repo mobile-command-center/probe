@@ -47,6 +47,4 @@ export interface ApplicationConnection {
 export interface PageInfo {
     endCursor?: number;
     startCursor?: number;
-    hasNextPage: Boolean;
-    hasPreviousPage: Boolean;
 }
