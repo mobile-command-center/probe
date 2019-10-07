@@ -60,8 +60,6 @@ export interface EnrollmentConnection {
 export interface PageInfo {
     endCursor?: number;
     startCursor?: number;
-    hasNextPage: Boolean;
-    hasPreviousPage: Boolean;
 }
 
 export const enum ENROLL_STATE {

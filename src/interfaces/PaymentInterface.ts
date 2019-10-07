@@ -58,8 +58,6 @@ export interface PaymentConnection {
 export interface PageInfo {
     endCursor?: number;
     startCursor?: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
 }
 
 

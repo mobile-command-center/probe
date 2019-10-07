@@ -24,8 +24,6 @@ export const readApplicationQuery =
     pageInfo {
       startCursor
       endCursor
-      hasNextPage
-      hasPreviousPage
     }
     totalCount
   }

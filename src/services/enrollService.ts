@@ -77,8 +77,6 @@ class EnrollService {
                             pageInfo: {
                                 endCursor: null,
                                 startCursor: null,
-                                hasNextPage: false,
-                                hasPreviousPage: false
                             },
                             totalCount: 0
                         }
@@ -115,33 +113,28 @@ class EnrollService {
                     reject(err);
                     throw err;
                 } else {
-                    if(input.first) {
+                    if(data.ScannedCount < 1) {
                         const result = {
-                            edges: data.Items.reverse() as EnrollmentDTO[],
+                            edges: [],
                             pageInfo: {
-                                endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
-                                startCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
-                                hasNextPage: (data.ScannedCount === input.first),
-                                hasPreviousPage: !!enrollmentDTO
+                                endCursor: null,
+                                startCursor: null,
                             },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
+                            totalCount: 0
+                        }
+                        resolve(result);
+                        return;
                     }
 
-                    if(input.last) {
-                        const result = {
-                            edges: data.Items as EnrollmentDTO[],
-                            pageInfo: {
-                                endCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
-                                startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
-                                hasNextPage: (data.ScannedCount === input.last),
-                                hasPreviousPage: !!enrollmentDTO
-                            },
-                            totalCount: data.ScannedCount
-                        };
-                        return resolve(result);
-                    }
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as EnrollmentDTO[],
+                        pageInfo: {
+                            endCursor: data.ScannedCount ? data.Items[0].EL_ID : null,
+                            startCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.EL_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].EL_ID : null,
+                        },
+                        totalCount: data.ScannedCount
+                    };
+                    return resolve(result);
                 }
             });
         });

@@ -26,8 +26,6 @@ export const readConsultationQuery =
       pageInfo {
         startCursor
         endCursor
-        hasNextPage
-        hasPreviousPage
       }
       totalCount
     }
