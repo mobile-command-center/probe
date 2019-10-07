@@ -133,7 +133,7 @@ class ConsultService {
                     if(input.first) {
                         console.log(data.Items);
                         const result = {
-                            edges: data.Items as ConsultationDTO[],
+                            edges: data.Items.reverse() as ConsultationDTO[],
                             pageInfo: {
                                 endCursor: data.LastEvaluatedKey ? data.LastEvaluatedKey.CONST_ID : data.ScannedCount ? data.Items[data.ScannedCount - 1].CONST_ID : null,
                                 startCursor: data.ScannedCount ? data.Items[0].CONST_ID : null,
