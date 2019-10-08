@@ -13,7 +13,7 @@ export default class EnrollmentDTO implements EnrollmentInterface {
     public CPAN: string;
     public PROD: string;
     public ST: ENROLL_STATE;
-    public GIFT_AMT: number;
+    public GIFT_AMT: string;
 
     constructor(builder: EnrollmentBuilder) {
         // @TODO 없는 값들은 기본값을 어디서 무엇으로 할지 결정 필요

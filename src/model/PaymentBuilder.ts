@@ -9,7 +9,7 @@ export default class PaymentBuilder {
     private _date: TypedString;
     private _eeId: TypedString;
     private _payType: TypedString;
-    private _payAmt: TypedNumber;
+    private _payAmt: TypedString;
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
     private _st: PAY_STATE | undefined;
@@ -87,7 +87,7 @@ export default class PaymentBuilder {
         return this._payType;
     }
 
-    public get PAY_AMT(): TypedNumber {
+    public get PAY_AMT(): TypedString {
         return this._payAmt;
     }
 

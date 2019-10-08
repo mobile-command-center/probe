@@ -7,7 +7,7 @@ export default class PaymentDTO implements PaymentInterface {
     public DATE: string;
     public EE_ID: string;
     public PAY_TYPE: string; // @TODO enum으로 뺴야 하지 않을까?
-    public PAY_AMT: number;
+    public PAY_AMT: string;
     public WRTR_ID: string;
     public WRT_DATE: string;
     public ST: PAY_STATE;
