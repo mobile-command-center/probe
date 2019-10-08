@@ -27,6 +27,14 @@ const typeDefs = gql`
     before: Int
   }
 
+  input searchPaymentInput {
+    first: Int
+    last: Int
+    after: Int
+    before: Int
+    filter: searchPaymentInputFilter!
+  }
+
   input createPaymentInput {
     DATE: String!
     EE_ID: String
@@ -55,6 +63,42 @@ const typeDefs = gql`
     PYMT_ID: Int!
   }
 
+  input searchPaymentInputFilter {
+    DATE: PaymentStringFilter
+    EE_ID: PaymentStringFilter
+    PAY_TYPE: PaymentStringFilter
+    PAY_AMT: PaymentNumberFilter
+    WRTR_ID: PaymentStringFilter
+    WRT_DATE: PaymentStringFilter
+    ST: PaymentStringFilter
+    CONST_ID: PaymentStringFilter
+    EL_ID: PaymentStringFilter
+  }
+
+  input PaymentStringFilter {
+    ne: String
+    eq: String
+    le: String
+    lt: String
+    ge: String
+    gt: String
+    contains: String
+    notContains: String
+    between: [String]
+  }
+
+  input PaymentNumberFilter {
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    contains: Int
+    notContains: Int
+    between: [Int]
+  }
+
   type Payment {
     PYMT_ID: Int!
     DATE: String
@@ -71,6 +115,7 @@ const typeDefs = gql`
   type Query {
     getPayment(input: getPaymentInput!): Payment!
     readPayment(input: readPaymentInput!): PaymentConnection!
+    searchPayment(input: searchPaymentInput!): PaymentConnection!
   }
 
   type Mutation {

@@ -1,7 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import EnrollmentDTO from '../model/EnrollmentDTO';
-import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, getEnrollmentInput } from '../interfaces/EnrollmentInterface';
+import { EnrollmentConnection, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, getEnrollmentInput, searchEnrollmentInput } from '../interfaces/EnrollmentInterface';
 import EnrollmentBuilder from '../model/enrollmentBuilder';
+import InputUtils from '../utils/InputUtils';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -139,13 +140,56 @@ class EnrollService {
             });
         });
     }
+    public search(input: searchEnrollmentInput): Promise<EnrollmentConnection> {
+        const params: QueryInput = {
+            TableName: `${process.env.STAGE}-enrollment`,
+            IndexName: 'SortIDGSI',
+            KeyConditionExpression: '#sort = :sort',
+            ExpressionAttributeNames: {
+                '#sort': 'SORT',
+                ...InputUtils.getExpressionAttributeNames<searchEnrollmentInput>(input)
+            },
+            ExpressionAttributeValues: {
+                ":sort": 0,
+                ...InputUtils.getExpressionAttributeValues<searchEnrollmentInput>(input)
+            },
+            FilterExpression: InputUtils.getFilterExpression<searchEnrollmentInput>(input),
+            Limit: input.first || input.last,
+        }
+
+        if(input.after || input.before) {
+            params.ExclusiveStartKey =  {'EL_ID': input.after || input.before, 'SORT': 0 };
+        }
+
+        return new Promise((resolve, reject) => {
+            docClient.query(params, (err, data: QueryOutput) => {
+                if (err) {
+                    console.log(err, err.stack);
+                    reject(err);
+                    throw err;
+                } else {
+                    console.log(data);
+
+                    const result = {
+                        edges: (input.first ? data.Items.reverse() : data.Items) as EnrollmentDTO[],
+                        pageInfo: {
+                            endCursor: data.Count ? input.first ? data.Items[0].EL_ID : data.Items[data.Count - 1].EL_ID : null,
+                            startCursor: data.Count ? input.first ? data.Items[data.Count - 1].EL_ID : data.Items[0].EL_ID : null,
+                        },
+                        totalCount: data.Count
+                    };
+                    return resolve(result);
+                }
+            });
+        });
+    }
 
     public create(input: createEnrollmentInput): Promise<EnrollmentDTO> {
         return new Promise((resolve, reject) => {
             this.read({ last: 1 } as readEnrollmentInput)
                 .then(({pageInfo: {endCursor}}) => {
                     const enrollmentDTO = new EnrollmentBuilder()
-                        .setEL_ID(endCursor++)
+                        .setEL_ID(++endCursor)
                         .setByCreateInput(input)
                         .build();
                    

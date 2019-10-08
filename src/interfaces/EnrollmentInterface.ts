@@ -1,3 +1,5 @@
+import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } from "./CommonInterface";
+
 export interface EnrollmentInterface {
     EL_ID: number;
     DATE: string;
@@ -15,13 +17,12 @@ export interface EnrollmentInterface {
 export interface getEnrollmentInput {
     EL_ID: number;
 }
-export interface readEnrollmentInput {
-    first: number;
-    last: number;
-    after: number;
-    before: number;
-}
 
+export interface readEnrollmentInput extends ReadInput {};
+
+export interface searchEnrollmentInput extends SearchInput {
+    filter: searchEnrollmentInputFilter;
+}
 export interface createEnrollmentInput {
     DATE: string;
     WRTR_ID: string;
@@ -49,6 +50,19 @@ export interface updateEnrollmentInput {
 
 export interface deleteEnrollmentInput {
     EL_ID: number;
+}
+
+export interface searchEnrollmentInputFilter {
+    DATE?: DynamoDBStringFilter;
+    WRTR_ID?: DynamoDBStringFilter;
+    WRT_DATE?: DynamoDBStringFilter; 
+    CONST_ID?: DynamoDBStringFilter;
+    EE_ID?: DynamoDBStringFilter;
+    APL_ID?: DynamoDBStringFilter;
+    CPAN?: DynamoDBStringFilter;
+    PROD?: DynamoDBStringFilter;
+    ST?: DynamoDBStringFilter;
+    GIFT_AMT?: DynamoDBNumberFilter;
 }
 
 export interface EnrollmentConnection {

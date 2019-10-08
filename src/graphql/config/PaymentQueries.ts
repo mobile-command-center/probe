@@ -22,7 +22,30 @@ export const readPaymentQuery =
       first: 10
     }) {
       edges {
-        APL_ID
+        PYMT_ID
+        DATE
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+      totalCount
+    }
+}`;
+
+export const searchPaymentQuery = 
+`query {
+    searchPayment(input: {
+      first: 10,
+      filter: {
+        WRTR_ID: {
+          contains: "USER"
+        }
+      }
+    }) {
+      edges {
+        PYMT_ID
+        WRTR_ID
         DATE
       }
       pageInfo {
@@ -36,7 +59,7 @@ export const readPaymentQuery =
 export const createPaymentQuery =
 `mutation {
   createPayment(input: {
-    WRTR_ID: "11231"
+    WRTR_ID: "USER"
     DATE: "2019-09-28T02:60:26.330Z"
     EE_ID: "2121312"
     ST: "PAY_GIFT"

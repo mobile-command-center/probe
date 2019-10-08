@@ -1,5 +1,5 @@
 import EnrollService from "../../services/EnrollService"
-import { EnrollmentConnection, getEnrollmentInput, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput } from "../../interfaces/EnrollmentInterface";
+import { EnrollmentConnection, getEnrollmentInput, createEnrollmentInput, readEnrollmentInput, updateEnrollmentInput, deleteEnrollmentInput, searchEnrollmentInput } from "../../interfaces/EnrollmentInterface";
 import EnrollmentDTO from "../../model/EnrollmentDTO";
 
 const resolvers = {
@@ -9,6 +9,9 @@ const resolvers = {
         },
         readEnrollment: (_, {input}:{input: readEnrollmentInput}): Promise<EnrollmentConnection> => {
             return EnrollService.getInstance().read(input);
+        },
+        searchEnrollment: (_, {input}: {input: searchEnrollmentInput}): Promise<EnrollmentConnection> => {
+            return EnrollService.getInstance().search(input);
         }
     },
     Mutation: {

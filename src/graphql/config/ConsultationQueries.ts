@@ -31,6 +31,29 @@ export const readConsultationQuery =
     }
 }`;
 
+
+export const searchConsultationQuery = 
+`query {
+    searchConsultation(input: {
+      first: 10
+      filter: {
+        MEMO: {
+          contains: "메모"
+        }
+      }
+    }) {
+      edges {
+        CONST_ID
+        DATE
+      }
+      pageInfo {
+        startCursor
+        endCursor
+      }
+      totalCount
+    }
+}`;
+
 export const createConsultationQuery =
 `mutation {
     createConsultation(input: {

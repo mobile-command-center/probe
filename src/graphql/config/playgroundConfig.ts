@@ -1,12 +1,17 @@
 import { PlaygroundConfig } from "apollo-server-lambda";
-import { getConsultationQuery, readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
-import { getEnrollmentQuery, createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery } from './EnrollmentQueries';
-import { getPaymentQuery, createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery } from './PaymentQueries';
-import { getApplicationQuery, createApplicationQuery, readApplicationQuery, updateApplicationQuery, deleteApplicationQuery} from './ApplicationQueries';
+import { searchConsultationQuery, getConsultationQuery, readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
+import { getEnrollmentQuery, createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery, searchEnrollmentQuery } from './EnrollmentQueries';
+import { getPaymentQuery, createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery, searchPaymentQuery } from './PaymentQueries';
+import { getApplicationQuery, createApplicationQuery, readApplicationQuery, updateApplicationQuery, deleteApplicationQuery, searchApplicationQuery} from './ApplicationQueries';
 
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
     tabs: [
+        {
+            name: 'searchConsultation',
+            endpoint: `graphql`,
+            query: searchConsultationQuery
+        },
         {
             name: 'getConsultation',
             endpoint: `graphql`,
@@ -38,6 +43,11 @@ const playgroundConfig: PlaygroundConfig = {
             query: getEnrollmentQuery
         },
         {
+            name: 'searchEnrollment',
+            endpoint: 'graphql',
+            query: searchEnrollmentQuery
+        },
+        {
             name: 'readEnrollment',
             endpoint: 'graphql',
             query: readEnrollmentQuery
@@ -63,6 +73,11 @@ const playgroundConfig: PlaygroundConfig = {
             query: getPaymentQuery
         },
         {
+            name: 'searchPayment',
+            endpoint: 'graphql',
+            query: searchPaymentQuery
+        },
+        {
             name: 'readPayment',
             endpoint: 'graphql',
             query: readPaymentQuery
@@ -86,6 +101,11 @@ const playgroundConfig: PlaygroundConfig = {
             name: 'getApplication',
             endpoint: 'graphql',
             query: getApplicationQuery
+        },
+        {
+            name: 'searchApplication',
+            endpoint: 'graphql',
+            query: searchApplicationQuery
         },
         {
             name: 'readApplication',
