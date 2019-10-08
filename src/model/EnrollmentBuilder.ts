@@ -15,7 +15,7 @@ export default class EnrollmentBuilder {
     private _cpan: TypedString;
     private _prod: TypedString;
     private _st: ENROLL_STATE | undefined;
-    private _giftAmt: TypedNumber;
+    private _giftAmt: TypedString;
 
     constructor(enrollmentDTO?: EnrollmentDTO) {
         if(enrollmentDTO) {
@@ -115,7 +115,7 @@ export default class EnrollmentBuilder {
         return this._st;
     }
 
-    public get GIFT_AMT(): TypedNumber {
+    public get GIFT_AMT(): TypedString {
         return this._giftAmt;
     }
 }

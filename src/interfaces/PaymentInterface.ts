@@ -5,7 +5,7 @@ export interface PaymentInterface {
     DATE: string;
     EE_ID: string;
     PAY_TYPE: string;
-    PAY_AMT: number;
+    PAY_AMT: string;
     WRTR_ID: string;
     WRT_DATE: string;
     ST: PAY_STATE;
@@ -27,7 +27,7 @@ export interface createPaymentInput {
     DATE?: string;
     EE_ID?: string;
     PAY_TYPE?: string;
-    PAY_AMT?: number;
+    PAY_AMT?: string;
     WRTR_ID: string;
     ST: PAY_STATE;
     CONST_ID?: string;
@@ -39,7 +39,7 @@ export interface updatePaymentInput {
     DATE?: string;
     EE_ID?: string;
     PAY_TYPE?: string;
-    PAY_AMT?: number;
+    PAY_AMT?: string;
     WRTR_ID?: string;
     ST?: PAY_STATE;
     CONST_ID?: string;
@@ -74,7 +74,7 @@ export interface PageInfo {
 
 
 export const enum PAY_STATE {
-    PAY_GIFT = 'PAY_GIFT',
-    PAY_CASH = 'PAY_CASH',
-    MOBILE_EXCHANGE = 'MOBILE_EXCHANGE'
+    PAY_GIFT = '사은품',
+    PAY_CASH = '현금',
+    MOBILE_EXCHANGE = '지류'
 }

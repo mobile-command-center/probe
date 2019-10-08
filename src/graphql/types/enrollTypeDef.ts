@@ -44,7 +44,7 @@ const typeDefs = gql`
     CPAN: String
     PROD: String
     ST: String!
-    GIFT_AMT: Int
+    GIFT_AMT: String
   }
 
   input updateEnrollmentInput {
@@ -57,7 +57,7 @@ const typeDefs = gql`
     CPAN: String
     PROD: String
     ST: String
-    GIFT_AMT: Int
+    GIFT_AMT: String
   }
 
   input deleteEnrollmentInput {
@@ -74,7 +74,7 @@ const typeDefs = gql`
     CPAN: EnrollmentStringFilter
     PROD: EnrollmentStringFilter
     ST: EnrollmentStringFilter
-    GIFT_AMT: EnrollmentNumberFilter
+    GIFT_AMT: EnrollmentStringFilter
   }
 
   input EnrollmentStringFilter {
@@ -112,7 +112,7 @@ const typeDefs = gql`
     CPAN: String
     PROD: String
     ST: String!
-    GIFT_AMT: Int
+    GIFT_AMT: String
   }
 
   type Query {

@@ -1,4 +1,4 @@
-import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } from "./CommonInterface";
+import { DynamoDBStringFilter, ReadInput, SearchInput } from "./CommonInterface";
 
 export interface EnrollmentInterface {
     EL_ID: number;
@@ -11,7 +11,7 @@ export interface EnrollmentInterface {
     CPAN?: string;
     PROD?: string;
     ST: string;
-    GIFT_AMT?: number;
+    GIFT_AMT?: string;
 };
 
 export interface getEnrollmentInput {
@@ -32,7 +32,8 @@ export interface createEnrollmentInput {
     CPAN?: string;
     PROD?: string;
     ST: ENROLL_STATE;
-    GIFT_AMT?: number;
+    w?: string;
+    GIFT_AMT?: string;
 };
 export interface updateEnrollmentInput {
     EL_ID: number;
@@ -45,7 +46,7 @@ export interface updateEnrollmentInput {
     CPAN?: string;
     PROD?: string;
     ST?: ENROLL_STATE;
-    GIFT_AMT?: number;
+    GIFT_AMT?: string;
 }
 
 export interface deleteEnrollmentInput {
@@ -62,7 +63,7 @@ export interface searchEnrollmentInputFilter {
     CPAN?: DynamoDBStringFilter;
     PROD?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
-    GIFT_AMT?: DynamoDBNumberFilter;
+    GIFT_AMT?: DynamoDBStringFilter;
 }
 
 export interface EnrollmentConnection {

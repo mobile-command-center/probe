@@ -39,7 +39,7 @@ const typeDefs = gql`
     DATE: String!
     EE_ID: String
     PAY_TYPE: String
-    PAY_AMT: Int
+    PAY_AMT: String
     WRTR_ID: String!
     ST: String!
     CONST_ID: String
@@ -51,7 +51,7 @@ const typeDefs = gql`
     DATE: String
     EE_ID: String
     PAY_TYPE: String
-    PAY_AMT: Int
+    PAY_AMT: String
     WRTR_ID: String
     WRT_DATE: String
     ST: String
@@ -67,7 +67,7 @@ const typeDefs = gql`
     DATE: PaymentStringFilter
     EE_ID: PaymentStringFilter
     PAY_TYPE: PaymentStringFilter
-    PAY_AMT: PaymentNumberFilter
+    PAY_AMT: PaymentStringFilter
     WRTR_ID: PaymentStringFilter
     WRT_DATE: PaymentStringFilter
     ST: PaymentStringFilter
@@ -104,7 +104,7 @@ const typeDefs = gql`
     DATE: String
     EE_ID: String
     PAY_TYPE: String
-    PAY_AMT: Int
+    PAY_AMT: String
     WRTR_ID: String
     WRT_DATE: String
     ST: String
