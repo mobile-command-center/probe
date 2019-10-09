@@ -42,8 +42,8 @@ const typeDefs = gql`
     PAY_AMT: String
     WRTR_ID: String!
     ST: String!
-    CONST_ID: String
-    EL_ID: String
+    CONST_ID: Int
+    EL_ID: Int
   }
 
   input updatePaymentInput {
@@ -55,8 +55,8 @@ const typeDefs = gql`
     WRTR_ID: String
     WRT_DATE: String
     ST: String
-    CONST_ID: String
-    EL_ID: String
+    CONST_ID: Int
+    EL_ID: Int
   }
 
   input deletePaymentInput {
@@ -71,8 +71,8 @@ const typeDefs = gql`
     WRTR_ID: PaymentStringFilter
     WRT_DATE: PaymentStringFilter
     ST: PaymentStringFilter
-    CONST_ID: PaymentStringFilter
-    EL_ID: PaymentStringFilter
+    CONST_ID: PaymentNumberFilter
+    EL_ID: PaymentNumberFilter
   }
 
   input PaymentStringFilter {
@@ -108,8 +108,8 @@ const typeDefs = gql`
     WRTR_ID: String
     WRT_DATE: String
     ST: String
-    CONST_ID: String
-    EL_ID: String
+    CONST_ID: Int
+    EL_ID: Int
   }
 
   type Query {

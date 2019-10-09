@@ -11,8 +11,8 @@ export default class PaymentDTO implements PaymentInterface {
     public WRTR_ID: string;
     public WRT_DATE: string;
     public ST: PAY_STATE;
-    public CONST_ID: string;
-    public EL_ID: string;
+    public CONST_ID: number;
+    public EL_ID: number;
 
     constructor(builder: PaymentBuilder) {
         // @TODO 없는 값들은 기본값을 어디서 무엇으로 할지 결정 필요

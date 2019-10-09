@@ -1,13 +1,13 @@
-import { DynamoDBStringFilter, ReadInput, SearchInput } from "./CommonInterface";
+import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } from "./CommonInterface";
 
 export interface EnrollmentInterface {
     EL_ID: number;
     DATE: string;
     WRTR_ID: string;
     WRT_DATE: string;
-    CONST_ID?: string;
+    CONST_ID?: number;
     EE_ID?: string;
-    APL_ID?: string;
+    APL_ID?: number;
     CPAN?: string;
     PROD?: string;
     ST: string;
@@ -26,9 +26,9 @@ export interface searchEnrollmentInput extends SearchInput {
 export interface createEnrollmentInput {
     DATE: string;
     WRTR_ID: string;
-    CONST_ID?: string;
+    CONST_ID?: number;
     EE_ID?: string;
-    APL_ID?: string;
+    APL_ID?: number;
     CPAN?: string;
     PROD?: string;
     ST: ENROLL_STATE;
@@ -40,9 +40,9 @@ export interface updateEnrollmentInput {
     DATE?: string;
     WRTR_ID?: string;
     WRT_DATE?: string; // @TODO WRT_DATE는 update시에 주입 받으면 안되는것 아닌가?
-    CONST_ID?: string;
+    CONST_ID?: number;
     EE_ID?: string;
-    APL_ID?: string;
+    APL_ID?: number;
     CPAN?: string;
     PROD?: string;
     ST?: ENROLL_STATE;
@@ -57,9 +57,9 @@ export interface searchEnrollmentInputFilter {
     DATE?: DynamoDBStringFilter;
     WRTR_ID?: DynamoDBStringFilter;
     WRT_DATE?: DynamoDBStringFilter; 
-    CONST_ID?: DynamoDBStringFilter;
+    CONST_ID?: DynamoDBNumberFilter;
     EE_ID?: DynamoDBStringFilter;
-    APL_ID?: DynamoDBStringFilter;
+    APL_ID?: DynamoDBNumberFilter;
     CPAN?: DynamoDBStringFilter;
     PROD?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
@@ -78,11 +78,11 @@ export interface PageInfo {
 }
 
 export const enum ENROLL_STATE {
-    READY = 'READY',
-    CHECK = 'CHECK',
-    HAPPY = 'HAPPY',
-    WITHHOLD = 'WITHHOLD',
-    COMMAND = 'COMMAND',
-    CONFIRM = 'CONFIRM',
-    COMPLETE = 'COMPLETE'
+    READY = '준비',
+    CHECK = '확인',
+    HAPPY = '해피콜',
+    WITHHOLD = '보류',
+    COMMAND = '지시',
+    CONFIRM = '개통확인',
+    COMPLETE = '개통완료'
 }

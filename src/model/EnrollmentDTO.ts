@@ -7,9 +7,9 @@ export default class EnrollmentDTO implements EnrollmentInterface {
     public DATE: string;
     public WRTR_ID: string;
     public WRT_DATE: string;
-    public CONST_ID: string;
+    public CONST_ID: number;
     public EE_ID: string;
-    public APL_ID: string;
+    public APL_ID: number;
     public CPAN: string;
     public PROD: string;
     public ST: ENROLL_STATE;

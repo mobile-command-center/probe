@@ -13,8 +13,8 @@ export default class PaymentBuilder {
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
     private _st: PAY_STATE | undefined;
-    private _constId: TypedString;
-    private _elId: TypedString;
+    private _constId: TypedNumber;
+    private _elId: TypedNumber;
 
     constructor(paymentDTO?: PaymentDTO) {
         if(paymentDTO) {
@@ -103,11 +103,11 @@ export default class PaymentBuilder {
         return this._st;
     }
 
-    public get CONST_ID(): TypedString {
+    public get CONST_ID(): TypedNumber {
         return this._constId;
     }
 
-    public get EL_ID(): TypedString {
+    public get EL_ID(): TypedNumber {
         return this._elId;
     }
 

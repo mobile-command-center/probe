@@ -38,9 +38,9 @@ const typeDefs = gql`
   input createEnrollmentInput {
     DATE: String!
     WRTR_ID: String!
-    CONST_ID: String
+    CONST_ID: Int
     EE_ID: String
-    APL_ID: String
+    APL_ID: Int
     CPAN: String
     PROD: String
     ST: String!
@@ -51,9 +51,9 @@ const typeDefs = gql`
     EL_ID: Int!
     DATE: String
     WRTR_ID: String
-    CONST_ID: String
+    CONST_ID: Int
     EE_ID: String
-    APL_ID: String
+    APL_ID: Int
     CPAN: String
     PROD: String
     ST: String
@@ -68,9 +68,9 @@ const typeDefs = gql`
     DATE: EnrollmentStringFilter
     WRTR_ID: EnrollmentStringFilter
     WRT_DATE: EnrollmentStringFilter
-    CONST_ID: EnrollmentStringFilter
+    CONST_ID: EnrollmentNumberFilter
     EE_ID: EnrollmentStringFilter
-    APL_ID: EnrollmentStringFilter
+    APL_ID: EnrollmentNumberFilter
     CPAN: EnrollmentStringFilter
     PROD: EnrollmentStringFilter
     ST: EnrollmentStringFilter
@@ -106,9 +106,9 @@ const typeDefs = gql`
     DATE: String!
     WRTR_ID: String!
     WRT_DATE: String!
-    CONST_ID: String
+    CONST_ID: Int
     EE_ID: String
-    APL_ID: String
+    APL_ID: Int
     CPAN: String
     PROD: String
     ST: String!

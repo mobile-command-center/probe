@@ -9,9 +9,9 @@ export default class EnrollmentBuilder {
     private _date: TypedString;
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
-    private _constId: TypedString;
+    private _constId: TypedNumber;
     private _eeId: TypedString;
-    private _aplId: TypedString;
+    private _aplId: TypedNumber;
     private _cpan: TypedString;
     private _prod: TypedString;
     private _st: ENROLL_STATE | undefined;
@@ -25,7 +25,7 @@ export default class EnrollmentBuilder {
             this._wrtDate = enrollmentDTO.WRT_DATE;
             this._constId = enrollmentDTO.CONST_ID;
             this._eeId = enrollmentDTO.EE_ID;
-            this._aplId = enrollmentDTO.EE_ID;
+            this._aplId = enrollmentDTO.APL_ID;
             this._cpan = enrollmentDTO.CPAN;
             this._prod = enrollmentDTO.PROD;
             this._st = enrollmentDTO.ST;
@@ -44,7 +44,7 @@ export default class EnrollmentBuilder {
         this._wrtDate = new Date().toISOString();
         this._constId = input.CONST_ID;
         this._eeId = input.EE_ID;
-        this._aplId = input.EE_ID;
+        this._aplId = input.APL_ID;
         this._cpan = input.CPAN;
         this._prod = input.PROD;
         this._st = input.ST;
@@ -60,7 +60,7 @@ export default class EnrollmentBuilder {
         this._wrtDate = new Date().toISOString();
         this._constId = input.CONST_ID || this._constId;
         this._eeId = input.EE_ID || this._eeId;
-        this._aplId = input.EE_ID || this._aplId;
+        this._aplId = input.APL_ID || this._aplId;
         this._cpan = input.CPAN || this._cpan;
         this._prod = input.PROD || this._prod;
         this._st = input.ST || this._st;
@@ -91,7 +91,7 @@ export default class EnrollmentBuilder {
         return this._wrtDate;
     }
     
-    public get CONST_ID(): TypedString {
+    public get CONST_ID(): TypedNumber {
         return this._constId;
     }
 
@@ -99,7 +99,7 @@ export default class EnrollmentBuilder {
         return this._eeId;
     }
 
-    public get APL_ID(): TypedString {
+    public get APL_ID(): TypedNumber {
         return this._aplId;
     }
 
