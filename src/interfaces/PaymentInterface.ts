@@ -9,7 +9,6 @@ export interface PaymentInterface {
     WRTR_ID: string;
     WRT_DATE: string;
     ST: PAY_STATE;
-    CONST_ID: number;
     EL_ID: number;
 };
 
@@ -30,7 +29,6 @@ export interface createPaymentInput {
     PAY_AMT?: string;
     WRTR_ID: string;
     ST: PAY_STATE;
-    CONST_ID?: number;
     EL_ID?: number;
 };
 
@@ -42,7 +40,6 @@ export interface updatePaymentInput {
     PAY_AMT?: string;
     WRTR_ID?: string;
     ST?: PAY_STATE;
-    CONST_ID?: number;
     EL_ID?: number;
 }
 
@@ -57,7 +54,6 @@ export interface searchPaymentInputFilter {
     PAY_AMT?: DynamoDBStringFilter;
     WRTR_ID?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
-    CONST_ID?: DynamoDBNumberFilter;
     EL_ID?: DynamoDBNumberFilter;
 }
 

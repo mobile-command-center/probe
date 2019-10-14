@@ -11,7 +11,6 @@ export default class PaymentDTO implements PaymentInterface {
     public WRTR_ID: string;
     public WRT_DATE: string;
     public ST: PAY_STATE;
-    public CONST_ID: number;
     public EL_ID: number;
 
     constructor(builder: PaymentBuilder) {
@@ -25,7 +24,6 @@ export default class PaymentDTO implements PaymentInterface {
         this.WRTR_ID = builder.WRTR_ID;
         this.WRT_DATE = builder.WRT_DATE;
         this.ST = builder.ST;
-        this.CONST_ID = builder.CONST_ID;
         this.EL_ID = builder.EL_ID;
     }
 
