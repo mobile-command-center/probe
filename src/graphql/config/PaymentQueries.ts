@@ -11,7 +11,6 @@ export const getPaymentQuery =
       WRTR_ID
       WRT_DATE
       ST
-      CONST_ID
       EL_ID
     }
 }`;
@@ -72,7 +71,6 @@ export const createPaymentQuery =
     WRTR_ID
     WRT_DATE
     ST
-    CONST_ID
     EL_ID
   }
 }`;

@@ -13,7 +13,6 @@ export default class PaymentBuilder {
     private _wrtrId: TypedString;
     private _wrtDate: TypedString;
     private _st: PAY_STATE | undefined;
-    private _constId: TypedNumber;
     private _elId: TypedNumber;
 
     constructor(paymentDTO?: PaymentDTO) {
@@ -26,7 +25,6 @@ export default class PaymentBuilder {
             this._wrtrId = paymentDTO.WRTR_ID;
             this._wrtDate = paymentDTO.WRT_DATE;
             this._st = paymentDTO.ST;
-            this._constId = paymentDTO.CONST_ID;
             this._elId = paymentDTO.EL_ID;
         }
     }
@@ -44,7 +42,6 @@ export default class PaymentBuilder {
         this._wrtrId = input.WRTR_ID;
         this._wrtDate = new Date().toISOString();
         this._st = input.ST;
-        this._constId = input.CONST_ID;
         this._elId = input.EL_ID;
 
         return this;
@@ -59,7 +56,6 @@ export default class PaymentBuilder {
         this._wrtrId = input.WRTR_ID || this._wrtrId;
         this._wrtDate = new Date().toISOString();
         this._st = input.ST || this._st;
-        this._constId = input.CONST_ID || this._constId;
         this._elId = input.EL_ID || this._elId;
 
         return this;
@@ -101,10 +97,6 @@ export default class PaymentBuilder {
 
     public get ST(): PAY_STATE | undefined {
         return this._st;
-    }
-
-    public get CONST_ID(): TypedNumber {
-        return this._constId;
     }
 
     public get EL_ID(): TypedNumber {

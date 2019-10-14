@@ -42,7 +42,6 @@ const typeDefs = gql`
     PAY_AMT: String
     WRTR_ID: String!
     ST: String!
-    CONST_ID: Int
     EL_ID: Int
   }
 
@@ -55,7 +54,6 @@ const typeDefs = gql`
     WRTR_ID: String
     WRT_DATE: String
     ST: String
-    CONST_ID: Int
     EL_ID: Int
   }
 
@@ -71,7 +69,6 @@ const typeDefs = gql`
     WRTR_ID: PaymentStringFilter
     WRT_DATE: PaymentStringFilter
     ST: PaymentStringFilter
-    CONST_ID: PaymentNumberFilter
     EL_ID: PaymentNumberFilter
   }
 
@@ -108,7 +105,6 @@ const typeDefs = gql`
     WRTR_ID: String
     WRT_DATE: String
     ST: String
-    CONST_ID: Int
     EL_ID: Int
   }
 
