@@ -36,18 +36,20 @@ const typeDefs = gql`
   }
 
   input createPaymentInput {
-    DATE: String!
+    SCHE_DATE: String
+    COMP_DATE: String
     EE_ID: String
     PAY_TYPE: String
     PAY_AMT: String
     WRTR_ID: String!
-    ST: String!
+    ST: String
     EL_ID: Int
   }
 
   input updatePaymentInput {
     PYMT_ID: Int!
-    DATE: String
+    SCHE_DATE: String
+    COMP_DATE: String
     EE_ID: String
     PAY_TYPE: String
     PAY_AMT: String
@@ -62,7 +64,8 @@ const typeDefs = gql`
   }
 
   input searchPaymentInputFilter {
-    DATE: PaymentStringFilter
+    SCHE_DATE: PaymentStringFilter
+    COMP_DATE: PaymentStringFilter
     EE_ID: PaymentStringFilter
     PAY_TYPE: PaymentStringFilter
     PAY_AMT: PaymentStringFilter
@@ -98,7 +101,8 @@ const typeDefs = gql`
 
   type Payment {
     PYMT_ID: Int!
-    DATE: String
+    SCHE_DATE: String
+    COMP_DATE: String
     EE_ID: String
     PAY_TYPE: String
     PAY_AMT: String

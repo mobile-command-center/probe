@@ -4,7 +4,8 @@ export const getPaymentQuery =
       PYMT_ID: 1
     }) {
       PYMT_ID
-      DATE
+      SCHE_DATE
+      COMP_DATE
       EE_ID
       PAY_TYPE
       PAY_AMT
@@ -22,7 +23,8 @@ export const readPaymentQuery =
     }) {
       edges {
         PYMT_ID
-        DATE
+        SCHE_DATE
+        COMP_DATE
       }
       pageInfo {
         startCursor
@@ -45,7 +47,8 @@ export const searchPaymentQuery =
       edges {
         PYMT_ID
         WRTR_ID
-        DATE
+        SCHE_DATE
+        COMP_DATE
       }
       pageInfo {
         startCursor
@@ -59,12 +62,12 @@ export const createPaymentQuery =
 `mutation {
   createPayment(input: {
     WRTR_ID: "USER"
-    DATE: "2019-09-28T02:60:26.330Z"
     EE_ID: "2121312"
     ST: "PAY_GIFT"
   }){
     PYMT_ID
-    DATE
+    SCHE_DATE
+    COMP_DATE
     EE_ID
     PAY_TYPE
     PAY_AMT

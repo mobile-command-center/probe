@@ -6,7 +6,8 @@ type TypedNumber = number | undefined;
 
 export default class PaymentBuilder {
     private _pymtId: TypedNumber;
-    private _date: TypedString;
+    private _scheDate: string;
+    private _compDate: string;
     private _eeId: TypedString;
     private _payType: TypedString;
     private _payAmt: TypedString;
@@ -18,7 +19,8 @@ export default class PaymentBuilder {
     constructor(paymentDTO?: PaymentDTO) {
         if(paymentDTO) {
             this._pymtId = paymentDTO.PYMT_ID;
-            this._date = paymentDTO.DATE;
+            this._scheDate = paymentDTO.SCHE_DATE;
+            this._compDate = paymentDTO.COMP_DATE;
             this._eeId = paymentDTO.EE_ID;
             this._payType = paymentDTO.PAY_TYPE;
             this._payAmt = paymentDTO.PAY_AMT;
@@ -35,7 +37,8 @@ export default class PaymentBuilder {
 
     public setByCreateInput(input: createPaymentInput) {
         this._pymtId = this._pymtId || 1;
-        this._date = input.DATE;
+        this._scheDate = input.SCHE_DATE;
+        this._compDate = input.COMP_DATE;
         this._eeId = input.EE_ID;
         this._payType = input.PAY_TYPE;
         this._payAmt = input.PAY_AMT;
@@ -49,7 +52,8 @@ export default class PaymentBuilder {
 
     public setByUpdateInput(input: updatePaymentInput) {
         this._pymtId = input.PYMT_ID || this._pymtId;
-        this._date = input.DATE || this._date; 
+        this._scheDate = input.SCHE_DATE || this._scheDate;
+        this._compDate = input.COMP_DATE || this._compDate;
         this._eeId = input.EE_ID || this._eeId;
         this._payType = input.PAY_TYPE || this._payType;
         this._payAmt = input.PAY_AMT || this._payAmt;
@@ -71,8 +75,12 @@ export default class PaymentBuilder {
         return this._pymtId;
     }
 
-    public get DATE(): TypedString {
-        return this._date;
+    public get SCHE_DATE(): TypedString {
+        return this._scheDate;
+    }
+
+    public get COMP_DATE(): TypedString {
+        return this._compDate;
     }
 
     public get EE_ID(): TypedString {
