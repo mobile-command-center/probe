@@ -2,7 +2,8 @@ import { DynamoDBStringFilter, ReadInput, SearchInput, DynamoDBNumberFilter } fr
 
 export interface PaymentInterface {
     PYMT_ID: number;
-    DATE: string;
+    SCHE_DATE: string;
+    COMP_DATE: string;
     EE_ID: string;
     PAY_TYPE: string;
     PAY_AMT: string;
@@ -23,18 +24,20 @@ export interface searchPaymentInput extends SearchInput {
 }
 
 export interface createPaymentInput {
-    DATE?: string;
+    SCHE_DATE?: string;
+    COMP_DATE?: string;
     EE_ID?: string;
     PAY_TYPE?: string;
     PAY_AMT?: string;
     WRTR_ID: string;
-    ST: PAY_STATE;
+    ST?: PAY_STATE;
     EL_ID?: number;
 };
 
 export interface updatePaymentInput {
     PYMT_ID: number;
-    DATE?: string;
+    SCHE_DATE?: string;
+    COMP_DATE?: string;
     EE_ID?: string;
     PAY_TYPE?: string;
     PAY_AMT?: string;
@@ -48,7 +51,8 @@ export interface deletePaymentInput {
 }
 
 export interface searchPaymentInputFilter {
-    DATE?: DynamoDBStringFilter;
+    SCHE_DATE?: DynamoDBStringFilter;
+    COMP_DATE?: DynamoDBStringFilter;
     EE_ID?: DynamoDBStringFilter;
     PAY_TYPE?: DynamoDBStringFilter;
     PAY_AMT?: DynamoDBStringFilter;
