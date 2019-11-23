@@ -13,6 +13,7 @@ export default class ConsultationBuilder {
     private _eeId: TypedString;
     private _cTel: TypedString;
     private _memo: TypedString;
+    private _st: TypedString;
     private _PSubsidyAmt: TypedString;
 
     constructor(consultationDTO?: ConsultationDTO) {
@@ -24,6 +25,7 @@ export default class ConsultationBuilder {
             this._eeId = consultationDTO.EE_ID;
             this._cTel = consultationDTO.C_TEL;
             this._memo = consultationDTO.MEMO;
+            this._st = consultationDTO.ST;
             this._PSubsidyAmt = consultationDTO.P_SUBSIDY_AMT;
         }
     }
@@ -40,6 +42,7 @@ export default class ConsultationBuilder {
         this._eeId = input.EE_ID;
         this._cTel = input.C_TEL;
         this._memo = input.MEMO;
+        this._st = input.ST;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT;
 
         return this;
@@ -53,6 +56,7 @@ export default class ConsultationBuilder {
         this._eeId = input.EE_ID || this._eeId;
         this._cTel = input.C_TEL || this._cTel;
         this._memo = input.MEMO || this._memo;
+        this._st = input.ST || this._st;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT || this._PSubsidyAmt;
 
         return this;
@@ -91,6 +95,11 @@ export default class ConsultationBuilder {
     public get MEMO(): TypedString {
         return this._memo;
     }
+
+    public get ST(): TypedString {
+        return this._st;
+    }
+
     public get P_SUBSIDY_AMT(): TypedString {
         return this._PSubsidyAmt;
     }

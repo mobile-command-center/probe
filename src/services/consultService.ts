@@ -154,8 +154,7 @@ class ConsultService {
                 ":sort": 0,
                 ...InputUtils.getExpressionAttributeValues<searchConsultationInput>(input)
             },
-            FilterExpression: InputUtils.getFilterExpression<searchConsultationInput>(input),
-            Limit: input.first || input.last,
+            FilterExpression: InputUtils.getFilterExpression<searchConsultationInput>(input)
         }
 
         if(input.after || input.before) {
