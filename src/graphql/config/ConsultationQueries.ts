@@ -10,6 +10,7 @@ export const getConsultationQuery =
       EE_ID
       C_TEL
       MEMO
+      ST
       P_SUBSIDY_AMT
     }
 }`;
@@ -62,6 +63,7 @@ export const createConsultationQuery =
       EE_ID: "2121312"
       C_TEL: "01093616635",
       MEMO: "메모니라",
+      ST: "신청",
       P_SUBSIDY_AMT: "70000"
     }){
       CONST_ID

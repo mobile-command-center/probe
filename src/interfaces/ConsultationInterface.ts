@@ -8,6 +8,7 @@ export interface ConsultationInterface {
     EE_ID: string;
     C_TEL: string;
     MEMO: string;
+    ST: string;
     P_SUBSIDY_AMT: string;
 };
 
@@ -27,6 +28,7 @@ export interface createConsultationInput {
     EE_ID?: string;
     C_TEL?: string;
     MEMO?: string;
+    ST?: string;
     P_SUBSIDY_AMT?: string;
 };
 
@@ -38,6 +40,7 @@ export interface updateConsultationInput {
     EE_ID?: string;
     C_TEL?: string;
     MEMO?: string;
+    ST?: string;
     P_SUBSIDY_AMT?: string;
 }
 
@@ -51,6 +54,7 @@ export interface searchConsultationInputFilter {
     EE_ID?: DynamoDBStringFilter;
     C_TEL?: DynamoDBStringFilter;
     MEMO?: DynamoDBStringFilter;
+    ST?: DynamoDBStringFilter;
     P_SUBSIDY_AMT?: DynamoDBStringFilter;
 }
 

@@ -10,6 +10,7 @@ export default class ConsultationDTO implements ConsultationInterface {
     public EE_ID: string;
     public C_TEL: string;
     public MEMO: string;
+    public ST: string;
     public P_SUBSIDY_AMT: string;
 
     constructor(builder: ConsultationBuilder) {
@@ -20,6 +21,7 @@ export default class ConsultationDTO implements ConsultationInterface {
         this.EE_ID = builder.EE_ID;
         this.C_TEL = builder.C_TEL;
         this.MEMO = builder.MEMO;
+        this.ST = builder.ST;
         this.P_SUBSIDY_AMT = builder.P_SUBSIDY_AMT;
     }
 

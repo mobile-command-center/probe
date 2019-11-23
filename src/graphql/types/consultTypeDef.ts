@@ -41,6 +41,7 @@ const typeDefs = gql`
     EE_ID: String
     C_TEL: String
     MEMO: String
+    ST: String
     P_SUBSIDY_AMT: String
   }
 
@@ -51,6 +52,7 @@ const typeDefs = gql`
     EE_ID: String
     C_TEL: String
     MEMO: String
+    ST: String
     P_SUBSIDY_AMT: String
   }
 
@@ -65,6 +67,7 @@ const typeDefs = gql`
     EE_ID: ConsultationFilter
     C_TEL: ConsultationFilter
     MEMO: ConsultationFilter
+    ST: ConsultationFilter
     P_SUBSIDY_AMT : ConsultationFilter
   }
 
@@ -88,6 +91,7 @@ const typeDefs = gql`
     EE_ID: String
     C_TEL: String
     MEMO: String
+    ST: String
     P_SUBSIDY_AMT: String
   }
 
