@@ -13,6 +13,7 @@ export default class ConsultationDTO implements ConsultationInterface {
     public ST: string;
     public P_SUBSIDY_AMT: string;
     public AVAL_INQUIRY_PASS: boolean;
+    public PPSTY: string;
 
     constructor(builder: ConsultationBuilder) {
         this.CONST_ID = builder.CONST_ID;
@@ -25,6 +26,7 @@ export default class ConsultationDTO implements ConsultationInterface {
         this.ST = builder.ST;
         this.P_SUBSIDY_AMT = builder.P_SUBSIDY_AMT;
         this.AVAL_INQUIRY_PASS = builder.AVAL_INQUIRY_PASS;
+        this.PPSTY = builder.PPSTY;
     }
 
     public getItem(): object {
