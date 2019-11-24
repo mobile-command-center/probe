@@ -10,6 +10,7 @@ export interface ConsultationInterface {
     MEMO: string;
     ST: string;
     P_SUBSIDY_AMT: string;
+    AVAL_INQUIRY_PASS?: boolean;
 };
 
 export interface getConsultationInput {
