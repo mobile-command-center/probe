@@ -3,6 +3,7 @@ import { createConsultationInput, updateConsultationInput } from '../interfaces/
 
 type TypedString = string | undefined;
 type TypedNumber = number | undefined;
+type TypedBoolean = boolean | undefined;
 
 export default class ConsultationBuilder {
     
@@ -15,6 +16,7 @@ export default class ConsultationBuilder {
     private _memo: TypedString;
     private _st: TypedString;
     private _PSubsidyAmt: TypedString;
+    private _avlInquiryPass: TypedBoolean;
 
     constructor(consultationDTO?: ConsultationDTO) {
         if(consultationDTO) {
@@ -27,6 +29,7 @@ export default class ConsultationBuilder {
             this._memo = consultationDTO.MEMO;
             this._st = consultationDTO.ST;
             this._PSubsidyAmt = consultationDTO.P_SUBSIDY_AMT;
+            this._avlInquiryPass = consultationDTO.AVAL_INQUIRY_PASS;
         }
     }
 
@@ -44,6 +47,7 @@ export default class ConsultationBuilder {
         this._memo = input.MEMO;
         this._st = input.ST;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT;
+        this._avlInquiryPass = input.AVAL_INQUIRY_PASS;
 
         return this;
     }
@@ -58,6 +62,7 @@ export default class ConsultationBuilder {
         this._memo = input.MEMO || this._memo;
         this._st = input.ST || this._st;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT || this._PSubsidyAmt;
+        this._avlInquiryPass = input.AVAL_INQUIRY_PASS || this._avlInquiryPass;
 
         return this;
     }
@@ -102,5 +107,9 @@ export default class ConsultationBuilder {
 
     public get P_SUBSIDY_AMT(): TypedString {
         return this._PSubsidyAmt;
+    }
+
+    public get AVAL_INQUIRY_PASS(): TypedBoolean {
+        return this._avlInquiryPass;
     }
 }

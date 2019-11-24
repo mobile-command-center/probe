@@ -9,6 +9,11 @@ export interface SearchInput extends ReadInput {
     filter: unknown;
 }
 
+export interface DynamoDBBooleanFilter {
+    ne: Boolean
+    eq: Boolean
+}
+
 export interface DynamoDBStringFilter {
     ne: String
     eq: String

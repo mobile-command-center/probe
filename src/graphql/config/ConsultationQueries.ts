@@ -12,6 +12,7 @@ export const getConsultationQuery =
       MEMO
       ST
       P_SUBSIDY_AMT
+      AVAL_INQUIRY_PASS
     }
 }`;
 
@@ -64,7 +65,8 @@ export const createConsultationQuery =
       C_TEL: "01093616635",
       MEMO: "메모니라",
       ST: "신청",
-      P_SUBSIDY_AMT: "70000"
+      P_SUBSIDY_AMT: "70000",
+      AVAL_INQUIRY_PASS: true
     }){
       CONST_ID
     }
