@@ -65,7 +65,7 @@ export default class ConsultationBuilder {
         this._memo = input.MEMO || this._memo;
         this._st = input.ST || this._st;
         this._PSubsidyAmt = input.P_SUBSIDY_AMT || this._PSubsidyAmt;
-        this._avlInquiryPass = input.AVAL_INQUIRY_PASS || this._avlInquiryPass;
+        this._avlInquiryPass = typeof input.AVAL_INQUIRY_PASS !== 'undefined' ? input.AVAL_INQUIRY_PASS : this._avlInquiryPass;
         this._ppsty = input.PPSTY || this._ppsty;
 
         return this;
