@@ -43,6 +43,7 @@ const typeDefs = gql`
     MEMO: String
     ST: String
     P_SUBSIDY_AMT: String
+    AVAL_INQUIRY_PASS: Boolean
   }
 
   input updateConsultationInput {
@@ -54,6 +55,7 @@ const typeDefs = gql`
     MEMO: String
     ST: String
     P_SUBSIDY_AMT: String
+    AVAL_INQUIRY_PASS: Boolean
   }
 
   input deleteConsultationInput {
@@ -61,17 +63,23 @@ const typeDefs = gql`
   }
 
   input searchConsultationInputFilter {
-    DATE: ConsultationFilter
-    WRTR_ID: ConsultationFilter
-    WRT_DATE: ConsultationFilter
-    EE_ID: ConsultationFilter
-    C_TEL: ConsultationFilter
-    MEMO: ConsultationFilter
-    ST: ConsultationFilter
-    P_SUBSIDY_AMT : ConsultationFilter
+    DATE: ConsultationStringFilter
+    WRTR_ID: ConsultationStringFilter
+    WRT_DATE: ConsultationStringFilter
+    EE_ID: ConsultationStringFilter
+    C_TEL: ConsultationStringFilter
+    MEMO: ConsultationStringFilter
+    ST: ConsultationStringFilter
+    P_SUBSIDY_AMT : ConsultationStringFilter
+    AVAL_INQUIRY_PASS: ConsultationBooleanFilter
   }
 
-  input ConsultationFilter {
+  input ConsultationBooleanFilter {
+    ne: Boolean
+    eq: Boolean
+  }
+
+  input ConsultationStringFilter {
     ne: String
     eq: String
     le: String
@@ -93,6 +101,7 @@ const typeDefs = gql`
     MEMO: String
     ST: String
     P_SUBSIDY_AMT: String
+    AVAL_INQUIRY_PASS: Boolean
   }
 
   type Query {

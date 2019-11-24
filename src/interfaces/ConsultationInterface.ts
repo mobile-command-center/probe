@@ -1,4 +1,4 @@
-import { SearchInput, ReadInput, DynamoDBStringFilter } from "./CommonInterface";
+import { SearchInput, ReadInput, DynamoDBStringFilter, DynamoDBBooleanFilter } from "./CommonInterface";
 
 export interface ConsultationInterface {
     CONST_ID: number;
@@ -30,6 +30,7 @@ export interface createConsultationInput {
     MEMO?: string;
     ST?: string;
     P_SUBSIDY_AMT?: string;
+    AVAL_INQUIRY_PASS?: boolean;
 };
 
 export interface updateConsultationInput {
@@ -42,6 +43,7 @@ export interface updateConsultationInput {
     MEMO?: string;
     ST?: string;
     P_SUBSIDY_AMT?: string;
+    AVAL_INQUIRY_PASS?: boolean;
 }
 
 export interface deleteConsultationInput {
@@ -56,6 +58,7 @@ export interface searchConsultationInputFilter {
     MEMO?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;
     P_SUBSIDY_AMT?: DynamoDBStringFilter;
+    AVAL_INQUIRY_PASS?: DynamoDBBooleanFilter;
 }
 
 export interface ConsultationConnection {
