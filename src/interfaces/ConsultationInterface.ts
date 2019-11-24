@@ -11,6 +11,7 @@ export interface ConsultationInterface {
     ST: string;
     P_SUBSIDY_AMT: string;
     AVAL_INQUIRY_PASS?: boolean;
+    PPSTY: string;
 };
 
 export interface getConsultationInput {
@@ -32,6 +33,7 @@ export interface createConsultationInput {
     ST?: string;
     P_SUBSIDY_AMT?: string;
     AVAL_INQUIRY_PASS?: boolean;
+    PPSTY?: string;
 };
 
 export interface updateConsultationInput {
@@ -45,6 +47,7 @@ export interface updateConsultationInput {
     ST?: string;
     P_SUBSIDY_AMT?: string;
     AVAL_INQUIRY_PASS?: boolean;
+    PPSTY?: string;
 }
 
 export interface deleteConsultationInput {
@@ -60,6 +63,7 @@ export interface searchConsultationInputFilter {
     ST?: DynamoDBStringFilter;
     P_SUBSIDY_AMT?: DynamoDBStringFilter;
     AVAL_INQUIRY_PASS?: DynamoDBBooleanFilter;
+    PPSTY?: DynamoDBStringFilter;
 }
 
 export interface ConsultationConnection {

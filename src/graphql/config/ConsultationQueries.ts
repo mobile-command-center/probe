@@ -13,6 +13,7 @@ export const getConsultationQuery =
       ST
       P_SUBSIDY_AMT
       AVAL_INQUIRY_PASS
+      PPSTY
     }
 }`;
 
@@ -66,7 +67,8 @@ export const createConsultationQuery =
       MEMO: "메모니라",
       ST: "신청",
       P_SUBSIDY_AMT: "70000",
-      AVAL_INQUIRY_PASS: true
+      AVAL_INQUIRY_PASS: true,
+      PPSTY: "높음"
     }){
       CONST_ID
     }
