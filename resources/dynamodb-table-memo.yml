@@ -3,7 +3,7 @@
 # PK, 관계
 # https://aws.amazon.com/ko/blogs/database/choosing-the-right-dynamodb-partition-key/
 Resources:
-    consultation: # 테이블 리소스
+    memo: # 테이블 리소스
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.stage}-memo
