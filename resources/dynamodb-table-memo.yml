@@ -1,0 +1,28 @@
+# 옵션값 설명
+# https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html
+# PK, 관계
+# https://aws.amazon.com/ko/blogs/database/choosing-the-right-dynamodb-partition-key/
+Resources:
+    consultation: # 테이블 리소스
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.stage}-memo
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: MEMO_ID
+            AttributeType: N
+          - AttributeName: SORT
+            AttributeType: N
+        KeySchema:
+          - AttributeName: MEMO_ID
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: SortIDGSI
+            KeySchema:
+              - AttributeName: SORT
+                KeyType: HASH
+              - AttributeName: MEMO_ID
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL          
+  

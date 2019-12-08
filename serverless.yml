@@ -25,6 +25,8 @@ provider:
       Resource: 
         - !GetAtt consultation.Arn # consultation는 테이블 리소스 이름
         - !Join [ '/',[!GetAtt consultation.Arn,index/*]]
+        - !GetAtt memo.Arn
+        - !Join [ '/',[!GetAtt memo.Arn,index/*]]
         - !GetAtt enrollment.Arn
         - !Join [ '/',[!GetAtt enrollment.Arn,index/*]]
         - !GetAtt payment.Arn
@@ -42,6 +44,7 @@ custom:
 resources:
   # DynamoDB
   - ${file(resources/dynamodb-table-consultation.yml)}
+  - ${file(resources/dynamodb-table-memo.yml)}
   - ${file(resources/dynamodb-table-enrollment.yml)}
   - ${file(resources/dynamodb-table-payment.yml)}
   - ${file(resources/dynamodb-table-application.yml)}
