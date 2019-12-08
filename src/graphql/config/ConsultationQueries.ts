@@ -4,10 +4,9 @@ export const getConsultationQuery =
       CONST_ID: 1
     }) {
       CONST_ID
-      DATE
+      DATE_REG
+      DATE_MDF
       WRTR_ID
-      WRT_DATE
-      EE_ID
       C_TEL
       MEMO
       ST
@@ -24,7 +23,7 @@ export const readConsultationQuery =
     }) {
       edges {
         CONST_ID
-        DATE
+        DATE_REG
       }
       pageInfo {
         startCursor
@@ -61,8 +60,6 @@ export const createConsultationQuery =
 `mutation {
     createConsultation(input: {
       WRTR_ID: "11231"
-      DATE: "2019-09-28T02:60:26.330Z"
-      EE_ID: "2121312"
       C_TEL: "01093616635",
       MEMO: "메모니라",
       ST: "신청",
