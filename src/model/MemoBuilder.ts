@@ -33,7 +33,7 @@ export default class MemoBuilder {
         this._memoId = this._memoId || 1;
         this._wrtrId = input.WRTR_ID;
         this._constId = this._constId; // ????
-        this._dateReg = input.DATE_REG;
+        this._dateReg = new Date().toISOString();
         this._dateMdf = new Date().toISOString();
         this._dateMemo = input.DATE_MEMO;
         this._content = input.CONTENT;

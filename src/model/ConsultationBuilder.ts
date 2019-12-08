@@ -8,10 +8,9 @@ type TypedBoolean = boolean | undefined;
 export default class ConsultationBuilder {
     
     private _constId: TypedNumber;
-    private _date: TypedString;
     private _wrtrId: TypedString;
-    private _wrtDate: TypedString;
-    private _eeId: TypedString;
+    private _dateReg: TypedString;
+    private _dateMdf: TypedString;
     private _cTel: TypedString;
     private _memo: TypedString;
     private _st: TypedString;
@@ -22,10 +21,9 @@ export default class ConsultationBuilder {
     constructor(consultationDTO?: ConsultationDTO) {
         if(consultationDTO) {
             this._constId = consultationDTO.CONST_ID;
-            this._date = consultationDTO.DATE;
             this._wrtrId = consultationDTO.WRTR_ID;
-            this._wrtDate = consultationDTO.WRT_DATE;
-            this._eeId = consultationDTO.EE_ID;
+            this._dateReg = consultationDTO.DATE_REG;
+            this._dateMdf = consultationDTO.DATE_MDF;
             this._cTel = consultationDTO.C_TEL;
             this._memo = consultationDTO.MEMO;
             this._st = consultationDTO.ST;
@@ -41,10 +39,9 @@ export default class ConsultationBuilder {
 
     public setByCreateInput(input: createConsultationInput) {
         this._constId = this._constId || 1;
-        this._date = input.DATE;
         this._wrtrId = input.WRTR_ID;
-        this._wrtDate = new Date().toISOString();
-        this._eeId = input.EE_ID;
+        this._dateReg = new Date().toISOString();
+        this._dateMdf = new Date().toISOString();
         this._cTel = input.C_TEL;
         this._memo = input.MEMO;
         this._st = input.ST;
@@ -57,10 +54,9 @@ export default class ConsultationBuilder {
 
     public setByUpdateInput(input: updateConsultationInput) {
         this._constId = input.CONST_ID || this._constId;
-        this._date = input.DATE || this._date; 
         this._wrtrId = input.WRTR_ID || this._wrtrId;
-        this._wrtDate = new Date().toISOString();
-        this._eeId = input.EE_ID || this._eeId;
+        this._dateReg = input.DATE_REG || this._dateReg; 
+        this._dateMdf = new Date().toISOString();
         this._cTel = input.C_TEL || this._cTel;
         this._memo = input.MEMO || this._memo;
         this._st = input.ST || this._st;
@@ -81,20 +77,16 @@ export default class ConsultationBuilder {
         return this._constId;
     }
 
-    public get DATE(): TypedString {
-        return this._date;
+    public get DATE_REG(): TypedString {
+        return this._dateReg;
+    }
+
+    public get DATE_MDF(): TypedString {
+        return this._dateMdf;
     }
 
     public get WRTR_ID(): TypedString {
         return this._wrtrId;
-    }
-
-    public get WRT_DATE(): TypedString {
-        return this._wrtDate;
-    }
-
-    public get EE_ID(): TypedString {
-        return this._eeId;
     }
 
     public get C_TEL(): TypedString {

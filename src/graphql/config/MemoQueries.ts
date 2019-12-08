@@ -20,7 +20,7 @@ export const readMemoQuery =
     }) {
       edges {
         MEMO_ID
-        DATE
+        DATE_REG
       }
       pageInfo {
         startCursor
@@ -59,8 +59,6 @@ export const createMemoQuery =
       WRTR_ID: "2121312"
       CONST_ID: 1
       DATE_MEMO: "2019-09-28T02:60:26.330Z"
-      DATE_REG: "2019-09-28T02:60:26.330Z"
-      DATE_MDF: "2019-09-28T02:60:26.330Z"
       CONTENT: "메노니라"
     }){
       MEMO_ID

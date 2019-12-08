@@ -36,9 +36,9 @@ const typeDefs = gql`
   }
 
   input createConsultationInput {
-    DATE: String!
+    DATE_REG: String
+    DATE_MDF: String
     WRTR_ID: String!
-    EE_ID: String
     C_TEL: String
     MEMO: String
     ST: String
@@ -49,9 +49,9 @@ const typeDefs = gql`
 
   input updateConsultationInput {
     CONST_ID: Int!
-    DATE: String
+    DATE_REG: String
+    DATE_MDF: String
     WRTR_ID: String
-    EE_ID: String
     C_TEL: String
     MEMO: String
     ST: String
@@ -67,8 +67,8 @@ const typeDefs = gql`
   input searchConsultationInputFilter {
     DATE: ConsultationStringFilter
     WRTR_ID: ConsultationStringFilter
-    WRT_DATE: ConsultationStringFilter
-    EE_ID: ConsultationStringFilter
+    DATE_REG: ConsultationStringFilter
+    DATE_MDF: ConsultationStringFilter
     C_TEL: ConsultationStringFilter
     MEMO: ConsultationStringFilter
     ST: ConsultationStringFilter
@@ -96,10 +96,9 @@ const typeDefs = gql`
 
   type Consultation {
     CONST_ID: Int!
-    DATE: String!
+    DATE_REG: String
+    DATE_MDF: String
     WRTR_ID: String
-    WRT_DATE: String
-    EE_ID: String
     C_TEL: String
     MEMO: String
     ST: String
