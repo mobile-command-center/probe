@@ -1,4 +1,5 @@
 import { PlaygroundConfig } from "apollo-server-lambda";
+import { searchMemoQuery, getMemoQuery, readMemoQuery, createMemoQuery, updateMemoQuery, deleteMemoQuery } from './MemoQueries';
 import { searchConsultationQuery, getConsultationQuery, readConsultationQuery, createConsultationQuery, updateConsultationQuery, deleteConsultationQuery } from './ConsultationQueries';
 import { getEnrollmentQuery, createEnrollmentQuery, readEnrollmentQuery, updateEnrollmentQuery, deleteEnrollmentQuery, searchEnrollmentQuery } from './EnrollmentQueries';
 import { getPaymentQuery, createPaymentQuery, readPaymentQuery, updatePaymentQuery, deletePaymentQuery, searchPaymentQuery } from './PaymentQueries';
@@ -7,6 +8,36 @@ import { getApplicationQuery, createApplicationQuery, readApplicationQuery, upda
 const playgroundConfig: PlaygroundConfig = {
     endpoint: '/playground',
     tabs: [
+        {
+            name: 'searchMemo',
+            endpoint: `graphql`,
+            query: searchMemoQuery
+        },
+        {
+            name: 'getMemo',
+            endpoint: `graphql`,
+            query: getMemoQuery
+        },
+        {
+            name: 'readMemo',
+            endpoint: `graphql`,
+            query: readMemoQuery
+        },
+        {
+            name: 'createMemo',
+            endpoint: `graphql`,
+            query: createMemoQuery
+        },
+        {
+            name: 'updateMemo',
+            endpoint: `graphql`,
+            query: updateMemoQuery
+        },
+        {
+            name: 'deleteMemo',
+            endpoint: `graphql`,
+            query: deleteMemoQuery
+        },
         {
             name: 'searchConsultation',
             endpoint: `graphql`,
