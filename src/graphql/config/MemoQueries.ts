@@ -36,14 +36,14 @@ export const searchMemoQuery =
     searchMemo(input: {
       first: 10
       filter: {
-        MEMO: {
+        CONTENT: {
           contains: "메모"
         }
       }
     }) {
       edges {
         MEMO_ID
-        DATE
+        DATE_REG
       }
       pageInfo {
         startCursor
@@ -59,7 +59,7 @@ export const createMemoQuery =
       WRTR_ID: "2121312"
       CONST_ID: 1
       DATE_MEMO: "2019-09-28T02:60:26.330Z"
-      CONTENT: "메노니라"
+      CONTENT: "메모니라"
     }){
       MEMO_ID
     }

@@ -1,8 +1,8 @@
 import { DynamoDB } from 'aws-sdk';
 import MemoDTO from '../model/MemoDTO';
-import ConsultantationBuilder from '../model/MemoBuilder';
 import { MemoConnection, createMemoInput, readMemoInput, searchMemoInput, deleteMemoInput, updateMemoInput, getMemoInput } from '../interfaces/MemoInterface';
 import InputUtils from '../utils/InputUtils';
+import MemoBuilder from '../model/MemoBuilder';
 
 type UpdateItemInput = DynamoDB.DocumentClient.UpdateItemInput;
 type DeleteItemInput = DynamoDB.DocumentClient.DeleteItemInput;
@@ -188,7 +188,7 @@ class MemoService {
         return new Promise((resolve, reject) => {
             this.read({ last: 1 } as readMemoInput)
                 .then(({pageInfo: {endCursor}}) => {
-                    const memoDTO = new ConsultantationBuilder()
+                    const memoDTO = new MemoBuilder()
                         .setMemoId(++endCursor)
                         .setByCreateInput(input)
                         .build();
@@ -229,7 +229,7 @@ class MemoService {
                     console.log(err, err.stack);
                     reject(err);
                 } else {
-                    const memoDTO = new ConsultantationBuilder(data.Item as MemoDTO)
+                    const memoDTO = new MemoBuilder(data.Item as MemoDTO)
                     .setByUpdateInput(input)
                     .build();
 

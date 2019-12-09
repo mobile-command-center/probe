@@ -32,7 +32,7 @@ export default class MemoBuilder {
     public setByCreateInput(input: createMemoInput) {
         this._memoId = this._memoId || 1;
         this._wrtrId = input.WRTR_ID;
-        this._constId = this._constId; // ????
+        this._constId = input.CONST_ID;
         this._dateReg = new Date().toISOString();
         this._dateMdf = new Date().toISOString();
         this._dateMemo = input.DATE_MEMO;
@@ -59,7 +59,7 @@ export default class MemoBuilder {
     }
 
     public get MEMO_ID(): TypedNumber {
-        return this._constId;
+        return this._memoId;
     }
 
     public get WRTR_ID(): TypedString {

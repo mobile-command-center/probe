@@ -17,7 +17,7 @@ const typeDefs = gql`
   }
 
   input getMemoInput {
-    CONST_ID: Int!
+    MEMO_ID: Int!
   }
 
   input readMemoInput {
@@ -47,7 +47,7 @@ const typeDefs = gql`
   input updateMemoInput {
     MEMO_ID: Int!
     WRTR_ID: String!
-    CONST_ID: Int;
+    CONST_ID: Int
     DATE_REG: String
     DATE_MDF: String
     DATE_MEMO: String
