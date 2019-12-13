@@ -7,6 +7,7 @@ export default class ConsultationDTO implements ConsultationInterface {
     public WRTR_ID: string;
     public DATE_REG: string;
     public DATE_MDF: string;
+    public DATE_INSTALL: string;
     public C_TEL: string;
     public MEMO: string;
     public ST: string;
@@ -19,6 +20,7 @@ export default class ConsultationDTO implements ConsultationInterface {
         this.WRTR_ID = builder.WRTR_ID;
         this.DATE_REG = builder.DATE_REG;
         this.DATE_MDF = builder.DATE_MDF;
+        this.DATE_INSTALL = builder.DATE_INSTALL;
         this.C_TEL = builder.C_TEL;
         this.MEMO = builder.MEMO;
         this.ST = builder.ST;

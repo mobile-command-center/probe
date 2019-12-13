@@ -38,6 +38,7 @@ const typeDefs = gql`
   input createConsultationInput {
     DATE_REG: String
     DATE_MDF: String
+    DATE_INSTALL: String
     WRTR_ID: String!
     C_TEL: String
     MEMO: String
@@ -51,6 +52,7 @@ const typeDefs = gql`
     CONST_ID: Int!
     DATE_REG: String
     DATE_MDF: String
+    DATE_INSTALL: String
     WRTR_ID: String
     C_TEL: String
     MEMO: String
@@ -69,6 +71,7 @@ const typeDefs = gql`
     WRTR_ID: ConsultationStringFilter
     DATE_REG: ConsultationStringFilter
     DATE_MDF: ConsultationStringFilter
+    DATE_INSTALL: ConsultationStringFilter
     C_TEL: ConsultationStringFilter
     MEMO: ConsultationStringFilter
     ST: ConsultationStringFilter
@@ -98,6 +101,7 @@ const typeDefs = gql`
     CONST_ID: Int!
     DATE_REG: String
     DATE_MDF: String
+    DATE_INSTALL: String
     WRTR_ID: String
     C_TEL: String
     MEMO: String

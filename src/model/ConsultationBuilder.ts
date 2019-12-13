@@ -11,6 +11,7 @@ export default class ConsultationBuilder {
     private _wrtrId: TypedString;
     private _dateReg: TypedString;
     private _dateMdf: TypedString;
+    private _dateInstall: TypedString;
     private _cTel: TypedString;
     private _memo: TypedString;
     private _st: TypedString;
@@ -24,6 +25,7 @@ export default class ConsultationBuilder {
             this._wrtrId = consultationDTO.WRTR_ID;
             this._dateReg = consultationDTO.DATE_REG;
             this._dateMdf = consultationDTO.DATE_MDF;
+            this._dateInstall = consultationDTO.DATE_INSTALL;
             this._cTel = consultationDTO.C_TEL;
             this._memo = consultationDTO.MEMO;
             this._st = consultationDTO.ST;
@@ -42,6 +44,7 @@ export default class ConsultationBuilder {
         this._wrtrId = input.WRTR_ID;
         this._dateReg = new Date().toISOString();
         this._dateMdf = new Date().toISOString();
+        this._dateInstall = input.DATE_INSTALL;
         this._cTel = input.C_TEL;
         this._memo = input.MEMO;
         this._st = input.ST;
@@ -57,6 +60,7 @@ export default class ConsultationBuilder {
         this._wrtrId = input.WRTR_ID || this._wrtrId;
         this._dateReg = input.DATE_REG || this._dateReg; 
         this._dateMdf = new Date().toISOString();
+        this._dateInstall = input.DATE_INSTALL || this._dateInstall;
         this._cTel = input.C_TEL || this._cTel;
         this._memo = input.MEMO || this._memo;
         this._st = input.ST || this._st;
@@ -83,6 +87,10 @@ export default class ConsultationBuilder {
 
     public get DATE_MDF(): TypedString {
         return this._dateMdf;
+    }
+
+    public get DATE_INSTALL(): TypedString {
+        return this._dateInstall;
     }
 
     public get WRTR_ID(): TypedString {
