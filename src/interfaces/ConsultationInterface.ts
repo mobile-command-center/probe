@@ -5,6 +5,7 @@ export interface ConsultationInterface {
     WRTR_ID: string;
     DATE_REG: string;
     DATE_MDF: string;
+    DATE_INSTALL: string;
     C_TEL: string;
     MEMO: string;
     ST: string;
@@ -27,6 +28,7 @@ export interface createConsultationInput {
     WRTR_ID: string;
     DATE_REG?: string;
     DATE_MDF?: string;
+    DATE_INSTALL?: string;
     C_TEL?: string;
     MEMO?: string;
     ST?: string;
@@ -39,6 +41,7 @@ export interface updateConsultationInput {
     CONST_ID: number;
     DATE_REG?: string;
     DATE_MDF?: string;
+    DATE_INSTALL?: string;
     WRTR_ID?: string;
     C_TEL?: string;
     MEMO?: string;
@@ -55,6 +58,7 @@ export interface searchConsultationInputFilter {
     WRTR_ID?: DynamoDBStringFilter;
     DATE_REG?: DynamoDBStringFilter;
     DATE_MDF?: DynamoDBStringFilter;
+    DATE_INSTALL?: DynamoDBStringFilter;
     C_TEL?: DynamoDBStringFilter;
     MEMO?: DynamoDBStringFilter;
     ST?: DynamoDBStringFilter;

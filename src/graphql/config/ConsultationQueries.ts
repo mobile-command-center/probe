@@ -6,6 +6,7 @@ export const getConsultationQuery =
       CONST_ID
       DATE_REG
       DATE_MDF
+      DATE_INSTALL
       WRTR_ID
       C_TEL
       MEMO
@@ -65,6 +66,7 @@ export const createConsultationQuery =
       ST: "신청",
       P_SUBSIDY_AMT: "70000",
       AVAL_INQUIRY_PASS: true,
+      DATE_INSTALL: "2019-09-28T02:60:26.330Z",
       PPSTY: "높음"
     }){
       CONST_ID

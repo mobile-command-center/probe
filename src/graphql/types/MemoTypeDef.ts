@@ -60,10 +60,23 @@ const typeDefs = gql`
 
   input searchMemoInputFilter {
     WRTR_ID: MemoStringFilter
+    CONST_ID: MemoIntFilter
     DATE_REG: MemoStringFilter
     DATE_MDF: MemoStringFilter
     DATE_MEMO: MemoStringFilter
     CONTENT: MemoStringFilter
+  }
+
+  input MemoIntFilter {
+    ne: Int
+    eq: Int
+    le: Int
+    lt: Int
+    ge: Int
+    gt: Int
+    contains: Int
+    notContains: Int
+    between: [Int]
   }
 
   input MemoStringFilter {
