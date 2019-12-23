@@ -42,6 +42,8 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_MEMO: String!
     CONTENT: String
+    P_SUBSIDY_AMT: String
+    ST: String
   }
 
   input updateMemoInput {
@@ -52,6 +54,8 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_MEMO: String
     CONTENT: String
+    P_SUBSIDY_AMT: String
+    ST: String
   }
 
   input deleteMemoInput {
@@ -65,6 +69,8 @@ const typeDefs = gql`
     DATE_MDF: MemoStringFilter
     DATE_MEMO: MemoStringFilter
     CONTENT: MemoStringFilter
+    P_SUBSIDY_AMT: MemoStringFilter
+    ST: MemoStringFilter
   }
 
   input MemoIntFilter {
@@ -99,6 +105,8 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_MEMO: String
     CONTENT: String
+    P_SUBSIDY_AMT: String
+    ST: String
   }
 
   type Query {

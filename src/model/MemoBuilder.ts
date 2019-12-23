@@ -12,6 +12,8 @@ export default class MemoBuilder {
     private _dateMdf: TypedString;
     private _dateMemo: TypedString;
     private _content: TypedString;
+    private _ppsty: TypedString;
+    private _st: TypedString;
 
     constructor(memoDTO?: MemoDTO) {
         if(memoDTO) {
@@ -22,6 +24,8 @@ export default class MemoBuilder {
             this._dateMdf = memoDTO.DATE_MDF;
             this._dateMemo = memoDTO.DATE_MEMO;
             this._content = memoDTO.CONTENT;
+            this._ppsty = memoDTO.P_SUBSIDY_AMT;
+            this._st = memoDTO.ST;
         }
     }
 
@@ -37,6 +41,9 @@ export default class MemoBuilder {
         this._dateMdf = new Date().toISOString();
         this._dateMemo = input.DATE_MEMO;
         this._content = input.CONTENT;
+        this._ppsty = input.P_SUBSIDY_AMT;
+        this._st = input.ST;
+        
         return this;
     }
 
@@ -48,6 +55,8 @@ export default class MemoBuilder {
         this._dateMdf = new Date().toISOString();
         this._dateMemo = input.DATE_MEMO || this._dateMemo;
         this._content = input.CONTENT || this._content;
+        this._ppsty = input.P_SUBSIDY_AMT || this._ppsty;
+        this._st = input.ST || this._st;
 
         return this;
     }
@@ -84,5 +93,13 @@ export default class MemoBuilder {
 
     public get CONTENT(): TypedString {
         return this._content;
+    }
+
+    public get P_SUBSIDY_AMT(): TypedString {
+        return this._ppsty;
+    }
+
+    public get ST(): TypedString {
+        return this._st;
     }
 }
