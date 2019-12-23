@@ -10,6 +10,7 @@ export default class MemoDTO implements MemoInterface {
     public DATE_REG: string;
     public DATE_MEMO: string;
     public CONTENT: string;
+    public P_SUBSIDY_AMT: string;
 
     constructor(builder: MemoBuilder) {
         this.MEMO_ID = builder.MEMO_ID;
@@ -19,6 +20,7 @@ export default class MemoDTO implements MemoInterface {
         this.DATE_REG = builder.DATE_REG;
         this.DATE_MEMO = builder.DATE_MEMO;
         this.CONTENT = builder.CONTENT;
+        this.P_SUBSIDY_AMT = builder.P_SUBSIDY_AMT;
     }
 
     public getItem(): object {
