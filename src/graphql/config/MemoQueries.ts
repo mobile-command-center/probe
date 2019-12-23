@@ -11,6 +11,7 @@ export const getMemoQuery =
       DATE_MDF
       CONTENT
       P_SUBSIDY_AMT
+      ST
     }
 }`;
 
@@ -62,6 +63,7 @@ export const createMemoQuery =
       DATE_MEMO: "2019-09-28T02:60:26.330Z"
       CONTENT: "메모니라"
       P_SUBSIDY_AMT: "70000"
+      ST: "신청"
     }){
       MEMO_ID
     }
@@ -71,8 +73,9 @@ export const updateMemoQuery =
 `mutation {
     updateMemo(input: {
       MEMO_ID: 1
-      CONTENT: "메모니라 업데이트 한다",
-      P_SUBSIDY_AMT: "70000",
+      CONTENT: "메모니라 업데이트 한다"
+      P_SUBSIDY_AMT: "70000"
+      ST: "신청"
     }){
       MEMO_ID
     }
