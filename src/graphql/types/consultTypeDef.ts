@@ -46,6 +46,7 @@ const typeDefs = gql`
     P_SUBSIDY_AMT: String
     AVAL_INQUIRY_PASS: Boolean
     PPSTY: String
+    REC_TEL: String
   }
 
   input updateConsultationInput {
@@ -60,6 +61,7 @@ const typeDefs = gql`
     P_SUBSIDY_AMT: String
     AVAL_INQUIRY_PASS: Boolean
     PPSTY: String
+    REC_TEL: String
   }
 
   input deleteConsultationInput {
@@ -78,6 +80,7 @@ const typeDefs = gql`
     P_SUBSIDY_AMT : ConsultationStringFilter
     AVAL_INQUIRY_PASS: ConsultationBooleanFilter
     PPSTY: ConsultationStringFilter
+    REC_TEL: ConsultationStringFilter
   }
 
   input ConsultationBooleanFilter {
@@ -109,6 +112,7 @@ const typeDefs = gql`
     P_SUBSIDY_AMT: String
     AVAL_INQUIRY_PASS: Boolean
     PPSTY: String
+    REC_TEL: String
   }
 
   type Query {

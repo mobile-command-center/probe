@@ -14,6 +14,7 @@ export const getConsultationQuery =
       P_SUBSIDY_AMT
       AVAL_INQUIRY_PASS
       PPSTY
+      REC_TEL
     }
 }`;
 
@@ -68,6 +69,7 @@ export const createConsultationQuery =
       AVAL_INQUIRY_PASS: true,
       DATE_INSTALL: "2019-09-28T02:60:26.330Z",
       PPSTY: "높음"
+      REC_TEL: "01082596635"
     }){
       CONST_ID
     }

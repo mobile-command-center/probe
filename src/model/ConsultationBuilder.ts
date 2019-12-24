@@ -18,6 +18,7 @@ export default class ConsultationBuilder {
     private _PSubsidyAmt: TypedString;
     private _avlInquiryPass: TypedBoolean;
     private _ppsty: TypedString;
+    private _recTel: TypedString;
 
     constructor(consultationDTO?: ConsultationDTO) {
         if(consultationDTO) {
@@ -32,6 +33,7 @@ export default class ConsultationBuilder {
             this._PSubsidyAmt = consultationDTO.P_SUBSIDY_AMT;
             this._avlInquiryPass = consultationDTO.AVAL_INQUIRY_PASS;
             this._ppsty = consultationDTO.PPSTY;
+            this._recTel = consultationDTO.REC_TEL;
         }
     }
 
@@ -51,6 +53,7 @@ export default class ConsultationBuilder {
         this._PSubsidyAmt = input.P_SUBSIDY_AMT;
         this._avlInquiryPass = input.AVAL_INQUIRY_PASS;
         this._ppsty = input.PPSTY;
+        this._recTel = input.REC_TEL;
 
         return this;
     }
@@ -67,6 +70,7 @@ export default class ConsultationBuilder {
         this._PSubsidyAmt = input.P_SUBSIDY_AMT || this._PSubsidyAmt;
         this._avlInquiryPass = typeof input.AVAL_INQUIRY_PASS !== 'undefined' ? input.AVAL_INQUIRY_PASS : this._avlInquiryPass;
         this._ppsty = input.PPSTY || this._ppsty;
+        this._recTel = input.REC_TEL || this._recTel;
 
         return this;
     }
@@ -119,5 +123,9 @@ export default class ConsultationBuilder {
 
     public get PPSTY(): TypedString {
         return this._ppsty;
+    }
+
+    public get REC_TEL(): TypedString {
+        return this._recTel;
     }
 }
