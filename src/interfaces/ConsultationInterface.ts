@@ -12,6 +12,7 @@ export interface ConsultationInterface {
     P_SUBSIDY_AMT: string;
     AVAL_INQUIRY_PASS?: boolean;
     PPSTY: string;
+    REC_TEL: string;
 };
 
 export interface getConsultationInput {
@@ -35,6 +36,7 @@ export interface createConsultationInput {
     P_SUBSIDY_AMT?: string;
     AVAL_INQUIRY_PASS?: boolean;
     PPSTY?: string;
+    REC_TEL?: string;
 };
 
 export interface updateConsultationInput {
@@ -49,6 +51,7 @@ export interface updateConsultationInput {
     P_SUBSIDY_AMT?: string;
     AVAL_INQUIRY_PASS?: boolean;
     PPSTY?: string;
+    REC_TEL?: string;
 }
 
 export interface deleteConsultationInput {
@@ -65,6 +68,7 @@ export interface searchConsultationInputFilter {
     P_SUBSIDY_AMT?: DynamoDBStringFilter;
     AVAL_INQUIRY_PASS?: DynamoDBBooleanFilter;
     PPSTY?: DynamoDBStringFilter;
+    REC_TEL?: DynamoDBStringFilter;
 }
 
 export interface ConsultationConnection {
