@@ -9,6 +9,7 @@ export default class ConsultationBuilder {
     
     private _constId: TypedNumber;
     private _wrtrId: TypedString;
+    private _wrtrIdMdf: TypedString;
     private _dateReg: TypedString;
     private _dateMdf: TypedString;
     private _dateInstall: TypedString;
@@ -24,6 +25,7 @@ export default class ConsultationBuilder {
         if(consultationDTO) {
             this._constId = consultationDTO.CONST_ID;
             this._wrtrId = consultationDTO.WRTR_ID;
+            this._wrtrIdMdf = consultationDTO.WRTR_ID_MDF;
             this._dateReg = consultationDTO.DATE_REG;
             this._dateMdf = consultationDTO.DATE_MDF;
             this._dateInstall = consultationDTO.DATE_INSTALL;
@@ -44,6 +46,7 @@ export default class ConsultationBuilder {
     public setByCreateInput(input: createConsultationInput) {
         this._constId = this._constId || 1;
         this._wrtrId = input.WRTR_ID;
+        this._wrtrIdMdf = input.WRTR_ID_MDF;
         this._dateReg = new Date().toISOString();
         this._dateMdf = new Date().toISOString();
         this._dateInstall = input.DATE_INSTALL;
@@ -61,6 +64,7 @@ export default class ConsultationBuilder {
     public setByUpdateInput(input: updateConsultationInput) {
         this._constId = input.CONST_ID || this._constId;
         this._wrtrId = input.WRTR_ID || this._wrtrId;
+        this._wrtrIdMdf = input.WRTR_ID_MDF || this._wrtrIdMdf;
         this._dateReg = input.DATE_REG || this._dateReg; 
         this._dateMdf = new Date().toISOString();
         this._dateInstall = input.DATE_INSTALL || this._dateInstall;
@@ -99,6 +103,10 @@ export default class ConsultationBuilder {
 
     public get WRTR_ID(): TypedString {
         return this._wrtrId;
+    }
+
+    public get WRTR_ID_MDF(): TypedString {
+        return this._wrtrIdMdf;
     }
 
     public get C_TEL(): TypedString {

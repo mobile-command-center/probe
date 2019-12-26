@@ -3,6 +3,7 @@ import { SearchInput, ReadInput, DynamoDBStringFilter, DynamoDBBooleanFilter } f
 export interface ConsultationInterface {
     CONST_ID: number;
     WRTR_ID: string;
+    WRTR_ID_MDF: string;
     DATE_REG: string;
     DATE_MDF: string;
     DATE_INSTALL: string;
@@ -27,6 +28,7 @@ export interface searchConsultationInput extends SearchInput {
 
 export interface createConsultationInput {
     WRTR_ID: string;
+    WRTR_ID_MDF?: string;
     DATE_REG?: string;
     DATE_MDF?: string;
     DATE_INSTALL?: string;
@@ -45,6 +47,7 @@ export interface updateConsultationInput {
     DATE_MDF?: string;
     DATE_INSTALL?: string;
     WRTR_ID?: string;
+    WRTR_ID_MDF?: string;
     C_TEL?: string;
     MEMO?: string;
     ST?: string;
@@ -59,6 +62,7 @@ export interface deleteConsultationInput {
 }
 export interface searchConsultationInputFilter {
     WRTR_ID?: DynamoDBStringFilter;
+    WRTR_ID_MDF?: DynamoDBStringFilter;
     DATE_REG?: DynamoDBStringFilter;
     DATE_MDF?: DynamoDBStringFilter;
     DATE_INSTALL?: DynamoDBStringFilter;

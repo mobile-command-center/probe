@@ -40,6 +40,7 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_INSTALL: String
     WRTR_ID: String!
+    WRTR_ID_MDF: String
     C_TEL: String
     MEMO: String
     ST: String
@@ -55,6 +56,7 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_INSTALL: String
     WRTR_ID: String
+    WRTR_ID_MDF: String
     C_TEL: String
     MEMO: String
     ST: String
@@ -71,6 +73,7 @@ const typeDefs = gql`
   input searchConsultationInputFilter {
     DATE: ConsultationStringFilter
     WRTR_ID: ConsultationStringFilter
+    WRTR_ID_MDF: ConsultationStringFilter
     DATE_REG: ConsultationStringFilter
     DATE_MDF: ConsultationStringFilter
     DATE_INSTALL: ConsultationStringFilter
@@ -106,6 +109,7 @@ const typeDefs = gql`
     DATE_MDF: String
     DATE_INSTALL: String
     WRTR_ID: String
+    WRTR_ID_MDF: String
     C_TEL: String
     MEMO: String
     ST: String
