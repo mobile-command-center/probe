@@ -9,7 +9,6 @@ export interface MemoInterface {
     DATE_MDF: string;
     CONTENT: string;
     P_SUBSIDY_AMT: string;
-    ST: string;
 };
 
 export interface getMemoInput {
@@ -30,7 +29,6 @@ export interface createMemoInput {
     DATE_MDF?: string;
     CONTENT?: string;
     P_SUBSIDY_AMT?: string;
-    ST: string;
 };
 
 export interface updateMemoInput {
@@ -42,7 +40,6 @@ export interface updateMemoInput {
     DATE_MDF?: string;
     CONTENT?: string;
     P_SUBSIDY_AMT?: string;
-    ST: string;
 }
 
 export interface deleteMemoInput {
@@ -55,7 +52,6 @@ export interface searchMemoInputFilter {
     DATE_MDF: DynamoDBStringFilter;
     CONTENT: DynamoDBStringFilter;
     P_SUBSIDY_AMT: DynamoDBStringFilter;
-    ST: DynamoDBStringFilter;
 }
 
 export interface MemoConnection {
