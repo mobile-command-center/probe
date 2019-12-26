@@ -8,6 +8,7 @@ export const getConsultationQuery =
       DATE_MDF
       DATE_INSTALL
       WRTR_ID
+      WRTR_ID_MDF
       C_TEL
       MEMO
       ST
@@ -62,6 +63,7 @@ export const createConsultationQuery =
 `mutation {
     createConsultation(input: {
       WRTR_ID: "11231"
+      WRTR_ID_MDF: "11231"
       C_TEL: "01093616635",
       MEMO: "메모니라",
       ST: "신청",

@@ -5,6 +5,7 @@ import { ExpressionAttributeNameMap } from 'aws-sdk/clients/dynamodb';
 export default class ConsultationDTO implements ConsultationInterface {
     public CONST_ID: number;
     public WRTR_ID: string;
+    public WRTR_ID_MDF: string;
     public DATE_REG: string;
     public DATE_MDF: string;
     public DATE_INSTALL: string;
@@ -19,6 +20,7 @@ export default class ConsultationDTO implements ConsultationInterface {
     constructor(builder: ConsultationBuilder) {
         this.CONST_ID = builder.CONST_ID;
         this.WRTR_ID = builder.WRTR_ID;
+        this.WRTR_ID_MDF = builder.WRTR_ID_MDF;
         this.DATE_REG = builder.DATE_REG;
         this.DATE_MDF = builder.DATE_MDF;
         this.DATE_INSTALL = builder.DATE_INSTALL;
